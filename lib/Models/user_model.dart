@@ -1,4 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
 
 class UserModel {
   String? userID;
@@ -16,9 +15,9 @@ class UserModel {
       this.role,
       this.pinCode});
 
-  UserModel.fromSnapshot(DataSnapshot snapshot) {
-    Map value = snapshot.value as Map;
-    userID = snapshot.key;
+  UserModel.fromSnapshot( snapshot) {
+    Map value = snapshot.data() as Map;
+    userID = snapshot.id;
     email = value['email'];
     firstName = value['firstName'];
     lastName = value['lastName'];

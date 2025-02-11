@@ -15,7 +15,8 @@ class SignUpViewSmallSizeWidget extends StatefulWidget {
       required this.lastNameController,
       required this.passwordController,
       required this.onTapSignUp,
-      required this.formKey, required this.isLoading});
+      required this.formKey,
+      required this.isLoading});
   final TextEditingController emailController;
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;

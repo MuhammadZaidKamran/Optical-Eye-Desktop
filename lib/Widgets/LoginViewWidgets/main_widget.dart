@@ -14,13 +14,17 @@ class MainWidget extends StatelessWidget {
       required this.passwordController,
       required this.onTapForgotPassword,
       required this.onTapLogin,
-      required this.onTapSignUp});
+      required this.onTapSignUp,
+      required this.formKey,
+      required this.isLoading});
   final TextEditingController emailController;
   final TextEditingController passwordController;
   bool showPassword;
   final VoidCallback onTapForgotPassword;
   final VoidCallback onTapLogin;
   final VoidCallback onTapSignUp;
+  final Key formKey;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,8 @@ class MainWidget extends StatelessWidget {
           onTapForgotPassword: onTapForgotPassword,
           onTapLogin: onTapLogin,
           onTapSignUp: onTapSignUp,
+          formKey: formKey,
+          isLoading: isLoading,
         ),
       (ScreenSize.medium) => MediumSizeWidget(
           emailController: emailController,
@@ -41,6 +47,8 @@ class MainWidget extends StatelessWidget {
           onTapForgotPassword: onTapForgotPassword,
           onTapLogin: onTapLogin,
           onTapSignUp: onTapSignUp,
+          formKey: formKey,
+          isLoading: isLoading,
         ),
       (ScreenSize.normal) => NormalSizeWidget(
           emailController: emailController,
@@ -49,6 +57,8 @@ class MainWidget extends StatelessWidget {
           onTapForgotPassword: onTapForgotPassword,
           onTapLogin: onTapLogin,
           onTapSignUp: onTapSignUp,
+          formKey: formKey,
+          isLoading: isLoading,
         ),
       (_) => SmallSizeWidget(
           emailController: emailController,
@@ -57,6 +67,8 @@ class MainWidget extends StatelessWidget {
           onTapForgotPassword: onTapForgotPassword,
           onTapLogin: onTapLogin,
           onTapSignUp: onTapSignUp,
+          formKey: formKey,
+          isLoading: isLoading,
         ),
     };
   }

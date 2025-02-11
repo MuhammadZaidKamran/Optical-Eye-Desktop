@@ -22,7 +22,8 @@ class MyTextField extends StatelessWidget {
     this.borderRadius,
     this.leading,
     this.height,
-    this.width, this.trailing,
+    this.width,
+    this.trailing,
   });
   final TextEditingController controller;
   final String label;
@@ -61,7 +62,7 @@ class MyTextField extends StatelessWidget {
         controller: controller,
         readOnly: readOnly!,
         decoration: InputDecoration(
-          suffixIcon: trailing,
+            suffixIcon: trailing,
             hintMaxLines: 1,
             prefixIcon: prefixIcon,
             prefixIconColor: prefixIconColor,

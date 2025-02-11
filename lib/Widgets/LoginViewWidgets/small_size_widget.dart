@@ -14,13 +14,17 @@ class SmallSizeWidget extends StatefulWidget {
       required this.passwordController,
       required this.onTapForgotPassword,
       required this.onTapLogin,
-      required this.onTapSignUp});
+      required this.onTapSignUp,
+      required this.formKey,
+      required this.isLoading});
   final TextEditingController emailController;
   final TextEditingController passwordController;
   bool showPassword;
   final VoidCallback onTapForgotPassword;
   final VoidCallback onTapLogin;
   final VoidCallback onTapSignUp;
+  final Key formKey;
+  final bool isLoading;
 
   @override
   State<SmallSizeWidget> createState() => _SmallSizeWidgetState();
@@ -29,136 +33,153 @@ class SmallSizeWidget extends StatefulWidget {
 class _SmallSizeWidgetState extends State<SmallSizeWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          "assets/side_img.png",
-          width: Get.width,
-          height: Get.height * 0.1,
-          fit: BoxFit.cover,
-        ),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 15,
-              horizontal: 40,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Welcome!",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+    return Form(
+      key: widget.formKey,
+      child: Column(
+        children: [
+          Image.asset(
+            "assets/side_img.png",
+            width: Get.width,
+            height: Get.height * 0.1,
+            fit: BoxFit.cover,
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 40,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Welcome!",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                myHeight(0.015),
-                const Text(
-                  "Please login to access Portal",
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
+                  myHeight(0.015),
+                  const Text(
+                    "Please login to access Portal",
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                myHeight(0.045),
-                const Text(
-                  "Email",
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
+                  myHeight(0.045),
+                  const Text(
+                    "Email",
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                myHeight(0.015),
-                MyTextField(
+                  myHeight(0.015),
+                  MyTextField(
                     width: Get.width * 1,
                     controller: widget.emailController,
-                    label: "Email"),
-                myHeight(0.03),
-                const Text(
-                  "Password",
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                    label: "Email",
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter email";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                myHeight(0.015),
-                MyTextField(
-                  obscureText: widget.showPassword,
-                  width: Get.width * 1,
-                  controller: widget.passwordController,
-                  label: "Password",
-                  trailing: InkWell(
-                      onTap: () {
-                        widget.showPassword = !widget.showPassword;
-                        setState(() {});
-                      },
-                      child: widget.showPassword == true
-                          ? Image.asset(
-                              "assets/eye_remove_2.png",
-                              scale: 12,
-                            )
-                          : const Icon(Icons.remove_red_eye_outlined)),
-                ),
-                myHeight(0.02),
-                SizedBox(
-                  width: Get.width * 0.25,
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: InkWell(
-                      onTap: widget.onTapForgotPassword,
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                          color: blackColor,
+                  myHeight(0.03),
+                  const Text(
+                    "Password",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  myHeight(0.015),
+                  MyTextField(
+                    obscureText: widget.showPassword,
+                    width: Get.width * 1,
+                    controller: widget.passwordController,
+                    label: "Password",
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter password";
+                      }
+                      return null;
+                    },
+                    trailing: InkWell(
+                        onTap: () {
+                          widget.showPassword = !widget.showPassword;
+                          setState(() {});
+                        },
+                        child: widget.showPassword == true
+                            ? Image.asset(
+                                "assets/eye_remove_2.png",
+                                scale: 12,
+                              )
+                            : const Icon(Icons.remove_red_eye_outlined)),
+                  ),
+                  myHeight(0.02),
+                  SizedBox(
+                    width: Get.width * 0.25,
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: widget.onTapForgotPassword,
+                        child: Text(
+                          "Forgot Password?",
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: blackColor,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                myHeight(0.05),
-                MyButton(
-                  width: Get.width * 1,
-                  onTap: widget.onTapLogin,
-                  label: "Login",
-                ),
-                myHeight(0.05),
-                Expanded(
-                  child: SizedBox(
-                    // width: Get.width * 1,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Don't have an Account?",
-                          style: TextStyle(
-                            fontSize: 11,
-                          ),
-                        ),
-                        myWidth(0.003),
-                        InkWell(
-                          onTap: widget.onTapSignUp,
-                          child: Text(
-                            "Sign Up",
+                  myHeight(0.05),
+                  MyButton(
+                    isLoading: widget.isLoading,
+                    width: Get.width * 1,
+                    onTap: widget.onTapLogin,
+                    label: "Login",
+                  ),
+                  myHeight(0.05),
+                  Expanded(
+                    child: SizedBox(
+                      // width: Get.width * 1,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Don't have an Account?",
                             style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: mainThemeColor,
+                              fontSize: 11,
                             ),
                           ),
-                        )
-                      ],
+                          myWidth(0.003),
+                          InkWell(
+                            onTap: widget.onTapSignUp,
+                            child: Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: mainThemeColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

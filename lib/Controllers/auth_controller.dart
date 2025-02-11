@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
+import 'package:optical_eye_desktop/Models/user_model.dart';
 import 'package:optical_eye_desktop/Screens/home_screen.dart';
 
 class AuthController extends GetxController {
@@ -27,6 +28,15 @@ class AuthController extends GetxController {
           "role": "Admin",
           "pinCode": dateTime,
         }).then((value) {
+          fireStore
+              .collection("users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .snapshots()
+              .listen((value) {
+            if (value.data() != null) {
+              userModel = UserModel.fromJson(value.data()!);
+            }
+          });
           mySuccessSnackBar(
               context: Get.context!, message: "Account created successfully!");
           update();
@@ -42,10 +52,32 @@ class AuthController extends GetxController {
     try {
       await fAuth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) {
+          .then((value) async {
+        fireStore
+            .collection("users")
+            .doc(value.user!.uid)
+            .snapshots()
+            .listen((value) {
+          if (value.data() != null) {
+            userModel = UserModel.fromJson(value.data()!);
+          }
+        });
         mySuccessSnackBar(
             context: Get.context!, message: "Logged in successfully!");
         Get.off(() => const HomeScreen());
+      });
+    } catch (e) {
+      myErrorSnackBar(context: Get.context!, message: e.toString());
+    }
+  }
+
+  Future forgotPassword({required String email}) async {
+    try {
+      await fAuth.sendPasswordResetEmail(email: email).then((value) {
+        mySuccessSnackBar(
+            context: Get.context!,
+            message: "Password Reset email sent successfully!");
+        Get.back();
       });
     } catch (e) {
       myErrorSnackBar(context: Get.context!, message: e.toString());

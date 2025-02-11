@@ -37,7 +37,6 @@ ScreenSize getScreenSize(BuildContext context) {
       .shortestSide; // Gives us the shortest side of the device
   if (deviceWidth > ScreenSize.extraLarge.size) return ScreenSize.extraLarge;
   if (deviceWidth > ScreenSize.large.size) return ScreenSize.large;
-  // if (deviceWidth > ScreenSize.extraMedium.size) return ScreenSize.extraMedium;
   if (deviceWidth > ScreenSize.medium.size) return ScreenSize.medium;
   if (deviceWidth > ScreenSize.normal.size) return ScreenSize.normal;
   return ScreenSize.small;
@@ -57,6 +56,7 @@ mySuccessSnackBar({
       ),
       backgroundColor: greenColor,
     ),
+    snackBarAnimationStyle: AnimationStyle(duration: const Duration(seconds: 1)),
   );
 }
 
@@ -74,5 +74,6 @@ myErrorSnackBar({
       ),
       backgroundColor: redColor,
     ),
+    snackBarAnimationStyle: AnimationStyle(duration: const Duration(seconds: 1)),
   );
 }
