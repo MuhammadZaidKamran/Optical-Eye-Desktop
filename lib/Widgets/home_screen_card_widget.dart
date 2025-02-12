@@ -36,9 +36,7 @@ class _HomeScreenCardWidgetState extends State<HomeScreenCardWidget> {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
               color: widget.isHover ? Colors.grey : Colors.transparent),
-          color: widget.isHover
-              ? const Color.fromARGB(73, 158, 158, 158)
-              : Colors.transparent,
+          color: widget.isHover ? hoverColor : Colors.transparent,
         ),
         child: Column(
           children: [

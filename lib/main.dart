@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Auth/login_view.dart';
 import 'package:optical_eye_desktop/firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());

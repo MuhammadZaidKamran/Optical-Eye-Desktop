@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:optical_eye_desktop/Global/colors.dart';
+import 'package:optical_eye_desktop/Global/global.dart';
+import 'package:optical_eye_desktop/Screens/CustomerFiles/patient_file.dart';
 import 'package:optical_eye_desktop/Widgets/home_screen_card_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_app_bar.dart';
 
@@ -36,29 +39,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 fit: BoxFit.cover,
                 filterQuality: FilterQuality.high)),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // myHeight(0.05),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 HomeScreenCardWidget(
                   isHover: isHover,
                   image: "assets/inventory.png",
-                  text: "Inventory",
-                  onTap: () {},
+                  text: "Customer Files",
+                  onTap: () {
+                    Get.to(() => const PatientFile());
+                  },
                 ),
+                myWidth(0.04),
                 HomeScreenCardWidget(
                   isHover: isHover,
                   image: "assets/appointment.png",
                   text: "Appointment",
                   onTap: () {},
                 ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 HomeScreenCardWidget(
                   isHover: isHover,
                   image: "assets/order.png",
                   text: "Order",
                   onTap: () {},
                 ),
+                myWidth(0.04),
                 HomeScreenCardWidget(
                   isHover: isHover,
                   image: "assets/payment.png",
@@ -66,6 +79,49 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {},
                 ),
               ],
+            ),
+            myHeight(0.02),
+            InkWell(
+              onTap: () {},
+              onHover: (value) {
+                isHover = value;
+                setState(() {});
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  // border: ,
+                  color: isHover
+                      ? const Color.fromARGB(73, 158, 158, 158)
+                      : Colors.transparent,
+                ),
+                width: Get.width * 0.22,
+                // height: Get.height * 0.12,
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        "assets/Support.png",
+                        height: Get.height * 0.12,
+                        width: Get.width * 0.22,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    myHeight(0.01),
+                    Center(
+                      child: Text(
+                        "Support",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: whiteColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
