@@ -37,10 +37,12 @@ class AuthController extends GetxController {
               userModel = UserModel.fromJson(value.data()!);
             }
           });
-          mySuccessSnackBar(
-              context: Get.context!, message: "Account created successfully!");
-          update();
-          Get.off(() => const HomeScreen());
+          myLoadingDialog(Get.context!);
+          Future.delayed(const Duration(seconds: 2), () {}).then((value) {
+            mySuccessSnackBar(
+                context: Get.context!, message: "Logged in successfully!");
+            Get.off(() => const HomeScreen());
+          });
         });
       });
     } catch (e) {
@@ -48,7 +50,10 @@ class AuthController extends GetxController {
     }
   }
 
-  Future signIn({required String email, required String password}) async {
+  Future signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
       await fAuth
           .signInWithEmailAndPassword(email: email, password: password)
@@ -62,9 +67,12 @@ class AuthController extends GetxController {
             userModel = UserModel.fromJson(value.data()!);
           }
         });
-        mySuccessSnackBar(
-            context: Get.context!, message: "Logged in successfully!");
-        Get.off(() => const HomeScreen());
+        myLoadingDialog(Get.context!);
+        Future.delayed(const Duration(seconds: 2), () {}).then((value) {
+          mySuccessSnackBar(
+              context: Get.context!, message: "Logged in successfully!");
+          Get.off(() => const HomeScreen());
+        });
       });
     } catch (e) {
       myErrorSnackBar(context: Get.context!, message: e.toString());

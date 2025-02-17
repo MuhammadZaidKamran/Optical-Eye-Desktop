@@ -39,7 +39,8 @@ class _LoginViewState extends State<LoginView> {
           await authController
               .signIn(
                   email: emailController.text.trim(),
-                  password: passwordController.text.trim())
+                  password: passwordController.text.trim(),
+                  )
               .then((value) {
             isLoading = false;
             setState(() {});

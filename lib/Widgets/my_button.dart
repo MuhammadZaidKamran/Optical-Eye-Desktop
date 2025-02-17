@@ -11,12 +11,14 @@ class MyButton extends StatelessWidget {
       required this.onTap,
       required this.label,
       this.isLoading = false,
+      this.secondary = false,
       this.borderRadius});
   final double? height;
   final double? width;
   final String label;
   final VoidCallback onTap;
   final BorderRadius? borderRadius;
+  bool secondary = false;
   bool isLoading = false;
 
   @override
@@ -27,8 +29,9 @@ class MyButton extends StatelessWidget {
         height: height ?? 50,
         width: width ?? myWidth(1),
         decoration: BoxDecoration(
+          border: Border.all(color: secondary == true ? borderColor : Colors.transparent),
             borderRadius: borderRadius ?? BorderRadius.circular(10),
-            color: mainThemeColor),
+            color: secondary == true ? whiteColor : mainThemeColor),
         child: Center(
           child: isLoading
               ? Padding(
@@ -41,7 +44,7 @@ class MyButton extends StatelessWidget {
               : Text(
                   label,
                   style: TextStyle(
-                      color: whiteColor,
+                      color: secondary == true ? mainThemeColor : whiteColor,
                       fontSize: 17,
                       fontWeight: FontWeight.bold),
                 ),
