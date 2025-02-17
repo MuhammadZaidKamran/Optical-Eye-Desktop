@@ -6,7 +6,11 @@ import 'package:optical_eye_desktop/Global/global.dart';
 // ignore: must_be_immutable
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   MyAppBar(
-      {super.key, this.secondary, required this.name, required this.email, this.onTapLogOut});
+      {super.key,
+      this.secondary,
+      required this.name,
+      required this.email,
+      this.onTapLogOut});
   final String name;
   final String email;
   final VoidCallback? onTapLogOut;
@@ -68,17 +72,17 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
         myWidth(0.003),
-        secondary == true
-            ? InkWell(
-                onTap: onTapLogOut,
-                child: Image.asset(
-                  "assets/logout.png",
-                  height: Get.height * 0.025,
-                  width: Get.width * 0.025,
-                ),
-              )
-            : const SizedBox(),
-        myWidth(0.007),
+        // secondary == true
+        //     ? InkWell(
+        //         onTap: onTapLogOut,
+        //         child: Image.asset(
+        //           "assets/logout.png",
+        //           height: Get.height * 0.025,
+        //           width: Get.width * 0.025,
+        //         ),
+        //       )
+        //     : const SizedBox(),
+        // myWidth(0.007),
       ],
       // title:
     );
