@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:optical_eye_desktop/Auth/login_view.dart';
+import 'package:optical_eye_desktop/Screens/home_screen.dart';
 import 'package:optical_eye_desktop/firebase_options.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Optical Eye Desktop',
-      home: LoginView(),
+      home: HomeScreen(),
     );
   }
 }

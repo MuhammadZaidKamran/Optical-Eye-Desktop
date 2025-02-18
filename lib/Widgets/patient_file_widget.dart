@@ -5,20 +5,12 @@ import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
 import 'package:optical_eye_desktop/Widgets/my_text_field.dart';
 
-class NewPatientDialog extends StatelessWidget {
-  NewPatientDialog({super.key});
-
-  //Column 01
+class PatientFileWidget extends StatelessWidget {
+  PatientFileWidget({super.key});
   final nameController = TextEditingController();
-  final genderController = TextEditingController();
+  final emailController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   final postCodeController = TextEditingController();
-
-  //Column 02
-  final emailController = TextEditingController();
-  final addressController = TextEditingController();
-  final phoneController = TextEditingController();
-  final countryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +26,13 @@ class NewPatientDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              width: Get.width * 0.62,
+              width: Get.width * 0.72,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "New Patient",
+                    "Patient File",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
@@ -67,11 +59,11 @@ class NewPatientDialog extends StatelessWidget {
                 ],
               ),
             ),
-            myHeight(0.005),
-            const Text(
-              "Patient Information",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-            ),
+            // myHeight(0.005),
+            // const Text(
+            //   "Patient Information",
+            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+            // ),
             myHeight(0.01),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -87,21 +79,9 @@ class NewPatientDialog extends StatelessWidget {
                     ),
                     myHeight(0.004),
                     MyTextField(
-                        width: Get.width * 0.3,
+                        width: Get.width * 0.35,
                         controller: nameController,
                         label: "Name"),
-                    myHeight(0.007),
-                    const Text(
-                      "Gender",
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    myHeight(0.004),
-                    MyTextField(
-                        width: Get.width * 0.3,
-                        controller: genderController,
-                        label: "Gender"),
                     myHeight(0.007),
                     const Text(
                       "DOB",
@@ -111,22 +91,9 @@ class NewPatientDialog extends StatelessWidget {
                     ),
                     myHeight(0.004),
                     MyTextField(
-                        width: Get.width * 0.3,
+                        width: Get.width * 0.35,
                         controller: dateOfBirthController,
                         label: "e.g: 10/10/2025"),
-                    myHeight(0.007),
-                    const Text(
-                      "Post Code",
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    myHeight(0.004),
-                    MyTextField(
-                        width: Get.width * 0.3,
-                        controller: postCodeController,
-                        label: "Post Code"),
-                    myHeight(0.007),
                   ],
                 ),
                 myWidth(0.02),
@@ -141,77 +108,52 @@ class NewPatientDialog extends StatelessWidget {
                     ),
                     myHeight(0.004),
                     MyTextField(
-                        width: Get.width * 0.3,
+                        width: Get.width * 0.35,
                         controller: emailController,
                         label: "Email"),
                     myHeight(0.007),
                     const Text(
-                      "Address",
+                      "Post Code",
                       style: TextStyle(
                         fontSize: 14,
                       ),
                     ),
                     myHeight(0.004),
                     MyTextField(
-                        width: Get.width * 0.3,
-                        controller: addressController,
-                        label: "Address"),
-                    myHeight(0.007),
-                    const Text(
-                      "Contact Number",
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    myHeight(0.004),
-                    MyTextField(
-                        width: Get.width * 0.3,
-                        controller: phoneController,
-                        label: "Contact Number"),
-                    myHeight(0.007),
-                    const Text(
-                      "Country",
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    myHeight(0.004),
-                    MyTextField(
-                        width: Get.width * 0.3,
-                        controller: countryController,
-                        label: "Country"),
-                    myHeight(0.007),
+                        width: Get.width * 0.35,
+                        controller: postCodeController,
+                        label: "Post Code"),
                   ],
                 ),
               ],
             ),
             myHeight(0.045),
             SizedBox(
-              width: Get.width * 0.62,
+              width: Get.width * 0.72,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Spacer(),
-                  MyButton(
-                    btnFontWeight: FontWeight.normal,
-                    borderRadius: BorderRadius.circular(5),
-                    secondary: true,
-                    height: Get.height * 0.06,
-                    width: Get.width * 0.145,
-                    onTap: () {
-                      Get.back();
-                    },
-                    label: "Cancel",
-                  ),
-                  myWidth(0.01),
+                  // const Spacer(),
+                  // MyButton(
+                  //   btnFontWeight: FontWeight.normal,
+                  //   borderRadius: BorderRadius.circular(5),
+                  //   secondary: true,
+                  //   height: Get.height * 0.06,
+                  //   width: Get.width * 0.145,
+                  //   onTap: () {
+                  //     Get.back();
+                  //   },
+                  //   label: "Cancel",
+                  // ),
+                  // myWidth(0.01),
                   MyButton(
                     btnFontWeight: FontWeight.normal,
                     borderRadius: BorderRadius.circular(5),
                     height: Get.height * 0.06,
                     width: Get.width * 0.145,
                     onTap: () {},
-                    label: "Add",
+                    label: "Apply",
                   ),
                 ],
               ),

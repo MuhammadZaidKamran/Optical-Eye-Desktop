@@ -71,7 +71,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        myWidth(0.003),
+        myWidth(0.03),
         // secondary == true
         //     ? InkWell(
         //         onTap: onTapLogOut,

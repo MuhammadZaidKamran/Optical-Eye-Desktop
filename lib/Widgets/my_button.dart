@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
-import 'package:optical_eye_desktop/Global/global.dart';
 
 // ignore: must_be_immutable
 class MyButton extends StatelessWidget {
@@ -12,7 +12,8 @@ class MyButton extends StatelessWidget {
       required this.label,
       this.isLoading = false,
       this.secondary = false,
-      this.borderRadius});
+      this.borderRadius,
+      this.btnFontWeight});
   final double? height;
   final double? width;
   final String label;
@@ -20,6 +21,7 @@ class MyButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   bool secondary = false;
   bool isLoading = false;
+  final FontWeight? btnFontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,10 @@ class MyButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height ?? 50,
-        width: width ?? myWidth(1),
+        width: width ?? Get.width,
         decoration: BoxDecoration(
-          border: Border.all(color: secondary == true ? borderColor : Colors.transparent),
+            border: Border.all(
+                color: secondary == true ? borderColor : Colors.transparent),
             borderRadius: borderRadius ?? BorderRadius.circular(10),
             color: secondary == true ? whiteColor : mainThemeColor),
         child: Center(
@@ -45,8 +48,8 @@ class MyButton extends StatelessWidget {
                   label,
                   style: TextStyle(
                       color: secondary == true ? mainThemeColor : whiteColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold),
+                      fontSize: 16,
+                      fontWeight: btnFontWeight ?? FontWeight.bold),
                 ),
         ),
       ),

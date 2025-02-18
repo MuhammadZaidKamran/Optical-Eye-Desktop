@@ -262,7 +262,6 @@ class SearchCustomerList extends StatelessWidget {
                 fullName,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -279,7 +278,6 @@ class SearchCustomerList extends StatelessWidget {
                 postCode,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -296,7 +294,6 @@ class SearchCustomerList extends StatelessWidget {
                 patientId,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -313,7 +310,6 @@ class SearchCustomerList extends StatelessWidget {
                 lastVisit,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
