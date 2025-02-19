@@ -74,17 +74,17 @@ class MyTextField extends StatelessWidget {
                 borderSide: BorderSide(
                   color: borderColor,
                 ),
-                borderRadius: borderRadius ?? BorderRadius.circular(10)),
+                borderRadius: borderRadius ?? BorderRadius.circular(5)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: borderColor,
                 ),
-                borderRadius: borderRadius ?? BorderRadius.circular(10)),
+                borderRadius: borderRadius ?? BorderRadius.circular(5)),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: borderColor,
                 ),
-                borderRadius: borderRadius ?? BorderRadius.circular(10))),
+                borderRadius: borderRadius ?? BorderRadius.circular(5))),
       ),
     );
   }

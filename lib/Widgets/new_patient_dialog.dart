@@ -25,7 +25,7 @@ class NewPatientDialog extends StatelessWidget {
     return Dialog(
       backgroundColor: whiteColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Container(
         padding: myPadding,

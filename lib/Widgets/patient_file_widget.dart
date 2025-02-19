@@ -17,7 +17,7 @@ class PatientFileWidget extends StatelessWidget {
     return Dialog(
       backgroundColor: whiteColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Container(
         padding: myPadding,
@@ -32,7 +32,7 @@ class PatientFileWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Patient File",
+                    "Filter",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
@@ -59,11 +59,11 @@ class PatientFileWidget extends StatelessWidget {
                 ],
               ),
             ),
-            // myHeight(0.005),
-            // const Text(
-            //   "Patient Information",
-            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-            // ),
+            myHeight(0.005),
+            const Text(
+              "Patient File",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+            ),
             myHeight(0.01),
             Row(
               mainAxisSize: MainAxisSize.min,

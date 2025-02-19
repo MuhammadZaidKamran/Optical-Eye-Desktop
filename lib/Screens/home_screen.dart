@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_widgets.dart';
+import 'package:optical_eye_desktop/Widgets/security_pin_dialog_widget.dart';
 import 'package:optical_eye_desktop/Widgets/side_bar_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isHover = false;
   // bool isHover_2 = false;
   int myIndex = 0;
+  final pinController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +117,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   SideBarCardWidget(
                     isHover: isHover,
                     onTap: () {
-                      myIndex = 0;
-                      setState(() {});
+                      if (myIndex != 1) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SecurityPinDialogWidget(
+                                pinController: pinController,
+                                onTap: () {
+                                  Get.close(1);
+                                  myIndex = 1;
+                                  setState(() {});
+                                },
+                              );
+                            });
+                      }
+                      return;
                     },
                     onHover: (value) {
                       isHover = value;
@@ -129,8 +144,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   SideBarCardWidget(
                     isHover: isHover,
                     onTap: () {
-                      myIndex = 1;
-                      setState(() {});
+                      if (myIndex != 2) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SecurityPinDialogWidget(
+                                pinController: pinController,
+                                onTap: () {
+                                  Get.close(1);
+                                  myIndex = 2;
+                                  setState(() {});
+                                },
+                              );
+                            });
+                      }
+                      return;
                     },
                     onHover: (value) {
                       isHover = value;
@@ -142,8 +170,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   SideBarCardWidget(
                     isHover: isHover,
                     onTap: () {
-                      myIndex = 2;
-                      setState(() {});
+                      if (myIndex != 3) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SecurityPinDialogWidget(
+                                pinController: pinController,
+                                onTap: () {
+                                  Get.close(1);
+                                  myIndex = 3;
+                                  setState(() {});
+                                },
+                              );
+                            });
+                      }
+                      return;
                     },
                     onHover: (value) {
                       isHover = value;
@@ -155,8 +196,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   SideBarCardWidget(
                     isHover: isHover,
                     onTap: () {
-                      myIndex = 3;
-                      setState(() {});
+                      if (myIndex != 4) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SecurityPinDialogWidget(
+                                pinController: pinController,
+                                onTap: () {
+                                  Get.close(1);
+                                  myIndex = 4;
+                                  setState(() {});
+                                },
+                              );
+                            });
+                      }
+                      return;
                     },
                     onHover: (value) {
                       isHover = value;
@@ -168,8 +222,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   SideBarCardWidget(
                     isHover: isHover,
                     onTap: () {
-                      myIndex = 4;
-                      setState(() {});
+                      if (myIndex != 5) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SecurityPinDialogWidget(
+                                pinController: pinController,
+                                onTap: () {
+                                  Get.close(1);
+                                  myIndex = 5;
+                                  setState(() {});
+                                },
+                              );
+                            });
+                      }
+                      return;
                     },
                     onHover: (value) {
                       isHover = value;
@@ -189,11 +256,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          if (myIndex == 0) const CustomerFilesWidgets(),
-          if (myIndex == 1) Container(),
+          if (myIndex == 1) const CustomerFilesWidgets(),
           if (myIndex == 2) Container(),
           if (myIndex == 3) Container(),
           if (myIndex == 4) Container(),
+          if (myIndex == 5) Container(),
         ],
       ),
     );

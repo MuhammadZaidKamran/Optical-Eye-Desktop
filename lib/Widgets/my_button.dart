@@ -33,7 +33,7 @@ class MyButton extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(
                 color: secondary == true ? borderColor : Colors.transparent),
-            borderRadius: borderRadius ?? BorderRadius.circular(10),
+            borderRadius: borderRadius ?? BorderRadius.circular(5),
             color: secondary == true ? whiteColor : mainThemeColor),
         child: Center(
           child: isLoading
@@ -49,7 +49,7 @@ class MyButton extends StatelessWidget {
                   style: TextStyle(
                       color: secondary == true ? mainThemeColor : whiteColor,
                       fontSize: 16,
-                      fontWeight: btnFontWeight ?? FontWeight.bold),
+                      fontWeight: btnFontWeight ?? FontWeight.normal),
                 ),
         ),
       ),
