@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
-import 'package:optical_eye_desktop/Screens/CustomerFiles/search_customer.dart';
+import 'package:optical_eye_desktop/Widgets/PatientFileTabs/dispense_tab.dart';
+import 'package:optical_eye_desktop/Widgets/PatientFileTabs/equipment_tab.dart';
+import 'package:optical_eye_desktop/Widgets/PatientFileTabs/patient_tabs.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
+import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
+import 'package:optical_eye_desktop/Widgets/new_patient_dialog.dart';
+import 'package:optical_eye_desktop/Widgets/patient_file_tab_widget.dart';
 import 'package:optical_eye_desktop/Widgets/patient_file_widget.dart';
-import 'package:optical_eye_desktop/Widgets/select_role_widget.dart';
 
 class CustomerFilesWidgets extends StatefulWidget {
   const CustomerFilesWidgets({super.key});
@@ -17,6 +21,7 @@ class CustomerFilesWidgets extends StatefulWidget {
 
 class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
   int myIndex = 0;
+  int tabIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -62,11 +67,10 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       height: Get.height * 0.06,
                       width: Get.width * 0.12,
                       onTap: () {
-                        // NewPatientDialog()
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return const SelectRoleWidget();
+                              return NewPatientDialog();
                             });
                       },
                       label: "Add New Patient"),
@@ -108,21 +112,18 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                             physics: const BouncingScrollPhysics(),
                             itemCount: 15,
                             separatorBuilder: (context, index) {
-                              return myHeight(0.03);
+                              return myHeight(0.02);
                             },
                             itemBuilder: (context, index) {
-                              return GestureDetector(
+                              return DispenseWidget(
+                                tabItem01: "Isa Khan",
+                                tabItem02: "SA-345",
+                                tabItem03: "#206",
+                                tabItem04: "14/02/2023",
                                 onTap: () {
                                   myIndex = 1;
-
                                   setState(() {});
                                 },
-                                child: const SearchCustomerList(
-                                  fullName: "Isa Khan",
-                                  postCode: "SA-345",
-                                  patientId: "#206",
-                                  lastVisit: "14/02/2023",
-                                ),
                               );
                             },
                           ),
@@ -142,9 +143,9 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                           myIndex = 0;
                           setState(() {});
                         },
-                        child: const Icon(Icons.arrow_back),
+                        child: const Icon(Icons.arrow_back_ios),
                       ),
-                      myWidth(0.02),
+                      myWidth(0.01),
                       Text(
                         "Patient File",
                         style: TextStyle(
@@ -154,18 +155,78 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       ),
                     ],
                   ),
-                  myHeight(0.07),
-                  const Row(
+                  myHeight(0.04),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Name : Isa Khan",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )
+                      PatientFileTabWidget(
+                        text: "Patient",
+                        containerColor:
+                            tabIndex == 0 ? mainThemeColor : whiteColor,
+                        textColor: tabIndex == 0 ? whiteColor : mainThemeColor,
+                        borderColor:
+                            tabIndex == 0 ? Colors.transparent : mainThemeColor,
+                        onTap: () {
+                          tabIndex = 0;
+                          setState(() {});
+                        },
+                      ),
+                      PatientFileTabWidget(
+                        text: "History",
+                        containerColor:
+                            tabIndex == 1 ? mainThemeColor : whiteColor,
+                        textColor: tabIndex == 1 ? whiteColor : mainThemeColor,
+                        borderColor:
+                            tabIndex == 1 ? Colors.transparent : mainThemeColor,
+                        onTap: () {
+                          tabIndex = 1;
+                          setState(() {});
+                        },
+                      ),
+                      PatientFileTabWidget(
+                        text: "Equipment",
+                        containerColor:
+                            tabIndex == 2 ? mainThemeColor : whiteColor,
+                        textColor: tabIndex == 2 ? whiteColor : mainThemeColor,
+                        borderColor:
+                            tabIndex == 2 ? Colors.transparent : mainThemeColor,
+                        onTap: () {
+                          tabIndex = 2;
+                          setState(() {});
+                        },
+                      ),
+                      PatientFileTabWidget(
+                        text: "Handover",
+                        containerColor:
+                            tabIndex == 3 ? mainThemeColor : whiteColor,
+                        textColor: tabIndex == 3 ? whiteColor : mainThemeColor,
+                        borderColor:
+                            tabIndex == 3 ? Colors.transparent : mainThemeColor,
+                        onTap: () {
+                          tabIndex = 3;
+                          setState(() {});
+                        },
+                      ),
+                      PatientFileTabWidget(
+                        text: "Dispensing",
+                        containerColor:
+                            tabIndex == 4 ? mainThemeColor : whiteColor,
+                        textColor: tabIndex == 4 ? whiteColor : mainThemeColor,
+                        borderColor:
+                            tabIndex == 4 ? Colors.transparent : mainThemeColor,
+                        onTap: () {
+                          tabIndex = 4;
+                          setState(() {});
+                        },
+                      ),
                     ],
                   ),
+                  myHeight(0.03),
+                  if (tabIndex == 0) const PatientTabs(),
+                  if (tabIndex == 1) Container(),
+                  if (tabIndex == 2) const EquipmentTab(),
+                  if (tabIndex == 3) Container(),
+                  if (tabIndex == 4) const DispenseTab(),
                 ],
               ),
       ),
