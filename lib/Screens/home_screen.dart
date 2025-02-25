@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_widgets.dart';
+import 'package:optical_eye_desktop/Widgets/hover_button.dart';
 import 'package:optical_eye_desktop/Widgets/security_pin_dialog_widget.dart';
 import 'package:optical_eye_desktop/Widgets/side_bar_card_widget.dart';
 
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isHover = false;
+  bool isBtnHover = false;
   // bool isHover_2 = false;
   int myIndex = 0;
   final pinController = TextEditingController();
@@ -257,7 +259,226 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           if (myIndex == 1) const CustomerFilesWidgets(),
-          if (myIndex == 2) Container(),
+          if (myIndex == 2)
+            Expanded(
+              child: Padding(
+                padding: myPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Stock Manager",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                        color: blackColor,
+                      ),
+                    ),
+                    myHeight(0.025),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Zonal Stock Takes",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: blackColor,
+                              ),
+                            ),
+                            myHeight(0.01),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: mainThemeColor),
+                              ),
+                              child: Column(
+                                children: [
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: Icons.search,
+                                      title: "Start a new zonal stock take",
+                                      onTap: () {}),
+                                  myHeight(0.02),
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: Icons.query_stats_sharp,
+                                      title: "Enter stock quantities",
+                                      onTap: () {}),
+                                  myHeight(0.02),
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: Icons.grid_view_outlined,
+                                      title: "Apply stock quantities",
+                                      onTap: () {}),
+                                  myHeight(0.02),
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: CupertinoIcons.clear,
+                                      title: "Cancel current stock take",
+                                      onTap: () {}),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Non-Zonal Stock Takes",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: blackColor,
+                              ),
+                            ),
+                            myHeight(0.01),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: mainThemeColor),
+                              ),
+                              child: Column(
+                                children: [
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: Icons.search,
+                                      title: "Start a new zonal stock take",
+                                      onTap: () {}),
+                                  myHeight(0.02),
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: CupertinoIcons.doc_append,
+                                      title: "Print out stock sheets",
+                                      onTap: () {}),
+                                  myHeight(0.02),
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: Icons.query_stats_sharp,
+                                      title: "Enter counted stock quantities",
+                                      onTap: () {}),
+                                  myHeight(0.02),
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: Icons.grid_view_outlined,
+                                      title: "Apply entered stock quantities",
+                                      onTap: () {}),
+                                  myHeight(0.02),
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: CupertinoIcons.clear,
+                                      title: "Cancel current stock take",
+                                      onTap: () {}),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Rolling Stock Take",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: blackColor,
+                              ),
+                            ),
+                            myHeight(0.01),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: mainThemeColor),
+                              ),
+                              child: Column(
+                                children: [
+                                  HoverButton(
+                                      width: Get.width * 0.24,
+                                      icon: Icons.receipt_long_outlined,
+                                      title: "Perform rolling stock take",
+                                      onTap: () {}),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    myHeight(0.015),
+                    const Text(
+                      "Stock Management",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    myHeight(0.015),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: mainThemeColor)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              HoverButton(
+                                  width: Get.width * 0.24,
+                                  icon: Icons.receipt_long_outlined,
+                                  title: "Deliveries",
+                                  onTap: () {}),
+                              myHeight(0.02),
+                              HoverButton(
+                                  width: Get.width * 0.24,
+                                  icon: Icons.search,
+                                  title: "Search",
+                                  onTap: () {}),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              HoverButton(
+                                  width: Get.width * 0.24,
+                                  icon: CupertinoIcons.doc_plaintext,
+                                  title: "Print Barcodes",
+                                  onTap: () {}),
+                              myHeight(0.02),
+                              HoverButton(
+                                  width: Get.width * 0.24,
+                                  icon: Icons.ballot,
+                                  title: "Stock Orders",
+                                  onTap: () {}),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              HoverButton(
+                                  width: Get.width * 0.24,
+                                  icon: Icons.adjust_sharp,
+                                  title: "Adjustments",
+                                  onTap: () {}),
+                              myHeight(0.02),
+                              HoverButton(
+                                  width: Get.width * 0.24,
+                                  icon: Icons.batch_prediction_sharp,
+                                  title: "Batch Adjustments",
+                                  onTap: () {}),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           if (myIndex == 3) Container(),
           if (myIndex == 4) Container(),
           if (myIndex == 5) Container(),
@@ -340,7 +561,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //                       ? const Color.fromARGB(73, 158, 158, 158)
 //                       : Colors.transparent,
 //                 ),
-//                 width: Get.width * 0.22,
+//                 width: Get.width * 0.244,
 //                 // height: Get.height * 0.12,
 //                 child: Column(
 //                   children: [
@@ -349,7 +570,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //                       child: Image.asset(
 //                         "assets/Support.png",
 //                         height: Get.height * 0.12,
-//                         width: Get.width * 0.22,
+//                         width: Get.width * 0.24,
 //                         fit: BoxFit.cover,
 //                       ),
 //                     ),

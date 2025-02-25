@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
@@ -20,6 +21,7 @@ class CustomerFilesWidgets extends StatefulWidget {
 }
 
 class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
+  final patientData = FirebaseFirestore.instance.collection("patients");
   int myIndex = 0;
   int tabIndex = 0;
   @override
@@ -97,7 +99,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                             CustomerFilesPatientDetailsWidget(
                                 containerText: "Patient ID"),
                             CustomerFilesPatientDetailsWidget(
-                              containerText: "Last Visit",
+                              containerText: "DOB",
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(5),
                               ),
@@ -108,25 +110,32 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                         SizedBox(
                           height: Get.height * 0.52,
                           width: Get.width,
-                          child: ListView.separated(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: 15,
-                            separatorBuilder: (context, index) {
-                              return myHeight(0.02);
-                            },
-                            itemBuilder: (context, index) {
-                              return DispenseWidget(
-                                tabItem01: "Isa Khan",
-                                tabItem02: "SA-345",
-                                tabItem03: "#206",
-                                tabItem04: "14/02/2023",
-                                onTap: () {
-                                  myIndex = 1;
-                                  setState(() {});
-                                },
-                              );
-                            },
-                          ),
+                          child: StreamBuilder(
+                              stream: patientData.snapshots(),
+                              builder: (context, snapshot) {
+                                return ListView.separated(
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: snapshot.data?.docs.length ?? 0,
+                                  separatorBuilder: (context, index) {
+                                    return myHeight(0.02);
+                                  },
+                                  itemBuilder: (context, index) {
+                                    final data = snapshot.data?.docs[index];
+                                    return DispenseWidget(
+                                      tabItem01: data?["name"].toString() ?? "",
+                                      tabItem02:
+                                          data?["postCode"].toString() ?? "",
+                                      tabItem03: data?.id.toString() ?? "",
+                                      tabItem04:
+                                          data?["dateOfBirth"].toString() ?? "",
+                                      onTap: () {
+                                        myIndex = 1;
+                                        setState(() {});
+                                      },
+                                    );
+                                  },
+                                );
+                              }),
                         ),
                       ],
                     ),
