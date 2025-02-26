@@ -152,7 +152,16 @@ class PatientFileWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     height: Get.height * 0.06,
                     width: Get.width * 0.145,
-                    onTap: () {},
+                    onTap: () {
+                      Get.back(
+                        result: {
+                          "name" : nameController.text.trim(),
+                          "email" : emailController.text.trim(),
+                          "dateOfBirth" : dateOfBirthController.text.trim(),
+                          "postCode" : postCodeController.text.trim(),
+                        },
+                      );
+                    },
                     label: "Apply",
                   ),
                 ],

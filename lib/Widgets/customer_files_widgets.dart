@@ -24,6 +24,68 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
   final patientData = FirebaseFirestore.instance.collection("patients");
   int myIndex = 0;
   int tabIndex = 0;
+  var displayItems = [];
+  String name = "";
+  String email = "";
+  String dateOfBirth = "";
+  String postCode = "";
+
+  int searchFunction() {
+    patientData.snapshots().listen((snapshot) {
+      if (name != "") {
+        displayItems = snapshot.docs
+            .where(
+              (e) => e["name"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(name.toLowerCase()),
+            )
+            .toList();
+        setState(() {});
+      } else if (email != "") {
+        displayItems = snapshot.docs
+            .where(
+              (e) => e["email"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(email.toLowerCase()),
+            )
+            .toList();
+        setState(() {});
+      } else if (dateOfBirth != "") {
+        displayItems = snapshot.docs
+            .where(
+              (e) => e["dateOfBirth"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(dateOfBirth.toLowerCase()),
+            )
+            .toList();
+        setState(() {});
+      } else if (postCode != "") {
+        displayItems = snapshot.docs
+            .where(
+              (e) => e["postCode"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(postCode.toLowerCase()),
+            )
+            .toList();
+        setState(() {});
+      } else {
+        displayItems = snapshot.docs.toList();
+        setState(() {});
+      }
+    });
+    return displayItems.length;
+  }
+
+  @override
+  void initState() {
+    searchFunction();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -44,12 +106,18 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       ),
                       const Spacer(),
                       InkWell(
-                        onTap: () {
-                          showDialog(
+                        onTap: () async {
+                          final data = await showDialog(
                               context: context,
                               builder: (context) {
                                 return PatientFileWidget();
                               });
+                          if (data != null) {
+                            name = data["name"].toString();
+                            email = data["email"].toString();
+                            dateOfBirth = data["dateOfBirth"].toString();
+                            postCode = data["postCode"].toString();
+                          }
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -115,12 +183,12 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                               builder: (context, snapshot) {
                                 return ListView.separated(
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: snapshot.data?.docs.length ?? 0,
+                                  itemCount: searchFunction(),
                                   separatorBuilder: (context, index) {
                                     return myHeight(0.02);
                                   },
                                   itemBuilder: (context, index) {
-                                    final data = snapshot.data?.docs[index];
+                                    final data = displayItems[index];
                                     return DispenseWidget(
                                       tabItem01: data?["name"].toString() ?? "",
                                       tabItem02:

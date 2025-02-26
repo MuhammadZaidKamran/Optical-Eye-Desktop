@@ -26,14 +26,14 @@ class CustomerFilesController extends GetxController {
       "contactNumber": contactNumber,
       "country": country,
     }).then((value) {
-      update();
       Get.close(2);
+      update();
       mySuccessSnackBar(
           context: Get.context!, message: "Patient Successfully Added!");
     }).catchError((error) {
-      update();
       Get.close(1);
-      myErrorSnackBar(context: Get.context!, message: "${error.toString()}");
+      update();
+      myErrorSnackBar(context: Get.context!, message: error.toString());
     });
   }
 }
