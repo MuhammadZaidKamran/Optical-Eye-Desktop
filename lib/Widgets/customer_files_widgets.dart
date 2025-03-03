@@ -21,6 +21,15 @@ class CustomerFilesWidgets extends StatefulWidget {
 }
 
 class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
+  String patientName = "";
+  String patientGender = "";
+  String patientDateOfBirth = "";
+  String patientEmail = "";
+  String patientAddress = "";
+  String patientContactNumber = "";
+  String patientPostCode = "";
+  String patientCountry = "";
+
   final patientData = FirebaseFirestore.instance.collection("patients");
   int myIndex = 0;
   int tabIndex = 0;
@@ -198,6 +207,24 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                                           data?["dateOfBirth"].toString() ?? "",
                                       onTap: () {
                                         myIndex = 1;
+                                        patientName =
+                                            data?["name"].toString() ?? "";
+                                        patientGender =
+                                            data?["gender"].toString() ?? "";
+                                        patientDateOfBirth =
+                                            data?["dateOfBirth"].toString() ??
+                                                "";
+                                        patientEmail =
+                                            data?["email"].toString() ?? "";
+                                        patientAddress =
+                                            data?["address"].toString() ?? "";
+                                        patientContactNumber =
+                                            data?["contactNumber"].toString() ??
+                                                "";
+                                        patientPostCode =
+                                            data?["postCode"].toString() ?? "";
+                                        patientCountry =
+                                            data?["country"].toString() ?? "";
                                         setState(() {});
                                       },
                                     );
@@ -299,7 +326,16 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                     ],
                   ),
                   myHeight(0.03),
-                  if (tabIndex == 0) const PatientTabs(),
+                  if (tabIndex == 0)  PatientTabs(
+                    name: patientName,
+                    gender: patientGender,
+                    dateOfBirth: patientDateOfBirth,
+                    email: patientEmail,
+                    address: patientAddress,
+                    contactNumber: patientContactNumber,
+                    postCode: patientPostCode,
+                    country: patientCountry,
+                  ),
                   if (tabIndex == 1) Container(),
                   if (tabIndex == 2) const EquipmentTab(),
                   if (tabIndex == 3) Container(),
