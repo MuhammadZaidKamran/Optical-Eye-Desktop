@@ -6,13 +6,18 @@ import 'package:optical_eye_desktop/Global/global.dart';
 class HoverButton extends StatefulWidget {
   HoverButton({
     super.key,
-    required this.title, required this.onTap, this.icon, this.width,
+    required this.title,
+    required this.onTap,
+    this.icon,
+    this.width,
+    this.isIconAdded = true,
   });
   bool isHover = false;
   final String title;
   final VoidCallback onTap;
   final IconData? icon;
   final double? width;
+  bool isIconAdded = true;
   @override
   State<HoverButton> createState() => _HoverButtonState();
 }
@@ -36,16 +41,21 @@ class _HoverButtonState extends State<HoverButton> {
               color: widget.isHover ? Colors.transparent : mainThemeColor),
         ),
         child: Row(
+          mainAxisAlignment: widget.isIconAdded
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(widget.icon ?? Icons.add,
-                color: widget.isHover ? whiteColor : mainThemeColor),
-            myWidth(0.01),
+            widget.isIconAdded
+                ? Icon(widget.icon ?? Icons.add,
+                    color: widget.isHover ? whiteColor : mainThemeColor)
+                : const SizedBox(),
+            widget.isIconAdded ? myWidth(0.01) : const SizedBox(),
             Text(widget.title,
                 style: TextStyle(
                   fontSize: 16,
                   color: widget.isHover ? whiteColor : mainThemeColor,
-                ))
+                )),
           ],
         ),
       ),

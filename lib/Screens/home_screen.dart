@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
+import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_widgets.dart';
+import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/hover_button.dart';
 import 'package:optical_eye_desktop/Widgets/security_pin_dialog_widget.dart';
 import 'package:optical_eye_desktop/Widgets/side_bar_card_widget.dart';
@@ -480,7 +482,105 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           if (myIndex == 3) Container(),
-          if (myIndex == 4) Container(),
+          if (myIndex == 4)
+            Expanded(
+              child: Padding(
+                padding: myPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Till",
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    myHeight(0.05),
+                    Container(
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: borderColor,
+                          )),
+                      child: Column(
+                        children: [
+                          const Row(
+                            children: [
+                              CustomerFilesPatientDetailsWidget(
+                                containerText: "Till",
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(5),
+                                ),
+                              ),
+                              CustomerFilesPatientDetailsWidget(
+                                  containerText: "Date"),
+                              CustomerFilesPatientDetailsWidget(
+                                  containerText: "ID"),
+                              CustomerFilesPatientDetailsWidget(
+                                  containerText: "User"),
+                              CustomerFilesPatientDetailsWidget(
+                                  containerText: "No.Sales"),
+                              CustomerFilesPatientDetailsWidget(
+                                  containerText: "Nett Sales"),
+                              CustomerFilesPatientDetailsWidget(
+                                containerText: "Logoff Date",
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(5),
+                                ),
+                              ),
+                            ],
+                          ),
+                          myHeight(0.01),
+                          SizedBox(
+                            height: Get.height * 0.52,
+                            width: Get.width,
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 2,
+                              separatorBuilder: (context, index) {
+                                return myHeight(0.02);
+                              },
+                              itemBuilder: (context, index) {
+                                return DispenseWidget(
+                                  tabItem01: "1",
+                                  tabItem02: "02/09/2021",
+                                  tabItem03: "9725",
+                                  tabItem04: "EMMAC",
+                                  tabItem05: "28",
+                                  tabItem06: "11063.44",
+                                  tabItem07: "-",
+                                  onTap: () {},
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    myHeight(0.03),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        HoverButton(
+                            width: Get.width * 0.12,
+                            isIconAdded: false,
+                            title: "View",
+                            onTap: () {}),
+                        myWidth(0.02),
+                        HoverButton(
+                            width: Get.width * 0.12,
+                            isIconAdded: false,
+                            title: "Complete",
+                            onTap: () {}),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
           if (myIndex == 5) Container(),
         ],
       ),
