@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,9 @@ import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widge
 import 'package:optical_eye_desktop/Widgets/customer_files_widgets.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/hover_button.dart';
+import 'package:optical_eye_desktop/Widgets/my_button.dart';
+import 'package:optical_eye_desktop/Widgets/my_drop_down.dart';
+import 'package:optical_eye_desktop/Widgets/my_text_field.dart';
 import 'package:optical_eye_desktop/Widgets/security_pin_dialog_widget.dart';
 import 'package:optical_eye_desktop/Widgets/side_bar_card_widget.dart';
 
@@ -18,11 +22,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final diaryNameController = TextEditingController();
+  final staffMemberNameController = TextEditingController();
+
   bool isHover = false;
   bool isBtnHover = false;
   // bool isHover_2 = false;
   int myIndex = 0;
   final pinController = TextEditingController();
+
+  final nameController = TextEditingController();
+  final staffController = TextEditingController();
+  final appointmentIntervalController = TextEditingController();
+  final startTimeController = TextEditingController();
+  final lastAppTimeController = TextEditingController();
+  String? selectDaysDropdown;
 
   @override
   Widget build(BuildContext context) {
@@ -481,7 +495,387 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          if (myIndex == 3) Container(),
+          if (myIndex == 3)
+            Expanded(
+              child: Padding(
+                padding: myPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Diary",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                            color: blackColor,
+                          ),
+                        ),
+                        HoverButton(
+                            title: "Add Diary",
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      backgroundColor: whiteColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Container(
+                                        padding: myPadding,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              width: Get.width * 0.72,
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "New Diary",
+                                                    style: TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: blackColor,
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () => Get.close(1),
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      decoration: BoxDecoration(
+                                                        color: mainThemeColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.close_rounded,
+                                                          color: whiteColor,
+                                                          size: 20,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            myHeight(0.005),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Diary Name",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    myHeight(0.004),
+                                                    MyTextField(
+                                                        width: Get.width * 0.35,
+                                                        controller:
+                                                            nameController,
+                                                        label: "Diary Name"),
+                                                  ],
+                                                ),
+                                                myWidth(0.02),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Staff Member",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    myHeight(0.004),
+                                                    MyTextField(
+                                                        width: Get.width * 0.35,
+                                                        controller:
+                                                            staffController,
+                                                        label: "Staff Member"),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            myHeight(0.015),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Appointment Interval",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    myHeight(0.004),
+                                                    MyTextField(
+                                                        width: Get.width * 0.35,
+                                                        controller:
+                                                            appointmentIntervalController,
+                                                        label: "e.g: 15 Mins"),
+                                                  ],
+                                                ),
+                                                myWidth(0.02),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Select Days",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    myHeight(0.004),
+                                                    SizedBox(
+                                                      width: Get.width * 0.35,
+                                                      child: MyDropDown(
+                                                        items: const [
+                                                          "Sunday",
+                                                          "Monday",
+                                                          "Tuesday",
+                                                          "Wednesday",
+                                                          "Thursday",
+                                                          "Friday",
+                                                          "Saturday"
+                                                        ],
+                                                        label: const Text("Days"),
+                                                        dropDownValue:
+                                                            selectDaysDropdown,
+                                                        onChanged: (value) {
+                                                          selectDaysDropdown =
+                                                              value;
+                                                          setState(() {});
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            myHeight(0.015),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Start Time",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    myHeight(0.004),
+                                                    MyTextField(
+                                                        width: Get.width * 0.35,
+                                                        controller:
+                                                            startTimeController,
+                                                        label: "Start Time"),
+                                                  ],
+                                                ),
+                                                myWidth(0.02),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      "Last Appointement Time",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    myHeight(0.004),
+                                                    MyTextField(
+                                                        width: Get.width * 0.35,
+                                                        controller:
+                                                            lastAppTimeController,
+                                                        label:
+                                                            "Last Appointement Time"),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            myHeight(0.045),
+                                            SizedBox(
+                                              width: Get.width * 0.72,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Spacer(),
+                                                  MyButton(
+                                                    btnFontWeight:
+                                                        FontWeight.normal,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    secondary: true,
+                                                    height: Get.height * 0.06,
+                                                    width: Get.width * 0.145,
+                                                    onTap: () {
+                                                      Get.back();
+                                                    },
+                                                    label: "Cancel",
+                                                  ),
+                                                  myWidth(0.01),
+                                                  MyButton(
+                                                    btnFontWeight:
+                                                        FontWeight.normal,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    height: Get.height * 0.06,
+                                                    width: Get.width * 0.145,
+                                                    onTap: () {
+                                                      Get.back();
+                                                    },
+                                                    label: "Add",
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            })
+                      ],
+                    ),
+                    myHeight(0.03),
+                    Container(
+                      padding: myPadding,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: borderColor),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Diary Name",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: blackColor,
+                                ),
+                              ),
+                              myHeight(0.01),
+                              MyTextField(
+                                width: Get.width * 0.35,
+                                controller: diaryNameController,
+                                label: "Diary Name",
+                                readOnly: true,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Staff Member",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: blackColor,
+                                ),
+                              ),
+                              myHeight(0.01),
+                              MyTextField(
+                                width: Get.width * 0.35,
+                                controller: staffMemberNameController,
+                                label: "Staff Member",
+                                readOnly: true,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    myHeight(0.03),
+                    Container(
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: borderColor,
+                          )),
+                      child: Column(
+                        children: [
+                          const Row(
+                            children: [
+                              CustomerFilesPatientDetailsWidget(
+                                containerText: "Start",
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(5),
+                                ),
+                              ),
+                              CustomerFilesPatientDetailsWidget(
+                                  containerText: "Duration"),
+                              CustomerFilesPatientDetailsWidget(
+                                  containerText: "End"),
+                              CustomerFilesPatientDetailsWidget(
+                                containerText: "Day",
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(5),
+                                ),
+                              ),
+                            ],
+                          ),
+                          myHeight(0.01),
+                          SizedBox(
+                            height: Get.height * 0.45,
+                            width: Get.width,
+                            child: ListView.separated(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 13,
+                              separatorBuilder: (context, index) {
+                                return myHeight(0.02);
+                              },
+                              itemBuilder: (context, index) {
+                                return DispenseWidget(
+                                  tabItem01: "11:30 AM",
+                                  tabItem02: "85",
+                                  tabItem03: "12:30 PM",
+                                  tabItem04: "Tuesday",
+                                  onTap: () {},
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           if (myIndex == 4)
             Expanded(
               child: Padding(

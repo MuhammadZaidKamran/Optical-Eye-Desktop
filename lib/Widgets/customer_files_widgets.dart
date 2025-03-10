@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,10 +91,26 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
     return displayItems.length;
   }
 
+  StreamSubscription? _subscription;
+
   @override
   void initState() {
-    searchFunction();
+    listenToStream();
     super.initState();
+  }
+
+  void listenToStream() {
+    _subscription = patientData.snapshots().listen((data) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -326,16 +344,17 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                     ],
                   ),
                   myHeight(0.03),
-                  if (tabIndex == 0)  PatientTabs(
-                    name: patientName,
-                    gender: patientGender,
-                    dateOfBirth: patientDateOfBirth,
-                    email: patientEmail,
-                    address: patientAddress,
-                    contactNumber: patientContactNumber,
-                    postCode: patientPostCode,
-                    country: patientCountry,
-                  ),
+                  if (tabIndex == 0)
+                    PatientTabs(
+                      name: patientName,
+                      gender: patientGender,
+                      dateOfBirth: patientDateOfBirth,
+                      email: patientEmail,
+                      address: patientAddress,
+                      contactNumber: patientContactNumber,
+                      postCode: patientPostCode,
+                      country: patientCountry,
+                    ),
                   if (tabIndex == 1) Container(),
                   if (tabIndex == 2) const EquipmentTab(),
                   if (tabIndex == 3) Container(),
