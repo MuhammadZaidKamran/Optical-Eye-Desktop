@@ -15,7 +15,7 @@ class UserModel {
       this.role,
       this.pinCode});
 
-  UserModel.fromSnapshot( snapshot) {
+  UserModel.fromSnapshot(snapshot) {
     Map value = snapshot.data() as Map;
     userID = snapshot.id;
     email = value['email'];

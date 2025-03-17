@@ -42,7 +42,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
   String postCode = "";
 
   int searchFunction() {
-    patientData.snapshots().listen((snapshot) {
+    patientData.snapshots().listen(cancelOnError: true, (snapshot) {
       if (name != "") {
         displayItems = snapshot.docs
             .where(
