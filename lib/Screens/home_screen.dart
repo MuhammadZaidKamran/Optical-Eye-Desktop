@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: () {
                                   Get.close(1);
                                   myIndex = 1;
-                                  setState(() {});
+                                  if (mounted) setState(() {});
                                 },
                               );
                             });
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: () {
                                   Get.close(1);
                                   myIndex = 2;
-                                  setState(() {});
+                                  if (mounted) setState(() {});
                                 },
                               );
                             });
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: () {
                                   Get.close(1);
                                   myIndex = 3;
-                                  setState(() {});
+                                  if (mounted) setState(() {});
                                 },
                               );
                             });

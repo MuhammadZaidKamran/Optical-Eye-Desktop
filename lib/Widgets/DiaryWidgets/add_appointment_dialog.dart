@@ -23,7 +23,7 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
   final durationController = TextEditingController();
   final typeController = TextEditingController();
   final lastAppTimeController = TextEditingController();
-  String? selectDaysDropdown;
+  final statusController = TextEditingController();
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -34,6 +34,12 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
 
   final _formKey = GlobalKey<FormState>();
   final addAppointmentController = Get.put(DiaryController());
+
+  @override
+  void initState() {
+    statusController.text = "Not Arrived";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,26 +173,11 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                             ),
                           ),
                           myHeight(0.004),
-                          SizedBox(
+                          MyTextField(
+                            readOnly: true,
                             width: Get.width * 0.35,
-                            child: MyDropDown(
-                              items: const [
-                                "Resident Contract (Other)",
-                                "Review (Other)",
-                                "Short Staffed (Other)",
-                                "Training (Other)",
-                                "Walk-ins (Other)",
-                                "Web CL Aftercare (Contact Lens)",
-                                "Web CL Assessment (Contact Lens)",
-                                "Web Exam (Spectacles)",
-                              ],
-                              label: const Text("Status"),
-                              dropDownValue: selectDaysDropdown,
-                              onChanged: (value) {
-                                selectDaysDropdown = value;
-                                setState(() {});
-                              },
-                            ),
+                            controller: statusController,
+                            label: "Status",
                           ),
                         ],
                       ),
@@ -415,15 +406,16 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                           height: Get.height * 0.06,
                           width: Get.width * 0.145,
                           onTap: () async {
-                            if (selectDaysDropdown == "" ||
-                                selectDaysDropdown == null) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const DiaryDropdownDialogWidget(
-                                        title: "Please Select Status");
-                                  });
-                            } else if (clinicNameDropdownValue == "" ||
+                            // if (selectStatusDropdown == "" ||
+                            //     selectStatusDropdown == null) {
+                            //   showDialog(
+                            //       context: context,
+                            //       builder: (context) {
+                            //         return const DiaryDropdownDialogWidget(
+                            //             title: "Please Select Status");
+                            //       });
+                            // } else
+                            if (clinicNameDropdownValue == "" ||
                                 clinicNameDropdownValue == null) {
                               showDialog(
                                   context: context,
@@ -436,7 +428,7 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                                 date: dateController.text.trim(),
                                 diary: diaryController.text.trim(),
                                 duration: durationController.text.trim(),
-                                status: selectDaysDropdown ?? "",
+                                status: statusController.text.trim(),
                                 type: typeController.text.trim(),
                                 lastAppointmentTime:
                                     lastAppTimeController.text.trim(),

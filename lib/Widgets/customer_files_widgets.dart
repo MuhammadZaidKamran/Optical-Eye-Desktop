@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   .contains(name.toLowerCase()),
             )
             .toList();
-        setState(() {});
+        if (mounted) setState(() {});
       } else if (email != "") {
         displayItems = snapshot.docs
             .where(
@@ -62,7 +61,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   .contains(email.toLowerCase()),
             )
             .toList();
-        setState(() {});
+        if (mounted) setState(() {});
       } else if (dateOfBirth != "") {
         displayItems = snapshot.docs
             .where(
@@ -72,7 +71,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   .contains(dateOfBirth.toLowerCase()),
             )
             .toList();
-        setState(() {});
+        if (mounted) setState(() {});
       } else if (postCode != "") {
         displayItems = snapshot.docs
             .where(
@@ -82,35 +81,19 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   .contains(postCode.toLowerCase()),
             )
             .toList();
-        setState(() {});
+        if (mounted) setState(() {});
       } else {
         displayItems = snapshot.docs.toList();
-        setState(() {});
+        if (mounted) setState(() {});
       }
     });
     return displayItems.length;
   }
 
-  StreamSubscription? _subscription;
-
   @override
   void initState() {
-    listenToStream();
+    searchFunction();
     super.initState();
-  }
-
-  void listenToStream() {
-    _subscription = patientData.snapshots().listen((data) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
   }
 
   @override

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:optical_eye_desktop/Global/colors.dart';
 
+// ignore: must_be_immutable
 class DispenseWidget extends StatelessWidget {
-  const DispenseWidget(
+  DispenseWidget(
       {super.key,
       required this.tabItem01,
       required this.tabItem02,
@@ -9,7 +12,9 @@ class DispenseWidget extends StatelessWidget {
       required this.tabItem04,
       this.tabItem05,
       this.tabItem06,
+      this.isStatus = false,
       required this.onTap,
+      this.containerColor,
       this.tabItem07});
   final String tabItem01;
   final String tabItem02;
@@ -18,6 +23,8 @@ class DispenseWidget extends StatelessWidget {
   final String? tabItem05;
   final String? tabItem06;
   final String? tabItem07;
+  bool? isStatus = false;
+  final Color? containerColor;
   final VoidCallback onTap;
 
   @override
@@ -58,22 +65,40 @@ class DispenseWidget extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
-              ),
-              child: Center(
-                child: Text(
-                  tabItem03,
-                  style: const TextStyle(
-                    fontSize: 18,
+          isStatus == true
+              ? Container(
+                  width: Get.width * 0.085,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: containerColor,
+                  ),
+                  padding: const EdgeInsets.symmetric(),
+                  child: Center(
+                    child: Text(
+                      tabItem03,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: blackColor),
+                    ),
+                  ),
+                )
+              : Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    child: Center(
+                      child: Text(
+                        tabItem03,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(

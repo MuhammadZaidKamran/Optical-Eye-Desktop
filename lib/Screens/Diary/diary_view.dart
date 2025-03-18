@@ -6,6 +6,7 @@ import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/DiaryWidgets/add_appointment_dialog.dart';
 import 'package:optical_eye_desktop/Widgets/DiaryWidgets/add_diary_dialog.dart';
 import 'package:optical_eye_desktop/Widgets/DiaryWidgets/search_filter_dialog.dart';
+import 'package:optical_eye_desktop/Widgets/DiaryWidgets/update_dialog.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/hover_button.dart';
@@ -39,7 +40,7 @@ class _DiaryViewState extends State<DiaryView> {
                 .toLowerCase()
                 .contains(appointmentDate.toLowerCase()))
             .toList();
-        setState(() {});
+        if (mounted) setState(() {});
       } else if (clinicName != "") {
         displayAppointments = snapshot.docs
             .where((e) => e["clinicName"]
@@ -47,10 +48,10 @@ class _DiaryViewState extends State<DiaryView> {
                 .toLowerCase()
                 .contains(clinicName.toLowerCase()))
             .toList();
-        setState(() {});
+        if (mounted) setState(() {});
       } else {
         displayAppointments = snapshot.docs.toList();
-        setState(() {});
+        if (mounted) setState(() {});
       }
     });
     return displayAppointments.length;
@@ -186,14 +187,31 @@ class _DiaryViewState extends State<DiaryView> {
                               return myHeight(0.02);
                             },
                             itemBuilder: (context, index) {
-                              final data = displayAppointments[index];
+                              DocumentSnapshot data =
+                                  displayAppointments[index];
                               return DispenseWidget(
-                                tabItem01: data?["name"].toString() ?? "",
-                                tabItem02: data?["type"].toString() ?? "",
-                                tabItem03: data?["status"].toString() ?? "",
-                                tabItem04: data?["clinicName"].toString() ?? "",
-                                tabItem05: data?["date"].toString() ?? "",
-                                onTap: () {},
+                                isStatus: true,
+                                containerColor: data["status"] == "Not Arrived"
+                                    ? Colors.amberAccent
+                                    : data["status"] == "Late"
+                                        ? redColor
+                                        : data["status"] == "Arrived"
+                                            ? greenColor
+                                            : null,
+                                tabItem01: data["name"].toString(),
+                                tabItem02: data["type"].toString(),
+                                tabItem03: data["status"].toString(),
+                                tabItem04: data["clinicName"].toString(),
+                                tabItem05: data["date"].toString(),
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return UpdateDialog(
+                                          id: data.id.toString(),
+                                        );
+                                      });
+                                },
                               );
                             },
                           );

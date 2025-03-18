@@ -38,6 +38,7 @@ class DiaryController extends GetxController {
   }) async {
     myLoadingDialog(Get.context!);
     await fireStore.collection("appointments").add({
+      "id" : fireStore.collection("appointments").doc().id,
       "date": date,
       "diary": diary,
       "duration": duration,
@@ -54,6 +55,22 @@ class DiaryController extends GetxController {
       update();
       mySuccessSnackBar(
           context: Get.context!, message: "Appointment Added Successfully");
+    }).catchError((error) {
+      Get.close(1);
+      update();
+      myErrorSnackBar(context: Get.context!, message: "$error");
+    });
+  }
+
+  Future updateStatus({required String status, required String id}) async {
+    myLoadingDialog(Get.context!);
+    await fireStore.collection("appointments").doc(id).update({
+      "status": status,
+    }).then((value) {
+      Get.close(2);
+      update();
+      mySuccessSnackBar(
+          context: Get.context!, message: "Status Updated Successfully!");
     }).catchError((error) {
       Get.close(1);
       update();
