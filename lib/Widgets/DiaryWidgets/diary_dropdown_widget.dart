@@ -5,8 +5,8 @@ import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/close_button_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
 
-class DiaryDropdownDialogWidget extends StatelessWidget {
-  const DiaryDropdownDialogWidget({super.key, required this.title});
+class DropdownDialogErrorWidget extends StatelessWidget {
+  const DropdownDialogErrorWidget({super.key, required this.title});
   final String title;
 
   @override

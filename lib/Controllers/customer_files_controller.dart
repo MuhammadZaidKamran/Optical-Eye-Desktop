@@ -36,4 +36,28 @@ class CustomerFilesController extends GetxController {
       myErrorSnackBar(context: Get.context!, message: error.toString());
     });
   }
+
+  Future addNewEquipment({
+    required String patientID,
+    required String imageLink,
+    required String lenseType,
+  }) async {
+    myLoadingDialog(Get.context!);
+    await fireStore.collection("patientEquipments").add({
+      "patientID": patientID,
+      "imageLink": imageLink,
+      "lenseType": lenseType,
+      "date":
+          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+    }).then((value) {
+      Get.close(2);
+      update();
+      mySuccessSnackBar(
+          context: Get.context!, message: "Equipment successfully added!");
+    }).catchError((error) {
+      Get.close(1);
+      update();
+      myErrorSnackBar(context: Get.context!, message: "$error");
+    });
+  }
 }

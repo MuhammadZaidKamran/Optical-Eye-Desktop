@@ -420,7 +420,7 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return const DiaryDropdownDialogWidget(
+                                    return const DropdownDialogErrorWidget(
                                         title: "Please Select Clinic");
                                   });
                             } else if (_formKey.currentState!.validate()) {

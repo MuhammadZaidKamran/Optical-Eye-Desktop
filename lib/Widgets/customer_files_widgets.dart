@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +21,7 @@ class CustomerFilesWidgets extends StatefulWidget {
 }
 
 class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
+  String patientId = "";
   String patientName = "";
   String patientGender = "";
   String patientDateOfBirth = "";
@@ -208,6 +208,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                                           data?["dateOfBirth"].toString() ?? "",
                                       onTap: () {
                                         myIndex = 1;
+                                        patientId = data?.id.toString() ?? "";
                                         patientName =
                                             data?["name"].toString() ?? "";
                                         patientGender =
@@ -339,7 +340,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       country: patientCountry,
                     ),
                   if (tabIndex == 1) Container(),
-                  if (tabIndex == 2) const EquipmentTab(),
+                  if (tabIndex == 2) EquipmentTab(patientID: patientId,),
                   if (tabIndex == 3) Container(),
                   if (tabIndex == 4) const DispenseTab(),
                 ],
