@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
+import 'package:optical_eye_desktop/Global/global.dart';
 
 // ignore: must_be_immutable
 class DispenseWidget extends StatelessWidget {
@@ -32,86 +33,125 @@ class DispenseWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: borderColor.withOpacity(0.5))),
+              ),
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 5,
+                vertical: 13,
               ),
-              child: Center(
-                child: Text(
-                  tabItem01,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
+              child: Text(
+                tabItem01,
+                style: const TextStyle(
+                  fontSize: 18,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
           Expanded(
             child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: borderColor.withOpacity(0.5))),
+              ),
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 5,
+                vertical: 13,
               ),
-              child: Center(
-                child: Text(
-                  tabItem02,
+              child: Text(tabItem02,
                   style: const TextStyle(
                     fontSize: 18,
                   ),
-                ),
-              ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis),
             ),
           ),
           isStatus == true
               ? Container(
-                  width: Get.width * 0.085,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: containerColor,
+                    border: Border(
+                        bottom:
+                            BorderSide(color: borderColor.withOpacity(0.5))),
                   ),
-                  padding: const EdgeInsets.symmetric(),
-                  child: Center(
-                    child: Text(
-                      tabItem03,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: blackColor),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 16,
+                  ),
+                  child: SizedBox(
+                    width: Get.width * 0.1,
+
+                    // padding: const EdgeInsets.symmetric(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 13,
+                          width: 13,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: containerColor,
+                          ),
+                        ),
+                        myWidth(0.006),
+                        Text(
+                          tabItem03,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis,
+                              color: blackColor),
+                        ),
+                      ],
                     ),
                   ),
                 )
               : Expanded(
                   child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(color: borderColor.withOpacity(0.5))),
+                    ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 5,
+                      vertical: 13,
                     ),
-                    child: Center(
-                      child: Text(
-                        tabItem03,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
+                    child: Text(
+                      tabItem03,
+                      style: const TextStyle(
+                        fontSize: 18,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
+          // myWidth(0.05),
           Expanded(
             child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: borderColor.withOpacity(0.5))),
+              ),
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
-                vertical: 5,
+                vertical: 13,
               ),
-              child: Center(
-                child: Text(
-                  tabItem04,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
+              child: Text(
+                tabItem04,
+                style: const TextStyle(
+                  fontSize: 18,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
@@ -119,19 +159,22 @@ class DispenseWidget extends StatelessWidget {
               ? const SizedBox()
               : Expanded(
                   child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(color: borderColor.withOpacity(0.5))),
+                    ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 5,
+                      vertical: 13,
                     ),
-                    child: Center(
-                      child: Text(
-                        tabItem05!,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    child: Text(
+                      tabItem05!,
+                      style: const TextStyle(
+                        fontSize: 18,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -139,17 +182,22 @@ class DispenseWidget extends StatelessWidget {
               ? const SizedBox()
               : Expanded(
                   child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(color: borderColor.withOpacity(0.5))),
+                    ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 5,
+                      vertical: 13,
                     ),
-                    child: Center(
-                      child: Text(
-                        tabItem06!,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
+                    child: Text(
+                      tabItem06!,
+                      style: const TextStyle(
+                        fontSize: 18,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -157,17 +205,22 @@ class DispenseWidget extends StatelessWidget {
               ? const SizedBox()
               : Expanded(
                   child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(color: borderColor.withOpacity(0.5))),
+                    ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 5,
+                      vertical: 13,
                     ),
-                    child: Center(
-                      child: Text(
-                        tabItem07!,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
+                    child: Text(
+                      tabItem07!,
+                      style: const TextStyle(
+                        fontSize: 18,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),

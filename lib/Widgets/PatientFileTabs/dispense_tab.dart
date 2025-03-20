@@ -29,9 +29,7 @@ class _DispenseTabState extends State<DispenseTab> {
             ),
             HoverButton(
               title: "New Dispense",
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
           ],
         ),
@@ -45,11 +43,11 @@ class _DispenseTabState extends State<DispenseTab> {
               )),
           child: Column(
             children: [
-              const Row(
+               Row(
                 children: [
                   CustomerFilesPatientDetailsWidget(
                     containerText: "Type",
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(5),
                     ),
                   ),
@@ -59,7 +57,7 @@ class _DispenseTabState extends State<DispenseTab> {
                   CustomerFilesPatientDetailsWidget(containerText: "Total"),
                   CustomerFilesPatientDetailsWidget(
                     containerText: "Status",
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(5),
                     ),
                   ),
@@ -69,12 +67,15 @@ class _DispenseTabState extends State<DispenseTab> {
               SizedBox(
                 height: Get.height * 0.46,
                 width: Get.width,
-                child: ListView.separated(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Get.width * 0.012,
+                  ),
                   physics: const BouncingScrollPhysics(),
                   itemCount: 15,
-                  separatorBuilder: (context, index) {
-                    return myHeight(0.01);
-                  },
+                  // separatorBuilder: (context, index) {
+                  //   return myHeight(0.01);
+                  // },
                   itemBuilder: (context, index) {
                     return DispenseWidget(
                       tabItem01: "type",

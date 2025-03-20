@@ -164,11 +164,11 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                         )),
                     child: Column(
                       children: [
-                        const Row(
+                         Row(
                           children: [
                             CustomerFilesPatientDetailsWidget(
                               containerText: "Full Name",
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(5),
                               ),
                             ),
@@ -178,7 +178,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                                 containerText: "Patient ID"),
                             CustomerFilesPatientDetailsWidget(
                               containerText: "DOB",
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(5),
                               ),
                             ),
@@ -191,12 +191,15 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                           child: StreamBuilder(
                               stream: patientData.snapshots(),
                               builder: (context, snapshot) {
-                                return ListView.separated(
+                                return ListView.builder(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: Get.width * 0.012,
+                                  ),
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: searchFunction(),
-                                  separatorBuilder: (context, index) {
-                                    return myHeight(0.02);
-                                  },
+                                  // separatorBuilder: (context, index) {
+                                  //   return myHeight(0.02);
+                                  // },
                                   itemBuilder: (context, index) {
                                     final data = displayItems[index];
                                     return DispenseWidget(
@@ -340,7 +343,10 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       country: patientCountry,
                     ),
                   if (tabIndex == 1) Container(),
-                  if (tabIndex == 2) EquipmentTab(patientID: patientId,),
+                  if (tabIndex == 2)
+                    EquipmentTab(
+                      patientID: patientId,
+                    ),
                   if (tabIndex == 3) Container(),
                   if (tabIndex == 4) const DispenseTab(),
                 ],

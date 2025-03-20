@@ -152,22 +152,29 @@ class _DiaryViewState extends State<DiaryView> {
                   )),
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     children: [
                       CustomerFilesPatientDetailsWidget(
+                        isSecondary: true,
                         containerText: "Name",
-                        borderRadius: BorderRadius.only(
+                        width: Get.width * 0.16,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(5),
                         ),
                       ),
-                      CustomerFilesPatientDetailsWidget(containerText: "Type"),
+                      CustomerFilesPatientDetailsWidget(
+                        containerText: "Type",
+                        isSecondary: true,
+                        width: Get.width * 0.16,
+                      ),
                       CustomerFilesPatientDetailsWidget(
                           containerText: "Status"),
                       CustomerFilesPatientDetailsWidget(
-                          containerText: "Clinic"),
+                          isSecondary: true, containerText: "Clinic"),
                       CustomerFilesPatientDetailsWidget(
+                        isSecondary: true,
                         containerText: "Date",
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(5),
                         ),
                       ),
@@ -180,23 +187,27 @@ class _DiaryViewState extends State<DiaryView> {
                     child: StreamBuilder(
                         stream: appointmentListFireStore.snapshots(),
                         builder: (context, snapshot) {
-                          return ListView.separated(
+                          return ListView.builder(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Get.width * 0.006,
+                            ),
                             physics: const BouncingScrollPhysics(),
                             itemCount: getAppointmentList(),
-                            separatorBuilder: (context, index) {
-                              return myHeight(0.02);
-                            },
+                            // separatorBuilder: (context, index) {
+                            //   return myHeight(0.02);
+                            // },
                             itemBuilder: (context, index) {
                               DocumentSnapshot data =
                                   displayAppointments[index];
                               return DispenseWidget(
                                 isStatus: true,
                                 containerColor: data["status"] == "Not Arrived"
-                                    ? Colors.amberAccent
+                                    ? const Color.fromARGB(255, 255, 232, 147)
                                     : data["status"] == "Late"
-                                        ? redColor
+                                        ? const Color.fromARGB(111, 255, 78, 66)
                                         : data["status"] == "Arrived"
-                                            ? greenColor
+                                            ? const Color.fromARGB(
+                                                255, 169, 255, 172)
                                             : null,
                                 tabItem01: data["name"].toString(),
                                 tabItem02: data["type"].toString(),

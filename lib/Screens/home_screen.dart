@@ -9,6 +9,7 @@ import 'package:optical_eye_desktop/Widgets/customer_files_widgets.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/hover_button.dart';
 import 'package:optical_eye_desktop/Widgets/security_pin_dialog_widget.dart';
+import 'package:optical_eye_desktop/Widgets/select_role_widget.dart';
 import 'package:optical_eye_desktop/Widgets/side_bar_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -511,11 +512,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           )),
                       child: Column(
                         children: [
-                          const Row(
+                           Row(
                             children: [
                               CustomerFilesPatientDetailsWidget(
                                 containerText: "Till",
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(5),
                                 ),
                               ),
@@ -531,7 +532,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   containerText: "Nett Sales"),
                               CustomerFilesPatientDetailsWidget(
                                 containerText: "Logoff Date",
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(5),
                                 ),
                               ),
@@ -585,7 +586,55 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          if (myIndex == 5) Container(),
+          if (myIndex == 5)
+            Expanded(
+                child: Padding(
+              padding: myPadding,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Support",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w500,
+                          color: blackColor,
+                        ),
+                      ),
+                      HoverButton(
+                          title: "Add Employee",
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const SelectRoleWidget();
+                                });
+                          })
+                    ],
+                  ),
+                  SizedBox(
+                    width: Get.width,
+                    height: Get.height * 0.7,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            "Under Construction",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: blackColor.withOpacity(0.4)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )),
         ],
       ),
     );

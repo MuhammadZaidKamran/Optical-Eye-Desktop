@@ -64,11 +64,11 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
                   )),
               child: Column(
                 children: [
-                  const Row(
+                   Row(
                     children: [
                       CustomerFilesPatientDetailsWidget(
                         containerText: "Grp",
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(5),
                         ),
                       ),
@@ -82,7 +82,7 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
                       CustomerFilesPatientDetailsWidget(containerText: "Qty"),
                       CustomerFilesPatientDetailsWidget(
                         containerText: "Price",
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(5),
                         ),
                       ),
@@ -92,12 +92,15 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
                   SizedBox(
                     height: Get.height * 0.55,
                     width: Get.width,
-                    child: ListView.separated(
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Get.width * 0.012,
+                      ),
                       physics: const BouncingScrollPhysics(),
                       itemCount: 15,
-                      separatorBuilder: (context, index) {
-                        return myHeight(0.02);
-                      },
+                      // separatorBuilder: (context, index) {
+                      //   return myHeight(0.02);
+                      // },
                       itemBuilder: (context, index) {
                         return DispenseWidget(
                           tabItem01: "SP",
