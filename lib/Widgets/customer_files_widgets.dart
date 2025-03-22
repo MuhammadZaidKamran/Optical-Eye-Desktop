@@ -5,6 +5,7 @@ import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/PatientFileTabs/dispense_tab.dart';
 import 'package:optical_eye_desktop/Widgets/PatientFileTabs/equipment_tab.dart';
+import 'package:optical_eye_desktop/Widgets/PatientFileTabs/hand_over_tab.dart';
 import 'package:optical_eye_desktop/Widgets/PatientFileTabs/patient_tabs.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
@@ -39,6 +40,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
   String email = "";
   String dateOfBirth = "";
   String postCode = "";
+
 
   int searchFunction() {
     patientData.snapshots().listen(cancelOnError: true, (snapshot) {
@@ -164,7 +166,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                         )),
                     child: Column(
                       children: [
-                         Row(
+                        Row(
                           children: [
                             CustomerFilesPatientDetailsWidget(
                               containerText: "Full Name",
@@ -333,6 +335,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   myHeight(0.03),
                   if (tabIndex == 0)
                     PatientTabs(
+                      id: patientId,
                       name: patientName,
                       gender: patientGender,
                       dateOfBirth: patientDateOfBirth,
@@ -347,7 +350,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                     EquipmentTab(
                       patientID: patientId,
                     ),
-                  if (tabIndex == 3) Container(),
+                  if (tabIndex == 3) const HandOverTab(),
                   if (tabIndex == 4) const DispenseTab(),
                 ],
               ),

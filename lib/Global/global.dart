@@ -23,7 +23,6 @@ enum ScreenSize {
   small(300),
   normal(400),
   medium(500),
-  // extraMedium(550),
   large(600),
   extraLarge(1000);
 

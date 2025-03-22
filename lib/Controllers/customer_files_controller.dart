@@ -60,4 +60,48 @@ class CustomerFilesController extends GetxController {
       myErrorSnackBar(context: Get.context!, message: "$error");
     });
   }
+
+  Future updatePatient({
+    required String id,
+    required String name,
+    required String email,
+    required String postCode,
+    required String gender,
+    required String address,
+    required String country,
+    required String dateOfBirth,
+    required String contactNumber,
+  }) async {
+    myLoadingDialog(Get.context!);
+    await fireStore.collection("patients").doc(id).set({
+      "name": name,
+      "email": email,
+      "postCode": postCode,
+      "gender": gender,
+      "address": address,
+      "country": country,
+      "dateOfBirth": dateOfBirth,
+      "contactNumber": contactNumber,
+    }).then((value) {
+      Get.close(1);
+      update();
+      mySuccessSnackBar(
+          context: Get.context!, message: "Patient Successfully Updated!");
+      Get.back(result: {
+        "name": name,
+        "email": email,
+        "postCode": postCode,
+        "gender": gender,
+        "address": address,
+        "country": country,
+        "dateOfBirth": dateOfBirth,
+        "contactNumber": contactNumber,
+      });
+      update();
+    }).catchError((error) {
+      Get.close(1);
+      update();
+      myErrorSnackBar(context: Get.context!, message: "$error");
+    });
+  }
 }
