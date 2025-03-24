@@ -6,6 +6,7 @@ import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widge
 import 'package:optical_eye_desktop/Widgets/dispense_item_dialog.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/hover_button.dart';
+import 'package:optical_eye_desktop/Widgets/new_dispense_dialog.dart';
 
 class DispenseTab extends StatefulWidget {
   const DispenseTab({super.key});
@@ -29,7 +30,13 @@ class _DispenseTabState extends State<DispenseTab> {
             ),
             HoverButton(
               title: "New Dispense",
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const NewDispenseDialog();
+                    });
+              },
             ),
           ],
         ),
@@ -43,7 +50,7 @@ class _DispenseTabState extends State<DispenseTab> {
               )),
           child: Column(
             children: [
-               Row(
+              Row(
                 children: [
                   CustomerFilesPatientDetailsWidget(
                     containerText: "Type",
