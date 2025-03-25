@@ -236,6 +236,14 @@ class _PatientTabsState extends State<PatientTabs> {
                       builder: (context) {
                         return UpdatePatientDialog(
                           id: widget.id,
+                          name: nameController.text.trim(),
+                          email: emailController.text.trim(),
+                          postCode: postCodeController.text.trim(),
+                          gender: genderController.text.trim(),
+                          address: addressController.text.trim(),
+                          country: countryController.text.trim(),
+                          dateOfBirth: dateOfBirthController.text.trim(),
+                          contactNumber: contactNumberController.text.trim(),
                         );
                       },
                     );

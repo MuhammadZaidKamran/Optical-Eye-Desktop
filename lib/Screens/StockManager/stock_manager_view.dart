@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
+import 'package:optical_eye_desktop/Screens/StockManager/lenses_stock.dart';
+import 'package:optical_eye_desktop/Screens/StockManager/spectacles_stock.dart';
 import 'package:optical_eye_desktop/Widgets/hover_button.dart';
-import 'package:optical_eye_desktop/Widgets/my_button.dart';
-import 'package:optical_eye_desktop/Widgets/my_text_field.dart';
 
 class StockManagerView extends StatefulWidget {
   const StockManagerView({super.key});
@@ -69,18 +69,21 @@ class _StockManagerViewState extends State<StockManagerView> {
                                     }),
                                 myHeight(0.02),
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: Icons.query_stats_sharp,
                                     title: "Enter stock quantities",
                                     onTap: () {}),
                                 myHeight(0.02),
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: Icons.grid_view_outlined,
                                     title: "Apply stock quantities",
                                     onTap: () {}),
                                 myHeight(0.02),
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: CupertinoIcons.clear,
                                     title: "Cancel current stock take",
@@ -110,30 +113,35 @@ class _StockManagerViewState extends State<StockManagerView> {
                             child: Column(
                               children: [
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: Icons.search,
                                     title: "Start a new zonal stock take",
                                     onTap: () {}),
                                 myHeight(0.02),
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: CupertinoIcons.doc_append,
                                     title: "Print out stock sheets",
                                     onTap: () {}),
                                 myHeight(0.02),
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: Icons.query_stats_sharp,
                                     title: "Enter counted stock quantities",
                                     onTap: () {}),
                                 myHeight(0.02),
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: Icons.grid_view_outlined,
                                     title: "Apply entered stock quantities",
                                     onTap: () {}),
                                 myHeight(0.02),
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: CupertinoIcons.clear,
                                     title: "Cancel current stock take",
@@ -163,6 +171,7 @@ class _StockManagerViewState extends State<StockManagerView> {
                             child: Column(
                               children: [
                                 HoverButton(
+                                    isAvailable: true,
                                     width: Get.width * 0.24,
                                     icon: Icons.receipt_long_outlined,
                                     title: "Perform rolling stock take",
@@ -194,12 +203,14 @@ class _StockManagerViewState extends State<StockManagerView> {
                         Column(
                           children: [
                             HoverButton(
+                                isAvailable: true,
                                 width: Get.width * 0.24,
                                 icon: Icons.receipt_long_outlined,
                                 title: "Deliveries",
                                 onTap: () {}),
                             myHeight(0.02),
                             HoverButton(
+                                isAvailable: true,
                                 width: Get.width * 0.24,
                                 icon: Icons.search,
                                 title: "Search",
@@ -209,12 +220,14 @@ class _StockManagerViewState extends State<StockManagerView> {
                         Column(
                           children: [
                             HoverButton(
+                                isAvailable: true,
                                 width: Get.width * 0.24,
                                 icon: CupertinoIcons.doc_plaintext,
                                 title: "Print Barcodes",
                                 onTap: () {}),
                             myHeight(0.02),
                             HoverButton(
+                                isAvailable: true,
                                 width: Get.width * 0.24,
                                 icon: Icons.ballot,
                                 title: "Stock Orders",
@@ -224,12 +237,14 @@ class _StockManagerViewState extends State<StockManagerView> {
                         Column(
                           children: [
                             HoverButton(
+                                isAvailable: true,
                                 width: Get.width * 0.24,
                                 icon: Icons.adjust_sharp,
                                 title: "Adjustments",
                                 onTap: () {}),
                             myHeight(0.02),
                             HoverButton(
+                                isAvailable: true,
                                 width: Get.width * 0.24,
                                 icon: Icons.batch_prediction_sharp,
                                 title: "Batch Adjustments",
@@ -278,46 +293,7 @@ class _StockManagerViewState extends State<StockManagerView> {
                             ),
                           ),
                           myHeight(0.01),
-                          Container(
-                            width: Get.width * 0.38,
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: borderColor),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Company Name",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: blackColor,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                myHeight(0.01),
-                                MyTextField(
-                                  controller: companyNameController,
-                                  label: "Company Name",
-                                ),
-                                myHeight(0.02),
-                                Text(
-                                  "Quantity",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: blackColor,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                myHeight(0.01),
-                                MyTextField(
-                                  controller: quantityController,
-                                  label: "Quantity",
-                                ),
-                                myHeight(0.02),
-                                MyButton(onTap: () {}, label: "Add Stock"),
-                              ],
-                            ),
-                          ),
+                          const SpectaclesStock(),
                         ],
                       ),
                       Column(
@@ -331,46 +307,7 @@ class _StockManagerViewState extends State<StockManagerView> {
                             ),
                           ),
                           myHeight(0.01),
-                          Container(
-                            width: Get.width * 0.38,
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: borderColor),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Company Name",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: blackColor,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                myHeight(0.01),
-                                MyTextField(
-                                  controller: companyNameController,
-                                  label: "Company Name",
-                                ),
-                                myHeight(0.02),
-                                Text(
-                                  "Quantity",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: blackColor,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                myHeight(0.01),
-                                MyTextField(
-                                  controller: quantityController,
-                                  label: "Quantity",
-                                ),
-                                myHeight(0.02),
-                                MyButton(onTap: () {}, label: "Add Stock"),
-                              ],
-                            ),
-                          ),
+                          const LensesStock(),
                         ],
                       ),
                     ],

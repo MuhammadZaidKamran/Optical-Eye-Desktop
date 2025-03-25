@@ -10,16 +10,14 @@ import 'package:optical_eye_desktop/Widgets/my_drop_down.dart';
 import 'package:optical_eye_desktop/Widgets/my_text_field.dart';
 import 'package:optical_eye_desktop/Widgets/warning_dialog.dart';
 
-class NewDispenseSpectaclesDialog extends StatefulWidget {
-  const NewDispenseSpectaclesDialog({super.key});
+class NewDispenseLenseDialog extends StatefulWidget {
+  const NewDispenseLenseDialog({super.key});
 
   @override
-  State<NewDispenseSpectaclesDialog> createState() =>
-      _NewDispenseSpectaclesDialogState();
+  State<NewDispenseLenseDialog> createState() => _NewDispenseLenseDialogState();
 }
 
-class _NewDispenseSpectaclesDialogState
-    extends State<NewDispenseSpectaclesDialog> {
+class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
   // Frames
   String? itemDropDownValue;
   final sizeController = TextEditingController();
@@ -42,7 +40,7 @@ class _NewDispenseSpectaclesDialogState
 
   displayItemDropDownFunc() async {
     fireStore
-        .collection("spectaclesStock")
+        .collection("lensesStock")
         .snapshots()
         .listen((snapshot) {
       items = snapshot.docs.map((e) => e["name"].toString()).toList();
@@ -55,7 +53,6 @@ class _NewDispenseSpectaclesDialogState
     displayItemDropDownFunc();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -398,7 +395,7 @@ class _NewDispenseSpectaclesDialogState
                                     });
                               } else if (_formKey.currentState!.validate()) {
                                 await controller.addDispense(
-                                  type: "Spectacles",
+                                  type: "Lense",
                                   item: itemDropDownValue ?? "",
                                   size: sizeController.text.trim(),
                                   price: priceController.text.trim(),

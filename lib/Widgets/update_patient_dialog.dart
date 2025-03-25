@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Controllers/customer_files_controller.dart';
@@ -8,8 +9,26 @@ import 'package:optical_eye_desktop/Widgets/my_button.dart';
 import 'package:optical_eye_desktop/Widgets/my_text_field.dart';
 
 class UpdatePatientDialog extends StatefulWidget {
-  const UpdatePatientDialog({super.key, required this.id});
+  const UpdatePatientDialog(
+      {super.key,
+      required this.id,
+      required this.name,
+      required this.email,
+      required this.postCode,
+      required this.gender,
+      required this.address,
+      required this.country,
+      required this.dateOfBirth,
+      required this.contactNumber});
   final String id;
+  final String name;
+  final String email;
+  final String postCode;
+  final String gender;
+  final String address;
+  final String country;
+  final String dateOfBirth;
+  final String contactNumber;
 
   @override
   State<UpdatePatientDialog> createState() => _UpdatePatientDialogState();
@@ -28,6 +47,20 @@ class _UpdatePatientDialogState extends State<UpdatePatientDialog> {
 
   final patientController = Get.put(CustomerFilesController());
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    nameController.text = widget.name;
+    emailController.text = widget.email;
+    postCodeController.text = widget.postCode;
+    genderController.text = widget.gender;
+    addressController.text = widget.address;
+    countryController.text = widget.country;
+    dateOfBirthController.text = widget.dateOfBirth;
+    phoneNumberController.text = widget.contactNumber;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CustomerFilesController>(builder: (controller) {
@@ -230,18 +263,46 @@ class _UpdatePatientDialogState extends State<UpdatePatientDialog> {
                           width: Get.width * 0.25,
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
-                              controller.updatePatient(
-                                id: widget.id,
-                                name: nameController.text.trim(),
-                                email: emailController.text.trim(),
-                                postCode: postCodeController.text.trim(),
-                                gender: genderController.text.trim(),
-                                address: addressController.text.trim(),
-                                country: countryController.text.trim(),
-                                dateOfBirth: dateOfBirthController.text.trim(),
-                                contactNumber:
+                              myLoadingDialog(Get.context!);
+                              await FirebaseFirestore.instance
+                                  .collection("patients")
+                                  .doc(widget.id)
+                                  .set({
+                                "name": nameController.text.trim(),
+                                "email": emailController.text.trim(),
+                                "postCode": postCodeController.text.trim(),
+                                "gender": genderController.text.trim(),
+                                "address": addressController.text.trim(),
+                                "country": countryController.text.trim(),
+                                "dateOfBirth":
+                                    dateOfBirthController.text.trim(),
+                                "contactNumber":
                                     phoneNumberController.text.trim(),
-                              );
+                              }).then((value) {
+                                Get.close(1);
+                                if(mounted) setState(() {});
+                                mySuccessSnackBar(
+                                    context: Get.context!,
+                                    message: "Patient Successfully Updated!");
+                                Get.back(result: {
+                                  "name": nameController.text.trim(),
+                                  "email": emailController.text.trim(),
+                                  "postCode": postCodeController.text.trim(),
+                                  "gender": genderController.text.trim(),
+                                  "address": addressController.text.trim(),
+                                  "country": countryController.text.trim(),
+                                  "dateOfBirth":
+                                      dateOfBirthController.text.trim(),
+                                  "contactNumber":
+                                      phoneNumberController.text.trim(),
+                                });
+                                if(mounted) setState(() {});
+                              }).catchError((error) {
+                                Get.close(1);
+                                if(mounted) setState(() {});
+                                myErrorSnackBar(
+                                    context: Get.context!, message: "$error");
+                              });
                             }
                           },
                           label: "Update"),

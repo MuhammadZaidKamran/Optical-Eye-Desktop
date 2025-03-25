@@ -10,6 +10,7 @@ class HoverButton extends StatefulWidget {
     required this.onTap,
     this.icon,
     this.width,
+    this.isAvailable = false,
     this.isIconAdded = true,
   });
   bool isHover = false;
@@ -18,6 +19,7 @@ class HoverButton extends StatefulWidget {
   final IconData? icon;
   final double? width;
   bool isIconAdded = true;
+  bool isAvailable = false;
   @override
   State<HoverButton> createState() => _HoverButtonState();
 }
@@ -35,10 +37,10 @@ class _HoverButtonState extends State<HoverButton> {
         width: widget.width,
         padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 18),
         decoration: BoxDecoration(
-          color: widget.isHover ? mainThemeColor : whiteColor,
+          color: widget.isHover ? widget.isAvailable ? borderColor : mainThemeColor : whiteColor,
           borderRadius: BorderRadius.circular(5),
           border: Border.all(
-              color: widget.isHover ? Colors.transparent : mainThemeColor),
+              color: widget.isHover ? Colors.transparent : widget.isAvailable ? borderColor : mainThemeColor),
         ),
         child: Row(
           mainAxisAlignment: widget.isIconAdded

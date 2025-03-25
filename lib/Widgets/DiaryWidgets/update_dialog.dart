@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Controllers/diary_controller.dart';
@@ -8,8 +9,12 @@ import 'package:optical_eye_desktop/Widgets/my_button.dart';
 import 'package:optical_eye_desktop/Widgets/my_drop_down.dart';
 
 class UpdateDialog extends StatefulWidget {
-  const UpdateDialog({super.key, required this.id});
+  const UpdateDialog({
+    super.key,
+    required this.id,
+  });
   final String id;
+  // final VoidCallback onTap;
 
   @override
   State<UpdateDialog> createState() => _UpdateDialogState();
@@ -87,13 +92,24 @@ class _UpdateDialogState extends State<UpdateDialog> {
                       height: Get.height * 0.06,
                       width: Get.width * 0.14,
                       onTap: () async {
-                        if (selectStatus == "Not Arrived") {
-                          Get.back();
-                          return;
-                        } else {
-                          await controller.updateStatus(
-                              status: selectStatus, id: widget.id);
-                        }
+                        myLoadingDialog(Get.context!);
+                        await FirebaseFirestore.instance
+                            .collection("appointments")
+                            .doc(widget.id)
+                            .update({
+                          "status": selectStatus,
+                        }).then((value) {
+                          if (mounted) setState(() {});
+                          Get.close(2);
+                          mySuccessSnackBar(
+                              context: Get.context!,
+                              message: "Status Updated Successfully!");
+                        }).catchError((error) {
+                          if (mounted) setState(() {});
+                          Get.close(1);
+                          myErrorSnackBar(
+                              context: Get.context!, message: "$error");
+                        });
                       },
                       label: "Update",
                     ),

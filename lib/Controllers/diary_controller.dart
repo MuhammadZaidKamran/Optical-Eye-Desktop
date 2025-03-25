@@ -62,19 +62,19 @@ class DiaryController extends GetxController {
     });
   }
 
-  Future updateStatus({required String status, required String id}) async {
-    myLoadingDialog(Get.context!);
-    await fireStore.collection("appointments").doc(id).update({
-      "status": status,
-    }).then((value) {
-      Get.close(2);
-      update();
-      mySuccessSnackBar(
-          context: Get.context!, message: "Status Updated Successfully!");
-    }).catchError((error) {
-      Get.close(1);
-      update();
-      myErrorSnackBar(context: Get.context!, message: "$error");
-    });
-  }
+  // Future updateStatus({required String status, required String id}) async {
+  //   myLoadingDialog(Get.context!);
+  //   await fireStore.collection("appointments").doc(id).update({
+  //     "status": status,
+  //   }).then((value) {
+  //     Get.close(2);
+  //     update();
+  //     mySuccessSnackBar(
+  //         context: Get.context!, message: "Status Updated Successfully!");
+  //   }).catchError((error) {
+  //     Get.close(1);
+  //     update();
+  //     myErrorSnackBar(context: Get.context!, message: "$error");
+  //   });
+  // }
 }

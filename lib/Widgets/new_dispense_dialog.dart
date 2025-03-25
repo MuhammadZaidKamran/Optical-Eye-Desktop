@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
@@ -6,6 +7,7 @@ import 'package:optical_eye_desktop/Widgets/close_button_widget.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
+import 'package:optical_eye_desktop/Widgets/new_dispense_lense_dialog.dart';
 import 'package:optical_eye_desktop/Widgets/new_dispense_spectacles_dialog.dart';
 
 class NewDispenseDialog extends StatefulWidget {
@@ -17,6 +19,27 @@ class NewDispenseDialog extends StatefulWidget {
 
 class _NewDispenseDialogState extends State<NewDispenseDialog> {
   final itemController = TextEditingController();
+  final fireStore = FirebaseFirestore.instance;
+  List dispenseItems = [];
+  var totalAmount = 0;
+
+  displayDispenseItems() {
+    fireStore.collection("dispense").snapshots().listen((snapshots) {
+      dispenseItems = snapshots.docs.toList();
+      for (var e in snapshots.docs) {
+        totalAmount += int.parse(e["price"].toString()) *
+            int.parse(e["quantity"].toString());
+      }
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    displayDispenseItems();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -79,26 +102,32 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                   SizedBox(
                     height: Get.height * 0.55,
                     width: Get.width,
-                    child: ListView.builder(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Get.width * 0.012,
-                      ),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: 15,
-                      // separatorBuilder: (context, index) {
-                      //   return myHeight(0.02);
-                      // },
-                      itemBuilder: (context, index) {
-                        return DispenseWidget(
-                          tabItem01: "Frame",
-                          tabItem02: "GRAND ADVANTAGE",
-                          tabItem03: "SV63",
-                          tabItem04: "3",
-                          tabItem06: "190.00",
-                          onTap: () {},
-                        );
-                      },
-                    ),
+                    child: StreamBuilder(
+                        stream: fireStore.collection("dispense").snapshots(),
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Get.width * 0.012,
+                            ),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: dispenseItems.length,
+                            itemBuilder: (context, index) {
+                              final data = dispenseItems[index];
+                              double total =
+                                  double.parse(data["quantity"].toString()) *
+                                      double.parse(data["price"].toString());
+                              // total = totalAmount;
+                              return DispenseWidget(
+                                tabItem01: data["type"],
+                                tabItem02: data["item"],
+                                tabItem03: data["itemCode"],
+                                tabItem04: data["quantity"],
+                                tabItem06: total.toString(),
+                                onTap: () {},
+                              );
+                            },
+                          );
+                        }),
                   ),
                 ],
               ),
@@ -124,7 +153,13 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                   MyButton(
                     height: Get.height * 0.07,
                     width: Get.width * 0.15,
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const NewDispenseLenseDialog();
+                          });
+                    },
                     label: "Lenses",
                   ),
                   const Spacer(),
@@ -145,10 +180,10 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                       ),
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        "Rs.360",
-                        style: TextStyle(
+                        "Rs.$totalAmount",
+                        style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
                         ),
