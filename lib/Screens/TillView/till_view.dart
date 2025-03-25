@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
@@ -16,6 +17,23 @@ class TillView extends StatefulWidget {
 }
 
 class _TillViewState extends State<TillView> {
+  final fireStore = FirebaseFirestore.instance;
+  List displayTillItems = [];
+
+  displayTill() async {
+    fireStore.collection("dispenseSummary").snapshots().listen((snapshots) {
+      displayTillItems = snapshots.docs.toList();
+      if (mounted) setState(() {});
+    });
+    return displayTillItems;
+  }
+
+  @override
+  void initState() {
+    displayTill();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -35,27 +53,6 @@ class _TillViewState extends State<TillView> {
                   ),
                 ),
                 const Spacer(),
-                MyButton(
-                  onTap: () {},
-                  label: "Cash",
-                  width: Get.width * 0.11,
-                  height: Get.height * 0.06,
-                ),
-                myWidth(0.01),
-                MyButton(
-                  onTap: () {},
-                  label: "Payout",
-                  width: Get.width * 0.11,
-                  height: Get.height * 0.06,
-                ),
-                myWidth(0.01),
-                MyButton(
-                  onTap: () {},
-                  label: "Payin",
-                  width: Get.width * 0.11,
-                  height: Get.height * 0.06,
-                ),
-                myWidth(0.01),
                 MyButton(
                   onTap: () {},
                   label: "Receipt",
@@ -105,33 +102,47 @@ class _TillViewState extends State<TillView> {
                       SizedBox(
                         height: Get.height * 0.52,
                         width: Get.width * 0.6,
-                        child: ListView.builder(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Get.width * 0.012,
-                          ),
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: 15,
-                          // separatorBuilder: (context, index) {
-                          //   return myHeight(0.01);
-                          // },
-                          itemBuilder: (context, index) {
-                            return DispenseWidget(
-                              tabItem01: "type",
-                              tabItem02: "reference",
-                              tabItem03: "date",
-                              tabItem04: "by",
-                              tabItem05: "total",
-                              tabItem06: "status",
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const DispenseItemDialog();
-                                    });
-                              },
-                            );
-                          },
-                        ),
+                        child: StreamBuilder(
+                            stream: fireStore
+                                .collection("dispenseSummary")
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              return ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: Get.width * 0.012,
+                                ),
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: displayTillItems.length,
+                                itemBuilder: (context, index) {
+                                  QueryDocumentSnapshot data =
+                                      displayTillItems[index];
+                                  return DispenseWidget(
+                                    tabItem01: data["type"],
+                                    tabItem02: data["id"],
+                                    tabItem03: data["date"],
+                                    tabItem04: data["by"],
+                                    tabItem05: data["total"],
+                                    tabItem06: data["status"],
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return DispenseItemDialog(
+                                              type: data["type"],
+                                              reference: data["id"],
+                                              date: data["date"],
+                                              by: data["by"],
+                                              total: data["total"],
+                                              status: data["status"],
+                                              dispenseItemDetails:
+                                                  data["dispenseItems"],
+                                            );
+                                          });
+                                    },
+                                  );
+                                },
+                              );
+                            }),
                       ),
                     ],
                   ),

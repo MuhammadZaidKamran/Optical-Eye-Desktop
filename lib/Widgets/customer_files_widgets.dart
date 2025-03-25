@@ -351,7 +351,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       patientID: patientId,
                     ),
                   if (tabIndex == 3) const HandOverTab(),
-                  if (tabIndex == 4) const DispenseTab(),
+                  if (tabIndex == 4)  DispenseTab(patientID: patientId,),
                 ],
               ),
       ),

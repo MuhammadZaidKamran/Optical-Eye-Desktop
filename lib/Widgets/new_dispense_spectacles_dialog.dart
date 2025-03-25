@@ -11,7 +11,8 @@ import 'package:optical_eye_desktop/Widgets/my_text_field.dart';
 import 'package:optical_eye_desktop/Widgets/warning_dialog.dart';
 
 class NewDispenseSpectaclesDialog extends StatefulWidget {
-  const NewDispenseSpectaclesDialog({super.key});
+  const NewDispenseSpectaclesDialog({super.key, required this.patientID});
+  final String patientID;
 
   @override
   State<NewDispenseSpectaclesDialog> createState() =>
@@ -41,10 +42,7 @@ class _NewDispenseSpectaclesDialogState
   List<String> items = [];
 
   displayItemDropDownFunc() async {
-    fireStore
-        .collection("spectaclesStock")
-        .snapshots()
-        .listen((snapshot) {
+    fireStore.collection("spectaclesStock").snapshots().listen((snapshot) {
       items = snapshot.docs.map((e) => e["name"].toString()).toList();
       setState(() {});
     });
@@ -398,6 +396,7 @@ class _NewDispenseSpectaclesDialogState
                                     });
                               } else if (_formKey.currentState!.validate()) {
                                 await controller.addDispense(
+                                  patientID: widget.patientID,
                                   type: "Spectacles",
                                   item: itemDropDownValue ?? "",
                                   size: sizeController.text.trim(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:optical_eye_desktop/Controllers/dispense_controller.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
@@ -7,13 +8,31 @@ import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
 
 class DispenseItemDialog extends StatefulWidget {
-  const DispenseItemDialog({super.key});
+  DispenseItemDialog(
+      {super.key,
+      required this.type,
+      required this.reference,
+      required this.date,
+      required this.by,
+      required this.total,
+      required this.dispenseItemDetails,
+      this.patientID,
+      required this.status});
+  final String type;
+  String? patientID;
+  final String reference;
+  final String date;
+  final String by;
+  final String total;
+  final String status;
+  final List dispenseItemDetails;
 
   @override
   State<DispenseItemDialog> createState() => _DispenseItemDialogState();
 }
 
 class _DispenseItemDialogState extends State<DispenseItemDialog> {
+  final dispenseController = Get.put(DispenseController());
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -21,112 +40,158 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
       backgroundColor: whiteColor,
       child: Padding(
         padding: myPadding,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Item Details",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                InkWell(
-                  onTap: () => Get.close(1),
-                  child: Container(
-                    padding: const EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      color: mainThemeColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.close_rounded,
-                        color: whiteColor,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            myHeight(0.02),
-            Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: borderColor,
-                  )),
-              child: Column(
+        child: GetBuilder<DispenseController>(builder: (controller) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Row(
-                    children: [
-                      CustomerFilesPatientDetailsWidget(
-                        containerText: "Grp",
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                        ),
-                      ),
-                      CustomerFilesPatientDetailsWidget(
-                          containerText: "Item Type"),
-                      CustomerFilesPatientDetailsWidget(containerText: "Name"),
-                      CustomerFilesPatientDetailsWidget(
-                          containerText: "Item Code"),
-                      CustomerFilesPatientDetailsWidget(
-                          containerText: "Description"),
-                      CustomerFilesPatientDetailsWidget(containerText: "Qty"),
-                      CustomerFilesPatientDetailsWidget(
-                        containerText: "Price",
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(5),
-                        ),
-                      ),
-                    ],
+                  const Text(
+                    "Item Details",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                  myHeight(0.01),
-                  SizedBox(
-                    height: Get.height * 0.55,
-                    width: Get.width,
-                    child: ListView.builder(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Get.width * 0.012,
+                  InkWell(
+                    onTap: () => Get.close(1),
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: mainThemeColor,
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: 15,
-                      // separatorBuilder: (context, index) {
-                      //   return myHeight(0.02);
-                      // },
-                      itemBuilder: (context, index) {
-                        return DispenseWidget(
-                          tabItem01: "SP",
-                          tabItem02: "Frame",
-                          tabItem03: "GRAND ADVANTAGE",
-                          tabItem04: "SV63",
-                          tabItem05: "Black Black, 55x18, 145",
-                          tabItem06: "3",
-                          tabItem07: "190.00",
-                          onTap: () {},
-                        );
-                      },
+                      child: Center(
+                        child: Icon(
+                          Icons.close_rounded,
+                          color: whiteColor,
+                          size: 20,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-            myHeight(0.02),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                MyButton(width: Get.width * 0.2, onTap: () {}, label: "Refund"),
-              ],
-            ),
-          ],
-        ),
+              myHeight(0.02),
+              Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: borderColor,
+                    )),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        CustomerFilesPatientDetailsWidget(
+                          containerText: "Item Type",
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                          ),
+                        ),
+                        CustomerFilesPatientDetailsWidget(
+                            containerText: "Name"),
+                        CustomerFilesPatientDetailsWidget(
+                            containerText: "Item Code"),
+                        CustomerFilesPatientDetailsWidget(containerText: "Qty"),
+                        CustomerFilesPatientDetailsWidget(
+                          containerText: "Price",
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(5),
+                          ),
+                        ),
+                      ],
+                    ),
+                    myHeight(0.01),
+                    SizedBox(
+                      height: Get.height * 0.55,
+                      width: Get.width,
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Get.width * 0.012,
+                        ),
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: widget.dispenseItemDetails.length,
+                        itemBuilder: (context, index) {
+                          final data = widget.dispenseItemDetails[index];
+                          return DispenseWidget(
+                            tabItem01: data["type"],
+                            tabItem02: data["item"],
+                            tabItem03: data["itemCode"],
+                            tabItem04: data["quantity"],
+                            tabItem05: data["price"],
+                            onTap: () {},
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              myHeight(0.02),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  MyButton(
+                    onTap: () {},
+                    label: "Cash",
+                    width: Get.width * 0.11,
+                    height: Get.height * 0.06,
+                  ),
+                  myWidth(0.01),
+                  MyButton(
+                    onTap: () {},
+                    label: "Payout",
+                    width: Get.width * 0.11,
+                    height: Get.height * 0.06,
+                  ),
+                  myWidth(0.01),
+                  MyButton(
+                    onTap: () {},
+                    label: "Payin",
+                    width: Get.width * 0.11,
+                    height: Get.height * 0.06,
+                  ),
+                  myWidth(0.01),
+                  widget.status == "Refund"
+                      ? Container(
+                          width: Get.width * 0.11,
+                          height: Get.height * 0.06,
+                          decoration: BoxDecoration(
+                            color: borderColor,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Refunded",
+                              style:
+                                  TextStyle(color: blackColor.withOpacity(0.6)),
+                            ),
+                          ),
+                        )
+                      : MyButton(
+                          width: Get.width * 0.11,
+                          height: Get.height * 0.06,
+                          onTap: () async {
+                            await controller.refundDispenseItems(
+                              patientID: widget.patientID ?? "Not available",
+                              type: widget.type,
+                              date: widget.date,
+                              by: widget.by,
+                              total: "-${widget.total}",
+                              status: "Refund",
+                              dispenseItems: widget.dispenseItemDetails,
+                            );
+                          },
+                          label: "Refund"),
+                ],
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

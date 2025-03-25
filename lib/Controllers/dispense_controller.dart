@@ -8,6 +8,7 @@ class DispenseController extends GetxController {
   final fireStore = FirebaseFirestore.instance;
 
   Future addDispense({
+    required String patientID,
     required String type,
     required String item,
     required String size,
@@ -23,6 +24,7 @@ class DispenseController extends GetxController {
   }) async {
     myLoadingDialog(Get.context!);
     await fireStore.collection("dispense").add({
+      "patientID": patientID,
       "type": type,
       "item": item,
       "size": size,
@@ -42,9 +44,75 @@ class DispenseController extends GetxController {
       showDialog(
           context: Get.context!,
           builder: (context) {
-            return const NewDispenseDialog();
+            return NewDispenseDialog(
+              patientID: patientID,
+            );
           });
       update();
+    }).catchError((error) {
+      Get.back();
+      update();
+      myErrorSnackBar(context: Get.context!, message: "$error");
+    });
+  }
+
+  Future sendToTill({
+    required String patientID,
+    required String type,
+    required String date,
+    required String by,
+    required String total,
+    required String status,
+    required List dispenseItems,
+  }) async {
+    myLoadingDialog(Get.context!);
+    await fireStore.collection("dispenseSummary").add({
+      "patientID": patientID,
+      "id" : fireStore.collection("dispenseSummary").doc().id,
+      "type": type,
+      "date": date,
+      "by": by,
+      "total": total,
+      "status": status,
+      "dispenseItems": dispenseItems,
+    }).then((value) {
+      Get.close(2);
+      update();
+      mySuccessSnackBar(
+          context: Get.context!,
+          message: "Added Dispense Summary / Till Successfully!");
+    }).catchError((error) {
+      Get.back();
+      update();
+      myErrorSnackBar(context: Get.context!, message: "$error");
+    });
+  }
+
+  Future refundDispenseItems({
+    required String patientID,
+    required String type,
+    required String date,
+    required String by,
+    required String total,
+    required String status,
+    required List dispenseItems,
+  }) async{
+    myLoadingDialog(Get.context!);
+    await fireStore.collection("dispenseSummary").add({
+      "patientID": patientID,
+      "id" : fireStore.collection("dispenseSummary").doc().id,
+      "type": type,
+      "date": date,
+      "by": by,
+      "total": total,
+      "status": status,
+      "dispenseItems": dispenseItems,
+    }).then((value) {
+      Get.close(2);
+      update();
+      mySuccessSnackBar(
+          context: Get.context!,
+          message: "Added Dispense Summary / Till Successfully!");
     }).catchError((error) {
       Get.back();
       update();
