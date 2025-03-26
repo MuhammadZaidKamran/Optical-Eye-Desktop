@@ -44,7 +44,7 @@ class _NewDispenseSpectaclesDialogState
   displayItemDropDownFunc() async {
     fireStore.collection("spectaclesStock").snapshots().listen((snapshot) {
       items = snapshot.docs.map((e) => e["name"].toString()).toList();
-      setState(() {});
+      if (mounted) setState(() {});
     });
   }
 
@@ -395,7 +395,8 @@ class _NewDispenseSpectaclesDialogState
                                           title: "Please Select Item");
                                     });
                               } else if (_formKey.currentState!.validate()) {
-                                await controller.addDispense(
+                                await controller
+                                    .addDispense(
                                   patientID: widget.patientID,
                                   type: "Spectacles",
                                   item: itemDropDownValue ?? "",
@@ -409,7 +410,28 @@ class _NewDispenseSpectaclesDialogState
                                   distPD_2: distPDController_2.text.trim(),
                                   nearPD_2: nearPDController_2.text.trim(),
                                   interPD_2: interPDController_2.text.trim(),
-                                );
+                                )
+                                    .then((value) async {
+                                  String data = "";
+                                  QuerySnapshot snapshot =
+                                      await FirebaseFirestore.instance
+                                          .collection("spectaclesStock")
+                                          .get();
+                                  for (var e in snapshot.docs) {
+                                    if (e["name"] == itemDropDownValue) {
+                                      data = e["quantity"].toString();
+                                    }
+                                    var quantity = int.parse(data) -
+                                        int.parse(
+                                            quantityController.text.trim());
+                                    await FirebaseFirestore.instance
+                                        .collection("spectaclesStock")
+                                        .doc(e.id)
+                                        .update({
+                                      "quantity": quantity,
+                                    });
+                                  }
+                                });
                               }
                             },
                             label: "Ok")

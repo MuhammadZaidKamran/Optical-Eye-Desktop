@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Controllers/diary_controller.dart';
@@ -34,11 +35,34 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
 
   final _formKey = GlobalKey<FormState>();
   final addAppointmentController = Get.put(DiaryController());
+  final fireStore = FirebaseFirestore.instance;
+  List displayItems = [];
+
+  getSuggestion(String input) async {
+    QuerySnapshot querySnapshot =
+        await fireStore.collection("appointments").get();
+
+    List<Map<String, dynamic>> items = querySnapshot.docs.map((doc) {
+      return doc.data() as Map<String, dynamic>;
+    }).toList();
+
+    displayItems = items
+        .where((e) =>
+            e["name"].toString().toLowerCase().contains(input.toLowerCase()))
+        .map((e) => e["name"].toString()) // Extract actual name
+        .toList();
+
+    if (mounted) setState(() {});
+  }
 
   @override
   void initState() {
+    // getSuggestion();
     statusController.text = "Not Arrived";
     super.initState();
+    nameController.addListener(() {
+      getSuggestion(nameController.text);
+    });
   }
 
   @override
@@ -297,6 +321,58 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                               return null;
                             },
                           ),
+                          displayItems.isEmpty ? const SizedBox() : myHeight(0.01),
+                          displayItems.isEmpty
+                              ? const SizedBox()
+                              : SizedBox(
+                                  height: Get.height * 0.1,
+                                  width: Get.width * 0.35,
+                                  child: ListView.builder(
+                                      itemCount: displayItems.length,
+                                      itemBuilder: (context, index) {
+                                        final item = displayItems[index];
+                                        return ListTile(
+                                          onTap: () async {
+                                            QuerySnapshot snapshot =
+                                                await fireStore
+                                                    .collection("appointments")
+                                                    .get();
+                                            for (QueryDocumentSnapshot doc
+                                                in snapshot.docs) {
+                                              if (doc["name"] == item) {
+                                                nameController.text =
+                                                    doc["name"];
+                                                emailController.text =
+                                                    doc["email"];
+                                                postCodeController.text =
+                                                    doc["postCode"];
+                                                dateOfBirthController.text =
+                                                    doc["dateOfBirth"];
+                                              }
+                                            }
+                                            // fireStore
+                                            //     .collection("appointments")
+                                            //     .snapshots()
+                                            //     .listen((snapshots) {
+                                            //   snapshots.docs
+                                            //       .where(
+                                            //           (e) => e["name"] == item)
+                                            //       .map((e) {
+                                            //     nameController.text = e["name"];
+                                            //     emailController.text =
+                                            //         e["email"];
+                                            //     postCodeController.text =
+                                            //         e["postCode"];
+                                            //     dateOfBirthController.text =
+                                            //         e["dateOfBirth"];
+                                            //   });
+                                            //   setState(() {});
+                                            // });
+                                          },
+                                          title: Text("$item"),
+                                        );
+                                      }),
+                                )
                         ],
                       ),
                       myWidth(0.02),
