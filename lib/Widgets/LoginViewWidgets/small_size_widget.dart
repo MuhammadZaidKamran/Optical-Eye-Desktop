@@ -144,36 +144,36 @@ class _SmallSizeWidgetState extends State<SmallSizeWidget> {
                     onTap: widget.onTapLogin,
                     label: "Login",
                   ),
-                  myHeight(0.05),
-                  Expanded(
-                    child: SizedBox(
-                      // width: Get.width * 1,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Don't have an Account?",
-                            style: TextStyle(
-                              fontSize: 11,
-                            ),
-                          ),
-                          myWidth(0.003),
-                          InkWell(
-                            onTap: widget.onTapSignUp,
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: mainThemeColor,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  // myHeight(0.05),
+                  // Expanded(
+                  //   child: SizedBox(
+                  //     // width: Get.width * 1,
+                  //     child: Row(
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         const Text(
+                  //           "Don't have an Account?",
+                  //           style: TextStyle(
+                  //             fontSize: 11,
+                  //           ),
+                  //         ),
+                  //         myWidth(0.003),
+                  //         InkWell(
+                  //           onTap: widget.onTapSignUp,
+                  //           child: Text(
+                  //             "Sign Up",
+                  //             style: TextStyle(
+                  //               fontSize: 12,
+                  //               fontWeight: FontWeight.w500,
+                  //               color: mainThemeColor,
+                  //             ),
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

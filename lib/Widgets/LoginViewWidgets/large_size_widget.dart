@@ -140,27 +140,27 @@ class _LargeSizeWidgetState extends State<LargeSizeWidget> {
                   onTap: widget.onTapLogin,
                   label: "Login",
                 ),
-                myHeight(0.1),
-                SizedBox(
-                  width: Get.width * 0.45,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Don't have an Account?"),
-                      myWidth(0.003),
-                      InkWell(
-                        onTap: widget.onTapSignUp,
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: mainThemeColor,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                // myHeight(0.1),
+                // SizedBox(
+                //   width: Get.width * 0.45,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       const Text("Don't have an Account?"),
+                //       myWidth(0.003),
+                //       InkWell(
+                //         onTap: widget.onTapSignUp,
+                //         child: Text(
+                //           "Sign Up",
+                //           style: TextStyle(
+                //             fontWeight: FontWeight.w500,
+                //             color: mainThemeColor,
+                //           ),
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

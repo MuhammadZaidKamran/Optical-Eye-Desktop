@@ -11,11 +11,21 @@ class AuthController extends GetxController {
   final dateTime = DateTime.now().millisecondsSinceEpoch.toStringAsFixed(5);
 
   Future signUp({
+    required String role,
     required String email,
-    required String firstName,
-    required String lastName,
+    required String employeeName,
+    required String displayName,
+    required String initials,
+    required String pinNumber,
+    required String insuranceCode,
+    required String logonName,
     required String password,
+    required String country,
+    required String phoneNumber,
+    required String postCode,
+    required String address,
   }) async {
+    myLoadingDialog(Get.context!);
     try {
       await fAuth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -23,29 +33,27 @@ class AuthController extends GetxController {
         await fireStore.collection("users").doc(value.user!.uid).set({
           "userID": FirebaseAuth.instance.currentUser!.uid,
           "email": email,
-          "firstName": firstName,
-          "lastName": lastName,
-          "role": "Admin",
-          "pinCode": dateTime,
+          "employeeName": employeeName,
+          "displayName": displayName,
+          "initials": initials,
+          "pinNumber": pinNumber,
+          "insuranceCode": insuranceCode,
+          "logonName": logonName,
+          "password": password,
+          "country": country,
+          "phoneNumber": phoneNumber,
+          "postCode": postCode,
+          "address": address,
+          "role": role,
         }).then((value) {
-          fireStore
-              .collection("users")
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .snapshots()
-              .listen((value) {
-            if (value.data() != null) {
-              userModel = UserModel.fromJson(value.data()!);
-            }
-          });
-          myLoadingDialog(Get.context!);
-          Future.delayed(const Duration(seconds: 2), () {}).then((value) {
-            mySuccessSnackBar(
-                context: Get.context!, message: "Logged in successfully!");
-            Get.off(() => const HomeScreen());
-          });
+          Get.close(2);
+          update();
+          mySuccessSnackBar(context: Get.context!, message: "New User Added!");
         });
       });
     } catch (e) {
+      Get.back();
+      update();
       myErrorSnackBar(context: Get.context!, message: e.toString());
     }
   }

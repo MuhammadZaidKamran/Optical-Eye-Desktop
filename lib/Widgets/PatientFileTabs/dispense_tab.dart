@@ -86,6 +86,8 @@ class _DispenseTabState extends State<DispenseTab> {
                   CustomerFilesPatientDetailsWidget(containerText: "By"),
                   CustomerFilesPatientDetailsWidget(containerText: "Total"),
                   CustomerFilesPatientDetailsWidget(
+                    isSecondary: true,
+                    width: Get.width * 0.15,
                     containerText: "Status",
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(5),
@@ -114,7 +116,7 @@ class _DispenseTabState extends State<DispenseTab> {
                             tabItem02: data["id"],
                             tabItem03: data["date"],
                             tabItem04: data["by"],
-                            tabItem05: data["total"],
+                            tabItem05: "£${data["total"]}",
                             tabItem06: data["status"],
                             onTap: () {
                               showDialog(
@@ -126,9 +128,10 @@ class _DispenseTabState extends State<DispenseTab> {
                                       reference: data["id"],
                                       date: data["date"],
                                       by: data["by"],
-                                      total: data["total"],
+                                      total: "£${data["total"]}",
                                       status: data["status"],
-                                      dispenseItemDetails: data["dispenseItems"],
+                                      dispenseItemDetails:
+                                          data["dispenseItems"],
                                     );
                                   });
                             },

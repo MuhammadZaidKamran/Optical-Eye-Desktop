@@ -13,7 +13,7 @@ import 'package:optical_eye_desktop/Widgets/new_dispense_spectacles_dialog.dart'
 import 'package:optical_eye_desktop/Widgets/warning_dialog.dart';
 
 class NewDispenseDialog extends StatefulWidget {
-  NewDispenseDialog({super.key, required this.patientID});
+  const NewDispenseDialog({super.key, required this.patientID});
   final String patientID;
 
   @override
@@ -62,9 +62,8 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
         await doc.reference.delete();
       }
 
-      print("All documents in '$collectionPath' have been deleted.");
     } catch (e) {
-      print("Error deleting documents: $e");
+      debugPrint("Error deleting documents: $e");
     }
   }
 
@@ -224,7 +223,7 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                       ),
                       child: Center(
                         child: Text(
-                          "Rs.$totalAmount",
+                          "£$totalAmount",
                           style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
@@ -241,7 +240,7 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return WarningDialog(title: "No item found!");
+                                  return const WarningDialog(title: "No item found!");
                                 });
                           } else {
                             myLoadingDialog(Get.context!);

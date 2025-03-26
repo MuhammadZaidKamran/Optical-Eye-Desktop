@@ -41,7 +41,6 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
   String dateOfBirth = "";
   String postCode = "";
 
-
   int searchFunction() {
     patientData.snapshots().listen(cancelOnError: true, (snapshot) {
       if (name != "") {
@@ -282,18 +281,22 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                           setState(() {});
                         },
                       ),
-                      PatientFileTabWidget(
-                        text: "History",
-                        containerColor:
-                            tabIndex == 1 ? mainThemeColor : whiteColor,
-                        textColor: tabIndex == 1 ? whiteColor : mainThemeColor,
-                        borderColor:
-                            tabIndex == 1 ? Colors.transparent : mainThemeColor,
-                        onTap: () {
-                          tabIndex = 1;
-                          setState(() {});
-                        },
-                      ),
+                      userModel?.role == "Optom"
+                          ? const SizedBox()
+                          : PatientFileTabWidget(
+                              text: "History",
+                              containerColor:
+                                  tabIndex == 1 ? mainThemeColor : whiteColor,
+                              textColor:
+                                  tabIndex == 1 ? whiteColor : mainThemeColor,
+                              borderColor: tabIndex == 1
+                                  ? Colors.transparent
+                                  : mainThemeColor,
+                              onTap: () {
+                                tabIndex = 1;
+                                setState(() {});
+                              },
+                            ),
                       PatientFileTabWidget(
                         text: "Equipment",
                         containerColor:
@@ -318,18 +321,22 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                           setState(() {});
                         },
                       ),
-                      PatientFileTabWidget(
-                        text: "Dispensing",
-                        containerColor:
-                            tabIndex == 4 ? mainThemeColor : whiteColor,
-                        textColor: tabIndex == 4 ? whiteColor : mainThemeColor,
-                        borderColor:
-                            tabIndex == 4 ? Colors.transparent : mainThemeColor,
-                        onTap: () {
-                          tabIndex = 4;
-                          setState(() {});
-                        },
-                      ),
+                      userModel?.role == "Optom"
+                          ? const SizedBox()
+                          : PatientFileTabWidget(
+                              text: "Dispensing",
+                              containerColor:
+                                  tabIndex == 4 ? mainThemeColor : whiteColor,
+                              textColor:
+                                  tabIndex == 4 ? whiteColor : mainThemeColor,
+                              borderColor: tabIndex == 4
+                                  ? Colors.transparent
+                                  : mainThemeColor,
+                              onTap: () {
+                                tabIndex = 4;
+                                setState(() {});
+                              },
+                            ),
                     ],
                   ),
                   myHeight(0.03),
@@ -345,13 +352,19 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       postCode: patientPostCode,
                       country: patientCountry,
                     ),
-                  if (tabIndex == 1) Container(),
+                  if (tabIndex == 1)
+                    userModel?.role == "Optom" ? Container() : Container(),
                   if (tabIndex == 2)
                     EquipmentTab(
                       patientID: patientId,
                     ),
                   if (tabIndex == 3) const HandOverTab(),
-                  if (tabIndex == 4)  DispenseTab(patientID: patientId,),
+                  if (tabIndex == 4)
+                    userModel?.role == "Optom"
+                        ? Container()
+                        : DispenseTab(
+                            patientID: patientId,
+                          ),
                 ],
               ),
       ),

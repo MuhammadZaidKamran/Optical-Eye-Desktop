@@ -37,11 +37,16 @@ class WarningDialog extends StatelessWidget {
               size: 80,
             ),
             myHeight(0.02),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
+            SizedBox(
+              width: Get.width * 0.2,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 2,
+                textAlign: TextAlign.center,
               ),
             ),
             myHeight(0.02),

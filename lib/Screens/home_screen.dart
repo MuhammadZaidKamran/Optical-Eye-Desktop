@@ -5,12 +5,12 @@ import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Screens/Diary/diary_view.dart';
 import 'package:optical_eye_desktop/Screens/StockManager/stock_manager_view.dart';
+import 'package:optical_eye_desktop/Screens/SupportView/support_view.dart';
 import 'package:optical_eye_desktop/Screens/TillView/till_view.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_widgets.dart';
-import 'package:optical_eye_desktop/Widgets/hover_button.dart';
 import 'package:optical_eye_desktop/Widgets/security_pin_dialog_widget.dart';
-import 'package:optical_eye_desktop/Widgets/select_role_widget.dart';
 import 'package:optical_eye_desktop/Widgets/side_bar_card_widget.dart';
+import 'package:optical_eye_desktop/Widgets/warning_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,7 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isBtnHover = false;
   // bool isHover_2 = false;
   int myIndex = 0;
-  final pinController = TextEditingController();
+  final pinController_1 = TextEditingController();
+  final pinController_2 = TextEditingController();
+  final pinController_3 = TextEditingController();
+  final pinController_4 = TextEditingController();
+  final pinController_5 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Isa Khan",
+                          "${userModel?.displayName}",
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
@@ -85,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          "isakhan@gmail.com",
+                          "${userModel?.email}",
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w400,
@@ -131,11 +135,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             context: context,
                             builder: (context) {
                               return SecurityPinDialogWidget(
-                                pinController: pinController,
+                                pinController: pinController_1,
                                 onTap: () {
-                                  Get.close(1);
-                                  myIndex = 1;
-                                  if (mounted) setState(() {});
+                                  if (pinController_1.text == "") {
+                                    return;
+                                  } else if (pinController_1.text ==
+                                      userModel?.pinNumber) {
+                                    Get.close(1);
+                                    myIndex = 1;
+                                    if (mounted) setState(() {});
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const WarningDialog(
+                                            title: "Invalid Pin Number",
+                                          );
+                                        });
+                                  }
                                 },
                               );
                             });
@@ -158,11 +175,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             context: context,
                             builder: (context) {
                               return SecurityPinDialogWidget(
-                                pinController: pinController,
+                                pinController: pinController_2,
                                 onTap: () {
-                                  Get.close(1);
-                                  myIndex = 2;
-                                  if (mounted) setState(() {});
+                                  if (pinController_2.text == "") {
+                                    return;
+                                  } else if (pinController_2.text ==
+                                      userModel?.pinNumber) {
+                                    Get.close(1);
+                                    myIndex = 2;
+                                    if (mounted) setState(() {});
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const WarningDialog(
+                                            title: "Invalid Pin Number",
+                                          );
+                                        });
+                                  }
                                 },
                               );
                             });
@@ -184,11 +214,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             context: context,
                             builder: (context) {
                               return SecurityPinDialogWidget(
-                                pinController: pinController,
+                                pinController: pinController_3,
                                 onTap: () {
-                                  Get.close(1);
-                                  myIndex = 3;
-                                  if (mounted) setState(() {});
+                                  if (pinController_3.text == "") {
+                                    return;
+                                  } else if (pinController_3.text ==
+                                      userModel?.pinNumber) {
+                                    Get.close(1);
+                                    myIndex = 3;
+                                    if (mounted) setState(() {});
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const WarningDialog(
+                                            title: "Invalid Pin Number",
+                                          );
+                                        });
+                                  }
                                 },
                               );
                             });
@@ -210,11 +253,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             context: context,
                             builder: (context) {
                               return SecurityPinDialogWidget(
-                                pinController: pinController,
+                                pinController: pinController_4,
                                 onTap: () {
-                                  Get.close(1);
-                                  myIndex = 4;
-                                  setState(() {});
+                                  if (pinController_4.text == "") {
+                                    return;
+                                  } else if (pinController_4.text ==
+                                      userModel?.pinNumber) {
+                                    Get.close(1);
+                                    myIndex = 4;
+                                    setState(() {});
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const WarningDialog(
+                                            title: "Invalid Pin Number",
+                                          );
+                                        });
+                                  }
                                 },
                               );
                             });
@@ -236,11 +292,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             context: context,
                             builder: (context) {
                               return SecurityPinDialogWidget(
-                                pinController: pinController,
+                                pinController: pinController_5,
                                 onTap: () {
-                                  Get.close(1);
-                                  myIndex = 5;
-                                  setState(() {});
+                                  if (pinController_5.text == "") {
+                                    return;
+                                  } else if (pinController_5.text ==
+                                      userModel?.pinNumber) {
+                                    Get.close(1);
+                                    myIndex = 5;
+                                    setState(() {});
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const WarningDialog(
+                                            title: "Invalid Pin Number",
+                                          );
+                                        });
+                                  }
                                 },
                               );
                             });
@@ -269,55 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (myIndex == 2) const StockManagerView(),
           if (myIndex == 3) const DiaryView(),
           if (myIndex == 4) const TillView(),
-          if (myIndex == 5)
-            Expanded(
-                child: Padding(
-              padding: myPadding,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Support",
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          color: blackColor,
-                        ),
-                      ),
-                      HoverButton(
-                          title: "Add Employee",
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return const SelectRoleWidget();
-                                });
-                          })
-                    ],
-                  ),
-                  SizedBox(
-                    width: Get.width,
-                    height: Get.height * 0.7,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Text(
-                            "Under Construction",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: blackColor.withOpacity(0.4)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )),
+          if (myIndex == 5) const SupportView(),
         ],
       ),
     );

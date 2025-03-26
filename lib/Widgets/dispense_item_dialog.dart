@@ -7,6 +7,7 @@ import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widge
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
 
+// ignore: must_be_immutable
 class DispenseItemDialog extends StatefulWidget {
   DispenseItemDialog(
       {super.key,
@@ -98,6 +99,8 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
                             containerText: "Item Code"),
                         CustomerFilesPatientDetailsWidget(containerText: "Qty"),
                         CustomerFilesPatientDetailsWidget(
+                          isSecondary: true,
+                          width: Get.width * 0.2,
                           containerText: "Price",
                           borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(5),
@@ -122,7 +125,7 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
                             tabItem02: data["item"],
                             tabItem03: data["itemCode"],
                             tabItem04: data["quantity"],
-                            tabItem05: data["price"],
+                            tabItem05: "£${data["price"]}",
                             onTap: () {},
                           );
                         },
