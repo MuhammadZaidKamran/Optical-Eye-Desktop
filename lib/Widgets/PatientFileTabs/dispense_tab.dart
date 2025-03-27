@@ -123,12 +123,13 @@ class _DispenseTabState extends State<DispenseTab> {
                                   context: context,
                                   builder: (context) {
                                     return DispenseItemDialog(
+                                      isDispense: true,
                                       patientID: widget.patientID,
                                       type: data["type"],
-                                      reference: data["id"],
+                                      reference: data.id,
                                       date: data["date"],
                                       by: data["by"],
-                                      total: "£${data["total"]}",
+                                      total: "${data["total"]}",
                                       status: data["status"],
                                       dispenseItemDetails:
                                           data["dispenseItems"],

@@ -6,8 +6,9 @@ import 'package:optical_eye_desktop/Widgets/close_button_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
 
 class WarningDialog extends StatelessWidget {
-  const WarningDialog({super.key, required this.title});
+  const WarningDialog({super.key, required this.title, this.onTap});
   final String title;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class WarningDialog extends StatelessWidget {
             ),
             myHeight(0.02),
             MyButton(
-              onTap: () {
+              onTap: onTap ?? () {
                 Get.back();
               },
               label: "Ok",

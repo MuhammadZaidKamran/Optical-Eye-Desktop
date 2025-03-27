@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:optical_eye_desktop/Auth/login_view.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Screens/Diary/diary_view.dart';
@@ -22,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final diaryNameController = TextEditingController();
   final staffMemberNameController = TextEditingController();
+  final fAuth = FirebaseAuth.instance;
 
   bool isHover = false;
   bool isBtnHover = false;
@@ -143,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       userModel?.pinNumber) {
                                     Get.close(1);
                                     myIndex = 1;
+                                    pinController_1.clear();
                                     if (mounted) setState(() {});
                                   } else {
                                     showDialog(
@@ -183,6 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       userModel?.pinNumber) {
                                     Get.close(1);
                                     myIndex = 2;
+                                    pinController_2.clear();
                                     if (mounted) setState(() {});
                                   } else {
                                     showDialog(
@@ -222,6 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       userModel?.pinNumber) {
                                     Get.close(1);
                                     myIndex = 3;
+                                    pinController_3.clear();
                                     if (mounted) setState(() {});
                                   } else {
                                     showDialog(
@@ -261,6 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       userModel?.pinNumber) {
                                     Get.close(1);
                                     myIndex = 4;
+                                    pinController_4.clear();
                                     setState(() {});
                                   } else {
                                     showDialog(
@@ -300,6 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       userModel?.pinNumber) {
                                     Get.close(1);
                                     myIndex = 5;
+                                    pinController_5.clear();
                                     setState(() {});
                                   } else {
                                     showDialog(
@@ -326,6 +334,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Spacer(),
                   SideBarCardWidget(
                     text: "Logout",
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return WarningDialog(
+                              title: "Are you sure you want to logout?",
+                              onTap: () {
+                                fAuth.signOut().then((value) {
+                                  Get.offAll(() => const LoginView());
+                                });
+                              },
+                            );
+                          });
+                    },
                     border: const Border(bottom: BorderSide.none),
                     icon: Icons.logout_rounded,
                     themeColor: redColor.withOpacity(0.75),

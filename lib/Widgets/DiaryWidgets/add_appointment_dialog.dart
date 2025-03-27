@@ -20,10 +20,10 @@ class AddAppointmentDialog extends StatefulWidget {
 
 class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
   final dateController = TextEditingController();
-  final diaryController = TextEditingController();
+  // final diaryController = TextEditingController();
   final durationController = TextEditingController();
   final typeController = TextEditingController();
-  final lastAppTimeController = TextEditingController();
+  // final lastAppTimeController = TextEditingController();
   final statusController = TextEditingController();
 
   final nameController = TextEditingController();
@@ -57,7 +57,6 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
 
   @override
   void initState() {
-    // getSuggestion();
     statusController.text = "Not Arrived";
     super.initState();
     nameController.addListener(() {
@@ -138,7 +137,7 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            "Diary",
+                            "Type",
                             style: TextStyle(
                               fontSize: 14,
                             ),
@@ -146,17 +145,59 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                           myHeight(0.004),
                           MyTextField(
                             width: Get.width * 0.35,
-                            controller: diaryController,
-                            label: "Diary",
+                            controller: typeController,
+                            label: "Type",
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Please enter diary name";
+                                return "Please enter type";
                               }
                               return null;
                             },
                           ),
                         ],
                       ),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     const Text(
+                      //       "Status",
+                      //       style: TextStyle(
+                      //         fontSize: 14,
+                      //       ),
+                      //     ),
+                      //     myHeight(0.004),
+                      //     MyTextField(
+                      //       readOnly: true,
+                      //       width: Get.width * 0.35,
+                      //       controller: statusController,
+                      //       label: "Status",
+                      //     ),
+                      //   ],
+                      // ),
+
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     const Text(
+                      //       "Diary",
+                      //       style: TextStyle(
+                      //         fontSize: 14,
+                      //       ),
+                      //     ),
+                      //     myHeight(0.004),
+                      //     MyTextField(
+                      //       width: Get.width * 0.35,
+                      //       controller: diaryController,
+                      //       label: "Diary",
+                      //       validator: (value) {
+                      //         if (value!.isEmpty) {
+                      //           return "Please enter diary name";
+                      //         }
+                      //         return null;
+                      //       },
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   myHeight(0.015),
@@ -187,83 +228,6 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                         ],
                       ),
                       myWidth(0.02),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Status",
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          myHeight(0.004),
-                          MyTextField(
-                            readOnly: true,
-                            width: Get.width * 0.35,
-                            controller: statusController,
-                            label: "Status",
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  myHeight(0.015),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Type",
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          myHeight(0.004),
-                          MyTextField(
-                            width: Get.width * 0.35,
-                            controller: typeController,
-                            label: "Type",
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter type";
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
-                      ),
-                      myWidth(0.02),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Last Appointement Time",
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          myHeight(0.004),
-                          MyTextField(
-                            width: Get.width * 0.35,
-                            controller: lastAppTimeController,
-                            label: "Last Appointement Time",
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter last appointment time";
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  myHeight(0.015),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -321,7 +285,9 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                               return null;
                             },
                           ),
-                          displayItems.isEmpty ? const SizedBox() : myHeight(0.01),
+                          displayItems.isEmpty
+                              ? const SizedBox()
+                              : myHeight(0.01),
                           displayItems.isEmpty
                               ? const SizedBox()
                               : SizedBox(
@@ -350,24 +316,6 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                                                     doc["dateOfBirth"];
                                               }
                                             }
-                                            // fireStore
-                                            //     .collection("appointments")
-                                            //     .snapshots()
-                                            //     .listen((snapshots) {
-                                            //   snapshots.docs
-                                            //       .where(
-                                            //           (e) => e["name"] == item)
-                                            //       .map((e) {
-                                            //     nameController.text = e["name"];
-                                            //     emailController.text =
-                                            //         e["email"];
-                                            //     postCodeController.text =
-                                            //         e["postCode"];
-                                            //     dateOfBirthController.text =
-                                            //         e["dateOfBirth"];
-                                            //   });
-                                            //   setState(() {});
-                                            // });
                                           },
                                           title: Text("$item"),
                                         );
@@ -482,15 +430,6 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                           height: Get.height * 0.06,
                           width: Get.width * 0.145,
                           onTap: () async {
-                            // if (selectStatusDropdown == "" ||
-                            //     selectStatusDropdown == null) {
-                            //   showDialog(
-                            //       context: context,
-                            //       builder: (context) {
-                            //         return const DiaryDropdownDialogWidget(
-                            //             title: "Please Select Status");
-                            //       });
-                            // } else
                             if (clinicNameDropdownValue == "" ||
                                 clinicNameDropdownValue == null) {
                               showDialog(
@@ -502,12 +441,9 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                             } else if (_formKey.currentState!.validate()) {
                               await controller.addNewAppointment(
                                 date: dateController.text.trim(),
-                                diary: diaryController.text.trim(),
                                 duration: durationController.text.trim(),
                                 status: statusController.text.trim(),
                                 type: typeController.text.trim(),
-                                lastAppointmentTime:
-                                    lastAppTimeController.text.trim(),
                                 clinicName: clinicNameDropdownValue ?? "",
                                 name: nameController.text.trim(),
                                 email: emailController.text.trim(),

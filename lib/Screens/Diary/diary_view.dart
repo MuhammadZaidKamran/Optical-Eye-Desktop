@@ -62,6 +62,7 @@ class _DiaryViewState extends State<DiaryView> {
       displayClinics =
           snapshots.docs.map((e) => e["clinicName"].toString()).toList();
       newDisplayClinics = displayClinics as List<String>;
+      if (mounted) setState(() {});
     });
   }
 

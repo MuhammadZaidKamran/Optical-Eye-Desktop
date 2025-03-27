@@ -25,11 +25,9 @@ class DiaryController extends GetxController {
 
   Future addNewAppointment({
     required String date,
-    required String diary,
     required String duration,
     required String status,
     required String type,
-    required String lastAppointmentTime,
     required String clinicName,
     required String name,
     required String email,
@@ -40,11 +38,9 @@ class DiaryController extends GetxController {
     await fireStore.collection("appointments").add({
       "id" : fireStore.collection("appointments").doc().id,
       "date": date,
-      "diary": diary,
       "duration": duration,
       "status": status,
       "type": type,
-      "lastAppointmentTime": lastAppointmentTime,
       "clinicName": clinicName,
       "name": name,
       "email": email,

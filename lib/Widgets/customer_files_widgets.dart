@@ -267,7 +267,9 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   ),
                   myHeight(0.04),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: userModel?.role == "Sales Manager"
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.spaceBetween,
                     children: [
                       PatientFileTabWidget(
                         text: "Patient",
@@ -281,48 +283,67 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                           setState(() {});
                         },
                       ),
-                      userModel?.role == "Optom"
+                      userModel?.role == "Sales Manager"
+                          ? const SizedBox(
+                              width: 20,
+                            )
+                          : userModel?.role == "Optom"
+                              ? const Spacer()
+                              : PatientFileTabWidget(
+                                  text: "History",
+                                  containerColor: tabIndex == 1
+                                      ? mainThemeColor
+                                      : whiteColor,
+                                  textColor: tabIndex == 1
+                                      ? whiteColor
+                                      : mainThemeColor,
+                                  borderColor: tabIndex == 1
+                                      ? Colors.transparent
+                                      : mainThemeColor,
+                                  onTap: () {
+                                    tabIndex = 1;
+                                    setState(() {});
+                                  },
+                                ),
+                      userModel?.role == "Sales Manager"
                           ? const SizedBox()
                           : PatientFileTabWidget(
-                              text: "History",
+                              text: "Equipment",
                               containerColor:
-                                  tabIndex == 1 ? mainThemeColor : whiteColor,
+                                  tabIndex == 2 ? mainThemeColor : whiteColor,
                               textColor:
-                                  tabIndex == 1 ? whiteColor : mainThemeColor,
-                              borderColor: tabIndex == 1
+                                  tabIndex == 2 ? whiteColor : mainThemeColor,
+                              borderColor: tabIndex == 2
                                   ? Colors.transparent
                                   : mainThemeColor,
                               onTap: () {
-                                tabIndex = 1;
+                                tabIndex = 2;
                                 setState(() {});
                               },
                             ),
-                      PatientFileTabWidget(
-                        text: "Equipment",
-                        containerColor:
-                            tabIndex == 2 ? mainThemeColor : whiteColor,
-                        textColor: tabIndex == 2 ? whiteColor : mainThemeColor,
-                        borderColor:
-                            tabIndex == 2 ? Colors.transparent : mainThemeColor,
-                        onTap: () {
-                          tabIndex = 2;
-                          setState(() {});
-                        },
-                      ),
-                      PatientFileTabWidget(
-                        text: "Handover",
-                        containerColor:
-                            tabIndex == 3 ? mainThemeColor : whiteColor,
-                        textColor: tabIndex == 3 ? whiteColor : mainThemeColor,
-                        borderColor:
-                            tabIndex == 3 ? Colors.transparent : mainThemeColor,
-                        onTap: () {
-                          tabIndex = 3;
-                          setState(() {});
-                        },
-                      ),
-                      userModel?.role == "Optom"
+                      userModel?.role == "Sales Manager"
                           ? const SizedBox()
+                          : userModel?.role == "Optom"
+                              ? const Spacer()
+                              : const SizedBox(),
+                      userModel?.role == "Sales Manager"
+                          ? const SizedBox()
+                          : PatientFileTabWidget(
+                              text: "Handover",
+                              containerColor:
+                                  tabIndex == 3 ? mainThemeColor : whiteColor,
+                              textColor:
+                                  tabIndex == 3 ? whiteColor : mainThemeColor,
+                              borderColor: tabIndex == 3
+                                  ? Colors.transparent
+                                  : mainThemeColor,
+                              onTap: () {
+                                tabIndex = 3;
+                                setState(() {});
+                              },
+                            ),
+                      userModel?.role == "Optom"
+                          ? const Spacer()
                           : PatientFileTabWidget(
                               text: "Dispensing",
                               containerColor:
@@ -353,7 +374,17 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                       country: patientCountry,
                     ),
                   if (tabIndex == 1)
-                    userModel?.role == "Optom" ? Container() : Container(),
+                    userModel?.role == "Optom"
+                        ? Container()
+                        : Center(
+                          child: Text(
+                            "Under Construction",
+                            style: TextStyle(
+                                color: blackColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
                   if (tabIndex == 2)
                     EquipmentTab(
                       patientID: patientId,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Controllers/dispense_controller.dart';
@@ -6,19 +7,22 @@ import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
+import 'package:optical_eye_desktop/Widgets/warning_dialog.dart';
 
 // ignore: must_be_immutable
 class DispenseItemDialog extends StatefulWidget {
-  DispenseItemDialog(
-      {super.key,
-      required this.type,
-      required this.reference,
-      required this.date,
-      required this.by,
-      required this.total,
-      required this.dispenseItemDetails,
-      this.patientID,
-      required this.status});
+  DispenseItemDialog({
+    super.key,
+    required this.type,
+    required this.reference,
+    required this.date,
+    required this.by,
+    required this.total,
+    required this.dispenseItemDetails,
+    this.patientID,
+    required this.status,
+    this.isDispense = false,
+  });
   final String type;
   String? patientID;
   final String reference;
@@ -27,6 +31,7 @@ class DispenseItemDialog extends StatefulWidget {
   final String total;
   final String status;
   final List dispenseItemDetails;
+  bool? isDispense = false;
 
   @override
   State<DispenseItemDialog> createState() => _DispenseItemDialogState();
@@ -138,27 +143,70 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  MyButton(
-                    onTap: () {},
-                    label: "Cash",
-                    width: Get.width * 0.11,
-                    height: Get.height * 0.06,
-                  ),
-                  myWidth(0.01),
-                  MyButton(
-                    onTap: () {},
-                    label: "Payout",
-                    width: Get.width * 0.11,
-                    height: Get.height * 0.06,
-                  ),
-                  myWidth(0.01),
-                  MyButton(
-                    onTap: () {},
-                    label: "Payin",
-                    width: Get.width * 0.11,
-                    height: Get.height * 0.06,
-                  ),
-                  myWidth(0.01),
+                  widget.isDispense == true
+                      ? const SizedBox()
+                      : MyButton(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const WarningDialog(
+                                      title: "Waiting for external system");
+                                });
+                          },
+                          label: "Receipt",
+                          width: Get.width * 0.11,
+                          height: Get.height * 0.06,
+                        ),
+                  widget.isDispense == true ? const SizedBox() : myWidth(0.01),
+                  widget.isDispense == true
+                      ? const SizedBox()
+                      : MyButton(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const WarningDialog(
+                                      title: "Waiting for external system");
+                                });
+                          },
+                          label: "Cash",
+                          width: Get.width * 0.11,
+                          height: Get.height * 0.06,
+                        ),
+                  widget.isDispense == true ? const SizedBox() : myWidth(0.01),
+                  widget.isDispense == true
+                      ? const SizedBox()
+                      : MyButton(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const WarningDialog(
+                                      title: "Waiting for external system");
+                                });
+                          },
+                          label: "PDQ",
+                          width: Get.width * 0.11,
+                          height: Get.height * 0.06,
+                        ),
+                  widget.isDispense == true ? const SizedBox() : myWidth(0.01),
+                  widget.isDispense == true
+                      ? const SizedBox()
+                      : MyButton(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const WarningDialog(
+                                      title: "Waiting for external system");
+                                });
+                          },
+                          label: "Voucher",
+                          width: Get.width * 0.11,
+                          height: Get.height * 0.06,
+                        ),
+                  widget.isDispense == true ? const SizedBox() : myWidth(0.01),
                   widget.status == "Refund"
                       ? Container(
                           width: Get.width * 0.11,
@@ -179,7 +227,8 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
                           width: Get.width * 0.11,
                           height: Get.height * 0.06,
                           onTap: () async {
-                            await controller.refundDispenseItems(
+                            await controller
+                                .refundDispenseItems(
                               patientID: widget.patientID ?? "Not available",
                               type: widget.type,
                               date: widget.date,
@@ -187,7 +236,15 @@ class _DispenseItemDialogState extends State<DispenseItemDialog> {
                               total: "-${widget.total}",
                               status: "Refund",
                               dispenseItems: widget.dispenseItemDetails,
-                            );
+                            )
+                                .then((value) async {
+                              await FirebaseFirestore.instance
+                                  .collection("dispenseSummary")
+                                  .doc(widget.reference.toString())
+                                  .update({
+                                "status": "Refund",
+                              });
+                            });
                           },
                           label: "Refund"),
                 ],

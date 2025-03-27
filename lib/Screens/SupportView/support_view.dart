@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/hover_button.dart';
@@ -59,24 +58,24 @@ class _SupportViewState extends State<SupportView> {
                   })
             ],
           ),
-          SizedBox(
-            width: Get.width,
-            height: Get.height * 0.7,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Text(
-                    "Under Construction",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: blackColor.withOpacity(0.4)),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // SizedBox(
+          //   width: Get.width,
+          //   height: Get.height * 0.7,
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Center(
+          //         child: Text(
+          //           "Under Construction",
+          //           style: TextStyle(
+          //               fontSize: 20,
+          //               fontWeight: FontWeight.bold,
+          //               color: blackColor.withOpacity(0.4)),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     ));

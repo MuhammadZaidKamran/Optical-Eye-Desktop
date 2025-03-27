@@ -33,350 +33,388 @@ class _HandOverTabState extends State<HandOverTab> {
   final handOverByController = TextEditingController();
   final handOverToController = TextEditingController();
   final examController = TextEditingController();
+
+  final dispenseNotesController = TextEditingController();
+  final clinicalNotesController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SizedBox(
+      height: Get.height * 0.65,
+      child: SingleChildScrollView(
+        child: Column(
           children: [
-            Column(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Glasses",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Glasses",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    myHeight(0.02),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      width: Get.width * 0.37,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Multilocal",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_1,
+                                  groupValue: groupValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue = value.toString();
+                                    });
+                                  })
+                            ],
+                          ),
+                          myHeight(0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Single Vision Dist",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_2,
+                                  groupValue: groupValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue = value.toString();
+                                    });
+                                  })
+                            ],
+                          ),
+                          myHeight(0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Single Vision Inter",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_3,
+                                  groupValue: groupValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue = value.toString();
+                                    });
+                                  })
+                            ],
+                          ),
+                          myHeight(0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Single Vision Near",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                activeColor: mainThemeColor,
+                                value: myValue_4,
+                                groupValue: groupValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    groupValue = value.toString();
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    myHeight(0.02),
+                    const Text(
+                      "Sun glasses",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    myHeight(0.02),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      width: Get.width * 0.37,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Multilocal",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_5,
+                                  groupValue: groupValue_2,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue_2 = value.toString();
+                                    });
+                                  })
+                            ],
+                          ),
+                          myHeight(0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Single Vision Dist",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_6,
+                                  groupValue: groupValue_2,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue_2 = value.toString();
+                                    });
+                                  })
+                            ],
+                          ),
+                          myHeight(0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Single Vision Inter",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_7,
+                                  groupValue: groupValue_2,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue_2 = value.toString();
+                                    });
+                                  })
+                            ],
+                          ),
+                          myHeight(0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Single Vision Near",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Radio(
+                                activeColor: mainThemeColor,
+                                value: myValue_8,
+                                groupValue: groupValue_2,
+                                onChanged: (value) {
+                                  setState(() {
+                                    groupValue_2 = value.toString();
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    myHeight(0.02),
+                    const Text(
+                      "Clinical Notes",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    myHeight(0.01),
+                    MyTextField(
+                        maxLines: 3,
+                        width: Get.width * 0.37,
+                        controller: clinicalNotesController,
+                        label: "Clinical Notes"),
+                  ],
                 ),
-                myHeight(0.02),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  width: Get.width * 0.37,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: borderColor),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "This Visit",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    myHeight(0.02),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      width: Get.width * 0.37,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            "Multilocal",
+                            "Visit Type",
                             style: TextStyle(
-                              fontSize: 15,
-                            ),
+                                fontSize: 15, fontWeight: FontWeight.w500),
                           ),
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_1,
-                              groupValue: groupValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue = value.toString();
-                                });
-                              })
+                          myHeight(0.01),
+                          Row(
+                            children: [
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_9,
+                                  groupValue: groupValue_3,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue_3 = value.toString();
+                                    });
+                                  }),
+                              myWidth(0.01),
+                              const Text("Private"),
+                              const Spacer(),
+                              Radio(
+                                  activeColor: mainThemeColor,
+                                  value: myValue_10,
+                                  groupValue: groupValue_3,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupValue_3 = value.toString();
+                                    });
+                                  }),
+                              myWidth(0.01),
+                              const Text("NHS"),
+                            ],
+                          ),
+                          myHeight(0.01),
+                          const Text(
+                            "Examiner",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w500),
+                          ),
+                          myHeight(0.01),
+                          MyTextField(
+                            controller: examinerController,
+                            label: "Examiner",
+                          ),
+                          myHeight(0.01),
+                          const Text("Handover By",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w500)),
+                          myHeight(0.01),
+                          MyTextField(
+                            controller: handOverByController,
+                            label: "Handover By",
+                          ),
+                          myHeight(0.01),
+                          const Text("Handover To",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w500)),
+                          myHeight(0.01),
+                          MyTextField(
+                            controller: handOverToController,
+                            label: "Handover To",
+                          ),
                         ],
                       ),
-                      myHeight(0.01),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Single Vision Dist",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_2,
-                              groupValue: groupValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue = value.toString();
-                                });
-                              })
-                        ],
+                    ),
+                    myHeight(0.02),
+                    const Text(
+                      "Dispense Notes",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
                       ),
-                      myHeight(0.01),
-                      Row(
+                    ),
+                    myHeight(0.01),
+                    MyTextField(
+                        maxLines: 3,
+                        width: Get.width * 0.37,
+                        controller: dispenseNotesController,
+                        label: "Dispense Notes"),
+                    myHeight(0.02),
+                    SizedBox(
+                      width: Get.width * 0.37,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Single Vision Inter",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
+                          MyButton(
+                            secondary: true,
+                            onTap: () {},
+                            label: "Cancel",
+                            width: Get.width * 0.17,
                           ),
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_3,
-                              groupValue: groupValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue = value.toString();
-                                });
-                              })
-                        ],
-                      ),
-                      myHeight(0.01),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Single Vision Near",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Radio(
-                            activeColor: mainThemeColor,
-                            value: myValue_4,
-                            groupValue: groupValue,
-                            onChanged: (value) {
-                              setState(() {
-                                groupValue = value.toString();
-                              });
-                            },
+                          MyButton(
+                            onTap: () {},
+                            label: "Do Handover",
+                            width: Get.width * 0.17,
                           )
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                myHeight(0.02),
-                const Text(
-                  "Sun glasses",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                myHeight(0.02),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  width: Get.width * 0.37,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: borderColor),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Multilocal",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_5,
-                              groupValue: groupValue_2,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue_2 = value.toString();
-                                });
-                              })
-                        ],
-                      ),
-                      myHeight(0.01),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Single Vision Dist",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_6,
-                              groupValue: groupValue_2,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue_2 = value.toString();
-                                });
-                              })
-                        ],
-                      ),
-                      myHeight(0.01),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Single Vision Inter",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_7,
-                              groupValue: groupValue_2,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue_2 = value.toString();
-                                });
-                              })
-                        ],
-                      ),
-                      myHeight(0.01),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Single Vision Near",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Radio(
-                            activeColor: mainThemeColor,
-                            value: myValue_8,
-                            groupValue: groupValue_2,
-                            onChanged: (value) {
-                              setState(() {
-                                groupValue_2 = value.toString();
-                              });
-                            },
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "This Visit",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                myHeight(0.02),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  width: Get.width * 0.37,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(color: borderColor),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Visit Type",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                      ),
-                      myHeight(0.01),
-                      Row(
-                        children: [
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_9,
-                              groupValue: groupValue_3,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue_3 = value.toString();
-                                });
-                              }),
-                          myWidth(0.01),
-                          const Text("Private"),
-                          const Spacer(),
-                          Radio(
-                              activeColor: mainThemeColor,
-                              value: myValue_10,
-                              groupValue: groupValue_3,
-                              onChanged: (value) {
-                                setState(() {
-                                  groupValue_3 = value.toString();
-                                });
-                              }),
-                          myWidth(0.01),
-                          const Text("NHS"),
-                        ],
-                      ),
-                      myHeight(0.01),
-                      const Text(
-                        "Examiner",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                      ),
-                      myHeight(0.01),
-                      MyTextField(
-                        controller: examinerController,
-                        label: "Examiner",
-                      ),
-                      myHeight(0.01),
-                      const Text("Handover By",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500)),
-                      myHeight(0.01),
-                      MyTextField(
-                        controller: handOverByController,
-                        label: "Handover By",
-                      ),
-                      myHeight(0.01),
-                      const Text("Handover To",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500)),
-                      myHeight(0.01),
-                      MyTextField(
-                        controller: handOverToController,
-                        label: "Handover To",
-                      ),
-                    ],
-                  ),
-                ),
-                myHeight(0.02),
-                SizedBox(
-                  width: Get.width * 0.37,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MyButton(
-                        secondary: true,
-                        onTap: () {},
-                        label: "Cancel",
-                        width: Get.width * 0.17,
-                      ),
-                      MyButton(
-                        onTap: () {},
-                        label: "Do Handover",
-                        width: Get.width * 0.17,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            // myHeight(0.01),
+            // Row(
+            //   children: [
+            //     Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+
+            //       ],
+            //     ),
+            //   ],
+            // ),
           ],
         ),
-        // myHeight(0.01),
-        // Row(
-        //   children: [
-        //     Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-
-        //       ],
-        //     ),
-        //   ],
-        // ),
-      ],
+      ),
     );
   }
 }

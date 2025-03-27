@@ -7,7 +7,6 @@ import 'package:optical_eye_desktop/Widgets/calculator_number_widget.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_item_dialog.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
-import 'package:optical_eye_desktop/Widgets/my_button.dart';
 
 class TillView extends StatefulWidget {
   const TillView({super.key});
@@ -19,9 +18,16 @@ class TillView extends StatefulWidget {
 class _TillViewState extends State<TillView> {
   final fireStore = FirebaseFirestore.instance;
   List displayTillItems = [];
+  var total = 0;
 
   displayTill() async {
     fireStore.collection("dispenseSummary").snapshots().listen((snapshots) {
+      for (var e in snapshots.docs) {
+        var amount = 0;
+        amount = int.parse(e["total"]);
+        total += amount;
+      }
+      // snapshots.docs.sort((a, b) => b["date"].compareTo(a["date"]));
       displayTillItems = snapshots.docs.toList();
       if (mounted) setState(() {});
     });
@@ -42,24 +48,13 @@ class _TillViewState extends State<TillView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Text(
-                  "Till",
-                  style: TextStyle(
-                    color: blackColor,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const Spacer(),
-                MyButton(
-                  onTap: () {},
-                  label: "Receipt",
-                  width: Get.width * 0.11,
-                  height: Get.height * 0.06,
-                ),
-              ],
+            Text(
+              "Till",
+              style: TextStyle(
+                color: blackColor,
+                fontSize: 25,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             myHeight(0.02),
             Row(
@@ -121,7 +116,7 @@ class _TillViewState extends State<TillView> {
                                     tabItem02: data["id"],
                                     tabItem03: data["date"],
                                     tabItem04: data["by"],
-                                    tabItem05: data["total"],
+                                    tabItem05: "£${data["total"]}",
                                     tabItem06: data["status"],
                                     onTap: () {
                                       showDialog(
@@ -129,10 +124,10 @@ class _TillViewState extends State<TillView> {
                                           builder: (context) {
                                             return DispenseItemDialog(
                                               type: data["type"],
-                                              reference: data["id"],
+                                              reference: data.id,
                                               date: data["date"],
                                               by: data["by"],
-                                              total: data["total"],
+                                              total: "${data["total"]}",
                                               status: data["status"],
                                               dispenseItemDetails:
                                                   data["dispenseItems"],
@@ -235,10 +230,10 @@ class _TillViewState extends State<TillView> {
                       ),
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        "Rs.360",
-                        style: TextStyle(
+                        "£$total",
+                        style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
                         ),
