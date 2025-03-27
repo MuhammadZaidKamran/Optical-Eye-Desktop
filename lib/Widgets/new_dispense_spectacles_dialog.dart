@@ -39,6 +39,7 @@ class _NewDispenseSpectaclesDialogState
   final dispenseController = Get.put(DispenseController());
   final _formKey = GlobalKey<FormState>();
   final fireStore = FirebaseFirestore.instance;
+  String quantity = "";
   List<String> items = [];
 
   displayItemDropDownFunc() async {
@@ -113,8 +114,16 @@ class _NewDispenseSpectaclesDialogState
                                 label: const Text("Item"),
                                 dropDownValue: itemDropDownValue,
                                 items: items,
-                                onChanged: (value) {
+                                onChanged: (value) async {
                                   itemDropDownValue = value;
+                                  QuerySnapshot snapshot = await fireStore
+                                      .collection("spectaclesStock")
+                                      .get();
+                                  for (var e in snapshot.docs) {
+                                    if (e["name"] == itemDropDownValue) {
+                                      quantity = e["quantity"].toString();
+                                    }
+                                  }
                                   setState(() {});
                                 },
                               ),
@@ -385,6 +394,8 @@ class _NewDispenseSpectaclesDialogState
                             width: Get.width * 0.15,
                             height: Get.height * 0.07,
                             onTap: () async {
+                              var finalQuantity = int.parse(quantity) -
+                                  int.parse(quantityController.text);
                               if (itemDropDownValue == null ||
                                   itemDropDownValue!.isEmpty ||
                                   itemDropDownValue == "") {
@@ -393,6 +404,13 @@ class _NewDispenseSpectaclesDialogState
                                     builder: (context) {
                                       return const WarningDialog(
                                           title: "Please Select Item");
+                                    });
+                              } else if (finalQuantity < 0) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const WarningDialog(
+                                          title: "This item is Out of Stock!");
                                     });
                               } else if (_formKey.currentState!.validate()) {
                                 await controller
@@ -420,16 +438,16 @@ class _NewDispenseSpectaclesDialogState
                                   for (var e in snapshot.docs) {
                                     if (e["name"] == itemDropDownValue) {
                                       data = e["quantity"].toString();
+                                      var quantity = int.parse(data) -
+                                          int.parse(
+                                              quantityController.text.trim());
+                                      await FirebaseFirestore.instance
+                                          .collection("spectaclesStock")
+                                          .doc(e.id)
+                                          .update({
+                                        "quantity": quantity,
+                                      });
                                     }
-                                    var quantity = int.parse(data) -
-                                        int.parse(
-                                            quantityController.text.trim());
-                                    await FirebaseFirestore.instance
-                                        .collection("spectaclesStock")
-                                        .doc(e.id)
-                                        .update({
-                                      "quantity": quantity,
-                                    });
                                   }
                                 });
                               }

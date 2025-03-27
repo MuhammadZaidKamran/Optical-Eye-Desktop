@@ -37,12 +37,13 @@ class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
   final dispenseController = Get.put(DispenseController());
   final _formKey = GlobalKey<FormState>();
   final fireStore = FirebaseFirestore.instance;
+  String quantity = "";
   List<String> items = [];
 
   displayItemDropDownFunc() async {
     fireStore.collection("lensesStock").snapshots().listen((snapshot) {
       items = snapshot.docs.map((e) => e["name"].toString()).toList();
-      setState(() {});
+      if (mounted) setState(() {});
     });
   }
 
@@ -111,8 +112,16 @@ class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
                                 label: const Text("Item"),
                                 dropDownValue: itemDropDownValue,
                                 items: items,
-                                onChanged: (value) {
+                                onChanged: (value) async {
                                   itemDropDownValue = value;
+                                  QuerySnapshot snapshot = await fireStore
+                                      .collection("lensesStock")
+                                      .get();
+                                  for (var e in snapshot.docs) {
+                                    if (e["name"] == itemDropDownValue) {
+                                      quantity = e["quantity"].toString();
+                                    }
+                                  }
                                   setState(() {});
                                 },
                               ),
@@ -383,6 +392,8 @@ class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
                             width: Get.width * 0.15,
                             height: Get.height * 0.07,
                             onTap: () async {
+                              var finalQuantity = int.parse(quantity) -
+                                  int.parse(quantityController.text);
                               if (itemDropDownValue == null ||
                                   itemDropDownValue!.isEmpty ||
                                   itemDropDownValue == "") {
@@ -392,8 +403,16 @@ class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
                                       return const WarningDialog(
                                           title: "Please Select Item");
                                     });
+                              } else if (finalQuantity < 0) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const WarningDialog(
+                                          title: "This item is Out of Stock!");
+                                    });
                               } else if (_formKey.currentState!.validate()) {
-                                await controller.addDispense(
+                                await controller
+                                    .addDispense(
                                   patientID: widget.patientID,
                                   type: "Lense",
                                   item: itemDropDownValue ?? "",
@@ -407,7 +426,28 @@ class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
                                   distPD_2: distPDController_2.text.trim(),
                                   nearPD_2: nearPDController_2.text.trim(),
                                   interPD_2: interPDController_2.text.trim(),
-                                );
+                                )
+                                    .then((value) async {
+                                  String data = "";
+                                  QuerySnapshot snapshot =
+                                      await FirebaseFirestore.instance
+                                          .collection("lensesStock")
+                                          .get();
+                                  for (var e in snapshot.docs) {
+                                    if (e["name"] == itemDropDownValue) {
+                                      data = e["quantity"].toString();
+                                      var quantity = int.parse(data) -
+                                          int.parse(
+                                              quantityController.text.trim());
+                                      await FirebaseFirestore.instance
+                                          .collection("lensesStock")
+                                          .doc(e.id)
+                                          .update({
+                                        "quantity": quantity,
+                                      });
+                                    }
+                                  }
+                                });
                               }
                             },
                             label: "Ok")
