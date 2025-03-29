@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:optical_eye_desktop/Controllers/dispense_controller.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
@@ -61,7 +62,6 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
       for (QueryDocumentSnapshot doc in snapshot.docs) {
         await doc.reference.delete();
       }
-
     } catch (e) {
       debugPrint("Error deleting documents: $e");
     }
@@ -240,7 +240,8 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return const WarningDialog(title: "No item found!");
+                                  return const WarningDialog(
+                                      title: "No item found!");
                                 });
                           } else {
                             myLoadingDialog(Get.context!);
@@ -270,6 +271,17 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                               if (mounted) setState(() {});
                               myErrorSnackBar(
                                   context: Get.context!, message: "$error");
+                            }).then((value) async {
+                              await FirebaseFirestore.instance
+                                  .collection("history")
+                                  .add({
+                                "id": widget.patientID.toString(),
+                                "log": "New Dispense Created!",
+                                "date":
+                                    "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                                "time": DateFormat('KK:mm:ss a')
+                                    .format(DateTime.now()),
+                              });
                             });
                           }
                           // await controller

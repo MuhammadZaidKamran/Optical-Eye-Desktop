@@ -1,63 +1,95 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/my_button.dart';
+import 'package:optical_eye_desktop/Widgets/my_drop_down.dart';
 import 'package:optical_eye_desktop/Widgets/my_text_field.dart';
+import 'package:optical_eye_desktop/Widgets/warning_dialog.dart';
 
-class CreateUserWidget extends StatefulWidget {
-  const CreateUserWidget({
-    super.key,
-    required this.employeeNameController,
-    required this.displayNameController,
-    required this.initialController,
-    required this.insuranceCodeController,
-    required this.pinNumberController,
-    required this.logOnNameController,
-    required this.passwordController,
-    required this.postCodeController,
-    required this.addressController,
-    required this.countryController,
-    required this.phoneController,
-    required this.emailController,
-    required this.onTapCreateUser,
-    this.dropdownValue,
-    required this.formKey,
-  });
-  //Identification
-  final TextEditingController employeeNameController;
-  final TextEditingController displayNameController;
-  final TextEditingController initialController;
-  final TextEditingController insuranceCodeController;
-  final TextEditingController pinNumberController;
-
-  //Security
-  final TextEditingController logOnNameController;
-  final TextEditingController passwordController;
-
-  //External Address
-  final TextEditingController postCodeController;
-  final TextEditingController addressController;
-  final TextEditingController countryController;
-  final TextEditingController phoneController;
-  final TextEditingController emailController;
-
-  //On Tap Create User
-  final VoidCallback onTapCreateUser;
-  final Key formKey;
-
-  //Dropdown Value
-  final String? dropdownValue;
+class UpdateEmployeeDialog extends StatefulWidget {
+  const UpdateEmployeeDialog(
+      {super.key,
+      required this.employeeName,
+      required this.displayName,
+      required this.initials,
+      required this.insuranceCode,
+      required this.pinNumber,
+      required this.logonName,
+      required this.password,
+      required this.country,
+      required this.phoneNumber,
+      required this.postCode,
+      required this.address,
+      required this.role,
+      required this.email,
+      required this.newRole,
+      required this.employeeID});
+  final String employeeID;
+  final String employeeName;
+  final String displayName;
+  final String initials;
+  final String insuranceCode;
+  final String pinNumber;
+  final String logonName;
+  final String password;
+  final String country;
+  final String phoneNumber;
+  final String postCode;
+  final String address;
+  final String role;
+  final String email;
+  final String newRole;
 
   @override
-  State<CreateUserWidget> createState() => _CreateUserWidgetState();
+  State<UpdateEmployeeDialog> createState() => _UpdateEmployeeDialogState();
 }
 
-class _CreateUserWidgetState extends State<CreateUserWidget> {
+class _UpdateEmployeeDialogState extends State<UpdateEmployeeDialog> {
+  //Identification
+  final employeeNameController = TextEditingController();
+  final displayNameController = TextEditingController();
+  final initialController = TextEditingController();
+  final insuranceCodeController = TextEditingController();
+  final pinNumberController = TextEditingController();
+
+  //Security
+  final logOnNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  //External Address
+  final postCodeController = TextEditingController();
+  final addressController = TextEditingController();
+  final countryController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+  String? dropdownValue2;
+  final _formKey = GlobalKey<FormState>();
+  final fireStore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    employeeNameController.text = widget.employeeName;
+    displayNameController.text = widget.displayName;
+    initialController.text = widget.initials;
+    insuranceCodeController.text = widget.insuranceCode;
+    pinNumberController.text = widget.pinNumber;
+    logOnNameController.text = widget.logonName;
+    passwordController.text = widget.password;
+    postCodeController.text = widget.postCode;
+    addressController.text = widget.address;
+    countryController.text = widget.country;
+    phoneController.text = widget.phoneNumber;
+    emailController.text = widget.email;
+    dropdownValue2 = widget.newRole;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.formKey,
+      key: _formKey,
       child: Dialog(
         backgroundColor: whiteColor,
         shape: RoundedRectangleBorder(
@@ -77,7 +109,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Create User",
+                        "Update Employee",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w500,
@@ -129,7 +161,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.employeeNameController,
+                          controller: employeeNameController,
                           label: "Employee Name",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -148,7 +180,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.displayNameController,
+                          controller: displayNameController,
                           label: "Display Name",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -167,7 +199,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.initialController,
+                          controller: initialController,
                           label: "Initials",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -176,10 +208,8 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                             return null;
                           },
                         ),
-                        widget.dropdownValue == "Optom"
-                            ? myHeight(0.007)
-                            : myHeight(0),
-                        widget.dropdownValue == "Optom"
+                        widget.role == "Optom" ? myHeight(0.007) : myHeight(0),
+                        widget.role == "Optom"
                             ? const Text(
                                 "Insurance Code",
                                 style: TextStyle(
@@ -187,13 +217,11 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                                 ),
                               )
                             : const SizedBox(),
-                        widget.dropdownValue == "Optom"
-                            ? myHeight(0.004)
-                            : myHeight(0),
-                        widget.dropdownValue == "Optom"
+                        widget.role == "Optom" ? myHeight(0.004) : myHeight(0),
+                        widget.role == "Optom"
                             ? MyTextField(
                                 width: Get.width * 0.2,
-                                controller: widget.insuranceCodeController,
+                                controller: insuranceCodeController,
                                 label: "Insurance Code",
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -213,7 +241,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.pinNumberController,
+                          controller: pinNumberController,
                           label: "PIN Number",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -246,7 +274,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.logOnNameController,
+                          controller: logOnNameController,
                           label: "Logon Name",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -265,8 +293,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.passwordController,
-                          obscureText: true,
+                          controller: passwordController,
                           label: "Password",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -277,7 +304,31 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                             return null;
                           },
                         ),
-                        // myHeight(0.01),
+                        myHeight(0.007),
+                        const Text(
+                          "Role",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        myHeight(0.004),
+                        SizedBox(
+                          width: Get.width * 0.2,
+                          child: MyDropDown(
+                            label: const Text("Select Role"),
+                            dropDownValue: dropdownValue2,
+                            items: const [
+                              "Sales Manager",
+                              "Admin",
+                              "Branch Manager",
+                              "Optom",
+                            ],
+                            onChanged: (value) {
+                              dropdownValue2 = value;
+                              setState(() {});
+                            },
+                          ),
+                        )
                       ],
                     ),
                     myWidth(0.02),
@@ -301,7 +352,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.emailController,
+                          controller: emailController,
                           label: "Email",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -322,7 +373,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.countryController,
+                          controller: countryController,
                           label: "Country",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -341,7 +392,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.phoneController,
+                          controller: phoneController,
                           label: "Phone Number",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -360,7 +411,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.postCodeController,
+                          controller: postCodeController,
                           label: "Post Code",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -379,7 +430,7 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         myHeight(0.004),
                         MyTextField(
                           width: Get.width * 0.2,
-                          controller: widget.addressController,
+                          controller: addressController,
                           label: "Adress",
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -416,8 +467,51 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
                         borderRadius: BorderRadius.circular(5),
                         height: Get.height * 0.06,
                         width: Get.width * 0.2,
-                        onTap: widget.onTapCreateUser,
-                        label: "Create User",
+                        onTap: () async {
+                          if (dropdownValue2 == null || dropdownValue2 == "") {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const WarningDialog(
+                                      title: "Please select employee role");
+                                });
+                          } else if (_formKey.currentState!.validate()) {
+                            myLoadingDialog(Get.context!);
+                            await fireStore
+                                .collection("users")
+                                .doc(widget.employeeID)
+                                .update({
+                              "employeeName":
+                                  employeeNameController.text.trim(),
+                              "displayName": displayNameController.text.trim(),
+                              "email": emailController.text.trim(),
+                              "initials": initialController.text.trim(),
+                              "insuranceCode":
+                                  insuranceCodeController.text.trim(),
+                              "logonName": logOnNameController.text.trim(),
+                              "password": passwordController.text.trim(),
+                              "phoneNumber": phoneController.text.trim(),
+                              "pinNumber": pinNumberController.text.trim(),
+                              "postCode": postCodeController.text.trim(),
+                              "role": dropdownValue2,
+                              "address": addressController.text.trim(),
+                              "country": countryController.text.trim(),
+                            }).then((value) {
+                              Get.close(2);
+                              if (mounted) setState(() {});
+                              mySuccessSnackBar(
+                                  context: Get.context!,
+                                  message:
+                                      "Employee File Updated Successfully!");
+                            }).catchError((error) {
+                              Get.back();
+                              if (mounted) setState(() {});
+                              myErrorSnackBar(
+                                  context: Get.context!, message: "$error");
+                            });
+                          }
+                        },
+                        label: "Update",
                       ),
                     ],
                   ),
@@ -430,23 +524,3 @@ class _CreateUserWidgetState extends State<CreateUserWidget> {
     );
   }
 }
-
-
-
-// //Identification
-//   final employeeNameController = TextEditingController();
-//   final displayNameController = TextEditingController();
-//   final initialController = TextEditingController();
-//   final insuranceCodeController = TextEditingController();
-//   final pinNumberController = TextEditingController();
-
-//   //Security
-//   final logOnNameController = TextEditingController();
-//   final passwordController = TextEditingController();
-
-//   //External Address
-//   final postCodeController = TextEditingController();
-//   final addressController = TextEditingController();
-//   final countryController = TextEditingController();
-//   final phoneController = TextEditingController();
-//   final emailController = TextEditingController();

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:optical_eye_desktop/Controllers/customer_files_controller.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
@@ -280,7 +281,7 @@ class _UpdatePatientDialogState extends State<UpdatePatientDialog> {
                                     phoneNumberController.text.trim(),
                               }).then((value) {
                                 Get.close(1);
-                                if(mounted) setState(() {});
+                                if (mounted) setState(() {});
                                 mySuccessSnackBar(
                                     context: Get.context!,
                                     message: "Patient Successfully Updated!");
@@ -296,12 +297,23 @@ class _UpdatePatientDialogState extends State<UpdatePatientDialog> {
                                   "contactNumber":
                                       phoneNumberController.text.trim(),
                                 });
-                                if(mounted) setState(() {});
+                                if (mounted) setState(() {});
                               }).catchError((error) {
                                 Get.close(1);
-                                if(mounted) setState(() {});
+                                if (mounted) setState(() {});
                                 myErrorSnackBar(
                                     context: Get.context!, message: "$error");
+                              }).then((value) async {
+                                await FirebaseFirestore.instance
+                                    .collection("history")
+                                    .add({
+                                  "id": widget.id.toString(),
+                                  "log": "Patient File Updated!",
+                                  "date":
+                                      "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                                  "time": DateFormat('KK:mm:ss a')
+                                      .format(DateTime.now()),
+                                });
                               });
                             }
                           },

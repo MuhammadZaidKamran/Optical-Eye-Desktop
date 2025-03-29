@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:optical_eye_desktop/Controllers/customer_files_controller.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
@@ -22,6 +23,7 @@ class _EquipmentTabState extends State<EquipmentTab> {
   List displayItems = [];
   final patientEquipmentFirestore =
       FirebaseFirestore.instance.collection("patientEquipments");
+  final fireStore = FirebaseFirestore.instance;
 
   int displayItemsFunction() {
     patientEquipmentFirestore.snapshots().listen((snapshot) {
@@ -368,11 +370,37 @@ class _NewEquipmentDialogState extends State<NewEquipmentDialog> {
                                       title: "Please select lense type");
                                 });
                           } else if (_formKey.currentState!.validate()) {
-                            await controller.addNewEquipment(
-                              patientID: widget.patientID,
-                              imageLink: imageLinkController.text.trim(),
-                              lenseType: dropDownValue2 ?? "",
-                            );
+                            await myLoadingDialog(Get.context!);
+                            await FirebaseFirestore.instance
+                                .collection("patientEquipments")
+                                .add({
+                              "patientID": widget.patientID,
+                              "imageLink": imageLinkController.text.trim(),
+                              "lenseType": dropDownValue2,
+                              "date":
+                                  "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                            }).then((value) async {
+                              Get.close(2);
+                              if (mounted) setState(() {});
+                              mySuccessSnackBar(
+                                  context: Get.context!,
+                                  message: "Equipment successfully added!");
+                              await FirebaseFirestore.instance
+                                  .collection("history")
+                                  .add({
+                                "id": widget.patientID.toString(),
+                                "log": "New Equipment Added!",
+                                "date":
+                                    "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                                "time": DateFormat('KK:mm:ss a')
+                                    .format(DateTime.now()),
+                              });
+                            }).catchError((error) {
+                              Get.close(1);
+                              if (mounted) setState(() {});
+                              myErrorSnackBar(
+                                  context: Get.context!, message: "$error");
+                            });
                           }
                         },
                       ),

@@ -15,8 +15,10 @@ class DispenseWidget extends StatelessWidget {
       this.tabItem06,
       this.isStatus = false,
       this.isIcon = false,
+      this.isIcon2 = false,
       required this.onTap,
       this.icon,
+      this.icon2,
       this.containerColor,
       this.tabItem07});
   final String tabItem01;
@@ -28,8 +30,10 @@ class DispenseWidget extends StatelessWidget {
   final String? tabItem07;
   bool? isStatus = false;
   bool? isIcon = false;
+  bool? isIcon2 = false;
   final Color? containerColor;
   IconData? icon;
+  IconData? icon2;
   final VoidCallback onTap;
 
   @override
@@ -170,9 +174,8 @@ class DispenseWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-          tabItem05 == null
-              ? const SizedBox()
-              : Expanded(
+          isIcon2 == true
+              ? Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
@@ -181,18 +184,38 @@ class DispenseWidget extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 13,
+                      vertical: 14,
                     ),
-                    child: Text(
-                      tabItem05!,
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    child: Center(
+                        child: Icon(
+                      icon2,
+                      color: blackColor.withOpacity(0.5),
+                    )),
                   ),
-                ),
+                )
+              : tabItem05 == null
+                  ? const SizedBox()
+                  : Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: borderColor.withOpacity(0.5))),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 13,
+                        ),
+                        child: Text(
+                          tabItem05!,
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
           tabItem06 == null
               ? const SizedBox()
               : Expanded(

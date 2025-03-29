@@ -6,6 +6,7 @@ import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Widgets/PatientFileTabs/dispense_tab.dart';
 import 'package:optical_eye_desktop/Widgets/PatientFileTabs/equipment_tab.dart';
 import 'package:optical_eye_desktop/Widgets/PatientFileTabs/hand_over_tab.dart';
+import 'package:optical_eye_desktop/Widgets/PatientFileTabs/history_tabs.dart';
 import 'package:optical_eye_desktop/Widgets/PatientFileTabs/patient_tabs.dart';
 import 'package:optical_eye_desktop/Widgets/customer_files_patient_details_widget.dart';
 import 'package:optical_eye_desktop/Widgets/dispense_widget.dart';
@@ -376,15 +377,7 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   if (tabIndex == 1)
                     userModel?.role == "Optom"
                         ? Container()
-                        : Center(
-                          child: Text(
-                            "Under Construction",
-                            style: TextStyle(
-                                color: blackColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
+                        : HistoryTab(id: patientId,),
                   if (tabIndex == 2)
                     EquipmentTab(
                       patientID: patientId,
