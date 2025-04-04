@@ -147,6 +147,7 @@ class _UpdatePatientDialogState extends State<UpdatePatientDialog> {
                             width: Get.width * 0.25,
                             controller: postCodeController,
                             label: "Post Code",
+                            maxLength: 6,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Please enter post code";

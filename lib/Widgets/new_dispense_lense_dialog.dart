@@ -137,6 +137,7 @@ class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
                             MyTextField(
                               width: Get.width * 0.2,
                               controller: sizeController,
+                              maxLength: 7,
                               label: "Size",
                               validator: (value) {
                                 if (value!.isEmpty) {
@@ -194,6 +195,7 @@ class _NewDispenseLenseDialogState extends State<NewDispenseLenseDialog> {
                             MyTextField(
                               width: Get.width * 0.2,
                               controller: itemCodeController,
+                              maxLength: 6,
                               label: "Item Code",
                               validator: (value) {
                                 if (value!.isEmpty) {

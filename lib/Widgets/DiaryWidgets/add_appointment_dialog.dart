@@ -393,6 +393,7 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                             width: Get.width * 0.35,
                             controller: postCodeController,
                             label: "Post Code",
+                            maxLength: 6,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Please enter post code";

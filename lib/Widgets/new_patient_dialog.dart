@@ -153,6 +153,7 @@ class NewPatientDialog extends StatelessWidget {
                         MyTextField(
                           width: Get.width * 0.3,
                           controller: postCodeController,
+                          maxLength: 6,
                           label: "Post Code",
                           validator: (value) {
                             if (value!.isEmpty) {
