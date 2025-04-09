@@ -139,32 +139,39 @@ class _NewDispenseDialogState extends State<NewDispenseDialog> {
                     SizedBox(
                       height: Get.height * 0.55,
                       width: Get.width,
-                      child: StreamBuilder(
-                          stream: fireStore.collection("dispense").snapshots(),
-                          builder: (context, snapshot) {
-                            return ListView.builder(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: Get.width * 0.012,
-                              ),
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: dispenseItems.length,
-                              itemBuilder: (context, index) {
-                                final data = dispenseItems[index];
-                                double total =
-                                    double.parse(data["quantity"].toString()) *
+                      child: dispenseItems.isNotEmpty
+                          ? StreamBuilder(
+                              stream:
+                                  fireStore.collection("dispense").snapshots(),
+                              builder: (context, snapshot) {
+                                return ListView.builder(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: Get.width * 0.012,
+                                  ),
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: dispenseItems.length,
+                                  itemBuilder: (context, index) {
+                                    final data = dispenseItems[index];
+                                    double total = double.parse(
+                                            data["quantity"].toString()) *
                                         double.parse(data["price"].toString());
-                                // total = totalAmount;
-                                return DispenseWidget(
-                                  tabItem01: data["type"],
-                                  tabItem02: data["item"],
-                                  tabItem03: data["itemCode"],
-                                  tabItem04: data["quantity"],
-                                  tabItem06: total.toString(),
-                                  onTap: () {},
+                                    // total = totalAmount;
+                                    return DispenseWidget(
+                                      tabItem01: data["type"],
+                                      tabItem02: data["item"],
+                                      tabItem03: data["itemCode"],
+                                      tabItem04: data["quantity"],
+                                      tabItem06: total.toString(),
+                                      onTap: () {},
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          }),
+                              })
+                          : const Center(
+                              child: Text(
+                                "No Dispense Items",
+                              ),
+                            ),
                     ),
                   ],
                 ),

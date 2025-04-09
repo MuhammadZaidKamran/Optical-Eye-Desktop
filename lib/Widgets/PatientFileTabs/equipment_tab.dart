@@ -74,84 +74,92 @@ class _EquipmentTabState extends State<EquipmentTab> {
         SizedBox(
           height: Get.height * 0.57,
           width: Get.width,
-          child: StreamBuilder(
-            stream: patientEquipmentFirestore.snapshots(),
-            builder: (context, snapshot) {
-              if (displayItems.isNotEmpty) {
-                return GridView.builder(
-                  itemCount: displayItemsFunction(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      // childAspectRatio: 0,
-                      childAspectRatio: 3 / 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (context, index) {
-                    final data = displayItems[index];
-                    return InkWell(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return EquipmentDetailDialog(
-                              date: data["date"].toString(),
-                              lenseType:
-                                  data["lenseType"] == "Left lense" ? "L" : "R",
-                              networkImage: data["imageLink"].toString(),
+          child: displayItems.isNotEmpty
+              ? StreamBuilder(
+                  stream: patientEquipmentFirestore.snapshots(),
+                  builder: (context, snapshot) {
+                    return GridView.builder(
+                      itemCount: displayItemsFunction(),
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 5,
+                              // childAspectRatio: 0,
+                              childAspectRatio: 3 / 3,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                      itemBuilder: (context, index) {
+                        final data = displayItems[index];
+                        return InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return EquipmentDetailDialog(
+                                  date: data["date"].toString(),
+                                  lenseType: data["lenseType"] == "Left lense"
+                                      ? "L"
+                                      : "R",
+                                  networkImage: data["imageLink"].toString(),
+                                );
+                              },
                             );
                           },
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: whiteColor,
-                          border: Border.all(color: mainThemeColor),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            data["imageLink"].toString().contains("https://")
-                                ? Image.network(
-                                    data["imageLink"].toString(),
-                                    height: Get.height * 0.18,
-                                  )
-                                : Image.asset(
-                                    "assets/img_not_found.jpg",
-                                    height: Get.height * 0.2,
-                                  ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: whiteColor,
+                              border: Border.all(color: mainThemeColor),
+                            ),
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  data["lenseType"] == "Left lense" ? "L" : "R",
-                                  style: TextStyle(
-                                    color: redColor,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                data["imageLink"]
+                                        .toString()
+                                        .contains("https://")
+                                    ? Image.network(
+                                        data["imageLink"].toString(),
+                                        height: Get.height * 0.18,
+                                      )
+                                    : Image.asset(
+                                        "assets/img_not_found.jpg",
+                                        height: Get.height * 0.2,
+                                      ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      data["lenseType"] == "Left lense"
+                                          ? "L"
+                                          : "R",
+                                      style: TextStyle(
+                                        color: redColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      data["date"].toString(),
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  data["date"].toString(),
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )
                               ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              } else {
-                return Center(
+                )
+              : Center(
                   child: Text(
                     "Equipment Not Found",
                     style: TextStyle(
@@ -160,10 +168,7 @@ class _EquipmentTabState extends State<EquipmentTab> {
                       color: blackColor,
                     ),
                   ),
-                );
-              }
-            },
-          ),
+                ),
         ),
       ],
     );

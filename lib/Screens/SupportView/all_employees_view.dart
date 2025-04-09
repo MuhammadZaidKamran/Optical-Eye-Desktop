@@ -97,51 +97,58 @@ class _AllEmployeesViewState extends State<AllEmployeesView> {
               SizedBox(
                 height: Get.height * 0.65,
                 width: Get.width,
-                child: StreamBuilder(
-                    stream: fireStore.collection("users").snapshots(),
-                    builder: (context, snapshot) {
-                      return ListView.builder(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Get.width * 0.006,
-                        ),
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: displayEmployees.length,
-                        itemBuilder: (context, index) {
-                          QueryDocumentSnapshot data = displayEmployees[index];
-                          return DispenseWidget(
-                            isIcon2: true,
-                            icon2: Icons.edit_outlined,
-                            tabItem01: data["role"],
-                            tabItem02: data["employeeName"],
-                            tabItem03: data["email"],
-                            tabItem04: data["phoneNumber"],
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return UpdateEmployeeDialog(
-                                      employeeID: data.id,
-                                      employeeName: data["employeeName"],
-                                      displayName: data["displayName"],
-                                      initials: data["initials"],
-                                      insuranceCode: data["insuranceCode"],
-                                      logonName: data["logonName"],
-                                      password: data["password"],
-                                      phoneNumber: data["phoneNumber"],
-                                      pinNumber: data["pinNumber"],
-                                      postCode: data["postCode"],
-                                      role: data["role"],
-                                      newRole: data["role"],
-                                      country: data["country"],
-                                      address: data["address"],
-                                      email: data["email"],
-                                    );
-                                  });
+                child: displayEmployees.isNotEmpty
+                    ? StreamBuilder(
+                        stream: fireStore.collection("users").snapshots(),
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Get.width * 0.006,
+                            ),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: displayEmployees.length,
+                            itemBuilder: (context, index) {
+                              QueryDocumentSnapshot data =
+                                  displayEmployees[index];
+                              return DispenseWidget(
+                                isIcon2: true,
+                                icon2: Icons.edit_outlined,
+                                tabItem01: data["role"],
+                                tabItem02: data["employeeName"],
+                                tabItem03: data["email"],
+                                tabItem04: data["phoneNumber"],
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return UpdateEmployeeDialog(
+                                          employeeID: data.id,
+                                          employeeName: data["employeeName"],
+                                          displayName: data["displayName"],
+                                          initials: data["initials"],
+                                          insuranceCode: data["insuranceCode"],
+                                          logonName: data["logonName"],
+                                          password: data["password"],
+                                          phoneNumber: data["phoneNumber"],
+                                          pinNumber: data["pinNumber"],
+                                          postCode: data["postCode"],
+                                          role: data["role"],
+                                          newRole: data["role"],
+                                          country: data["country"],
+                                          address: data["address"],
+                                          email: data["email"],
+                                        );
+                                      });
+                                },
+                              );
                             },
                           );
-                        },
-                      );
-                    }),
+                        })
+                    : const Center(
+                        child: Text(
+                          "No employees found",
+                        ),
+                      ),
               ),
             ],
           ),

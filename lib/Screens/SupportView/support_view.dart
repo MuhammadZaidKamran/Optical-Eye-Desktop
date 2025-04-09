@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:optical_eye_desktop/Global/colors.dart';
 import 'package:optical_eye_desktop/Global/global.dart';
 import 'package:optical_eye_desktop/Screens/SupportView/all_employees_view.dart';
@@ -89,6 +90,14 @@ class _SupportViewState extends State<SupportView> {
                         })
                   ],
                 ),
+                myHeight(0.02),
+                Expanded(
+                    child: Center(
+                  child: Image.asset("assets/center_image.png",
+                      height: Get.height * 0.5,
+                      width: Get.width * 0.5,
+                      fit: BoxFit.cover),
+                ))
               ],
             )
           : AllEmployeesView(

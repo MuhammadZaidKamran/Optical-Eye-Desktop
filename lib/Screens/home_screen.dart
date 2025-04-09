@@ -356,6 +356,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          if (myIndex == 0)
+            Expanded(
+              child: Center(
+                child: Image.asset("assets/center_image.png",
+                    height: Get.height * 0.5,
+                    width: Get.width * 0.5,
+                    fit: BoxFit.cover),
+              ),
+            ),
           if (myIndex == 1) const CustomerFilesWidgets(),
           if (myIndex == 2) const StockManagerView(),
           if (myIndex == 3) const DiaryView(),

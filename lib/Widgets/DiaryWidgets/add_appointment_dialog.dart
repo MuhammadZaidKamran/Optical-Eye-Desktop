@@ -376,6 +376,7 @@ class _AddAppointmentDialogState extends State<AddAppointmentDialog> {
                               return null;
                             },
                           ),
+                          myHeight(0.03),
                         ],
                       ),
                       myWidth(0.02),

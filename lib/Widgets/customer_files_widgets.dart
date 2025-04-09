@@ -190,54 +190,65 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                         SizedBox(
                           height: Get.height * 0.52,
                           width: Get.width,
-                          child: StreamBuilder(
-                              stream: patientData.snapshots(),
-                              builder: (context, snapshot) {
-                                return ListView.builder(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: Get.width * 0.012,
-                                  ),
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: searchFunction(),
-                                  // separatorBuilder: (context, index) {
-                                  //   return myHeight(0.02);
-                                  // },
-                                  itemBuilder: (context, index) {
-                                    final data = displayItems[index];
-                                    return DispenseWidget(
-                                      tabItem01: data?["name"].toString() ?? "",
-                                      tabItem02:
-                                          data?["postCode"].toString() ?? "",
-                                      tabItem03: data?.id.toString() ?? "",
-                                      tabItem04:
-                                          data?["dateOfBirth"].toString() ?? "",
-                                      onTap: () {
-                                        myIndex = 1;
-                                        patientId = data?.id.toString() ?? "";
-                                        patientName =
-                                            data?["name"].toString() ?? "";
-                                        patientGender =
-                                            data?["gender"].toString() ?? "";
-                                        patientDateOfBirth =
-                                            data?["dateOfBirth"].toString() ??
-                                                "";
-                                        patientEmail =
-                                            data?["email"].toString() ?? "";
-                                        patientAddress =
-                                            data?["address"].toString() ?? "";
-                                        patientContactNumber =
-                                            data?["contactNumber"].toString() ??
-                                                "";
-                                        patientPostCode =
-                                            data?["postCode"].toString() ?? "";
-                                        patientCountry =
-                                            data?["country"].toString() ?? "";
-                                        setState(() {});
+                          child: displayItems.isNotEmpty
+                              ? StreamBuilder(
+                                  stream: patientData.snapshots(),
+                                  builder: (context, snapshot) {
+                                    return ListView.builder(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: Get.width * 0.012,
+                                      ),
+                                      physics: const BouncingScrollPhysics(),
+                                      itemCount: searchFunction(),
+                                      itemBuilder: (context, index) {
+                                        final data = displayItems[index];
+                                        return DispenseWidget(
+                                          tabItem01:
+                                              data?["name"].toString() ?? "",
+                                          tabItem02:
+                                              data?["postCode"].toString() ??
+                                                  "",
+                                          tabItem03: data?.id.toString() ?? "",
+                                          tabItem04:
+                                              data?["dateOfBirth"].toString() ??
+                                                  "",
+                                          onTap: () {
+                                            myIndex = 1;
+                                            patientId =
+                                                data?.id.toString() ?? "";
+                                            patientName =
+                                                data?["name"].toString() ?? "";
+                                            patientGender =
+                                                data?["gender"].toString() ??
+                                                    "";
+                                            patientDateOfBirth =
+                                                data?["dateOfBirth"]
+                                                        .toString() ??
+                                                    "";
+                                            patientEmail =
+                                                data?["email"].toString() ?? "";
+                                            patientAddress =
+                                                data?["address"].toString() ??
+                                                    "";
+                                            patientContactNumber =
+                                                data?["contactNumber"]
+                                                        .toString() ??
+                                                    "";
+                                            patientPostCode =
+                                                data?["postCode"].toString() ??
+                                                    "";
+                                            patientCountry =
+                                                data?["country"].toString() ??
+                                                    "";
+                                            setState(() {});
+                                          },
+                                        );
                                       },
                                     );
-                                  },
-                                );
-                              }),
+                                  })
+                              : const Center(
+                                  child: Text("Patient not found!"),
+                                ),
                         ),
                       ],
                     ),
@@ -377,7 +388,9 @@ class _CustomerFilesWidgetsState extends State<CustomerFilesWidgets> {
                   if (tabIndex == 1)
                     userModel?.role == "Optom"
                         ? Container()
-                        : HistoryTab(id: patientId,),
+                        : HistoryTab(
+                            id: patientId,
+                          ),
                   if (tabIndex == 2)
                     EquipmentTab(
                       patientID: patientId,

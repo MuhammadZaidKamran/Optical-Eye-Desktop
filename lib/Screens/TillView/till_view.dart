@@ -97,47 +97,57 @@ class _TillViewState extends State<TillView> {
                       SizedBox(
                         height: Get.height * 0.52,
                         width: Get.width * 0.6,
-                        child: StreamBuilder(
-                            stream: fireStore
-                                .collection("dispenseSummary")
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              return ListView.builder(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Get.width * 0.012,
-                                ),
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: displayTillItems.length,
-                                itemBuilder: (context, index) {
-                                  QueryDocumentSnapshot data =
-                                      displayTillItems[index];
-                                  return DispenseWidget(
-                                    tabItem01: data["type"],
-                                    tabItem02: data["id"],
-                                    tabItem03: data["date"],
-                                    tabItem04: data["by"],
-                                    tabItem05: "£${data["total"]}",
-                                    tabItem06: data["status"],
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return DispenseItemDialog(
-                                              type: data["type"],
-                                              reference: data.id,
-                                              date: data["date"],
-                                              by: data["by"],
-                                              total: "${data["total"]}",
-                                              status: data["status"],
-                                              dispenseItemDetails:
-                                                  data["dispenseItems"],
-                                            );
-                                          });
+                        child: displayTillItems.isNotEmpty
+                            ? StreamBuilder(
+                                stream: fireStore
+                                    .collection("dispenseSummary")
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  return ListView.builder(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: Get.width * 0.012,
+                                    ),
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: displayTillItems.length,
+                                    itemBuilder: (context, index) {
+                                      QueryDocumentSnapshot data =
+                                          displayTillItems[index];
+                                      return DispenseWidget(
+                                        tabItem01: data["type"],
+                                        tabItem02: data["id"],
+                                        tabItem03: data["date"],
+                                        tabItem04: data["by"],
+                                        tabItem05: "£${data["total"]}",
+                                        tabItem06: data["status"],
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return DispenseItemDialog(
+                                                  type: data["type"],
+                                                  reference: data.id,
+                                                  date: data["date"],
+                                                  by: data["by"],
+                                                  total: "${data["total"]}",
+                                                  status: data["status"],
+                                                  dispenseItemDetails:
+                                                      data["dispenseItems"],
+                                                );
+                                              });
+                                        },
+                                      );
                                     },
                                   );
-                                },
-                              );
-                            }),
+                                })
+                            : Center(
+                                child: Text(
+                                  "No items found",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: blackColor.withOpacity(0.5),
+                                  ),
+                                ),
+                              ),
                       ),
                     ],
                   ),

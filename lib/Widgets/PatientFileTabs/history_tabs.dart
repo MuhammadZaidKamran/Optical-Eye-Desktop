@@ -80,27 +80,37 @@ class _HistoryTabState extends State<HistoryTab> {
               SizedBox(
                 height: Get.height * 0.49,
                 width: Get.width,
-                child: StreamBuilder(
-                    stream: fireStore.collection("history").snapshots(),
-                    builder: (context, snapshot) {
-                      return ListView.builder(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Get.width * 0.012,
-                        ),
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: displayHistoryItems.length,
-                        itemBuilder: (context, index) {
-                          QueryDocumentSnapshot data =
-                              displayHistoryItems[index];
-                          return DispenseWidget(
-                            tabItem01: data["log"].toString(),
-                            tabItem02: data["date"].toString(),
-                            tabItem03: data["time"].toString(),
-                            onTap: () {},
+                child: displayHistoryItems.isNotEmpty
+                    ? StreamBuilder(
+                        stream: fireStore.collection("history").snapshots(),
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Get.width * 0.012,
+                            ),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: displayHistoryItems.length,
+                            itemBuilder: (context, index) {
+                              QueryDocumentSnapshot data =
+                                  displayHistoryItems[index];
+                              return DispenseWidget(
+                                tabItem01: data["log"].toString(),
+                                tabItem02: data["date"].toString(),
+                                tabItem03: data["time"].toString(),
+                                onTap: () {},
+                              );
+                            },
                           );
-                        },
-                      );
-                    }),
+                        })
+                    : Center(
+                        child: Text(
+                          "No history found",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: blackColor.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
               ),
             ],
           ),

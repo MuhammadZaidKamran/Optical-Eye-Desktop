@@ -99,47 +99,52 @@ class _DispenseTabState extends State<DispenseTab> {
               SizedBox(
                 height: Get.height * 0.46,
                 width: Get.width,
-                child: StreamBuilder(
-                    stream: firestore.collection("dispenseSummary").snapshots(),
-                    builder: (context, snapshot) {
-                      return ListView.builder(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Get.width * 0.012,
-                        ),
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: displayDispenseSummary.length,
-                        itemBuilder: (context, index) {
-                          QueryDocumentSnapshot data =
-                              displayDispenseSummary[index];
-                          return DispenseWidget(
-                            tabItem01: data["type"],
-                            tabItem02: data["id"],
-                            tabItem03: data["date"],
-                            tabItem04: data["by"],
-                            tabItem05: "£${data["total"]}",
-                            tabItem06: data["status"],
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return DispenseItemDialog(
-                                      isDispense: true,
-                                      patientID: widget.patientID,
-                                      type: data["type"],
-                                      reference: data.id,
-                                      date: data["date"],
-                                      by: data["by"],
-                                      total: "${data["total"]}",
-                                      status: data["status"],
-                                      dispenseItemDetails:
-                                          data["dispenseItems"],
-                                    );
-                                  });
+                child: displayDispenseSummary.isNotEmpty
+                    ? StreamBuilder(
+                        stream:
+                            firestore.collection("dispenseSummary").snapshots(),
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Get.width * 0.012,
+                            ),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: displayDispenseSummary.length,
+                            itemBuilder: (context, index) {
+                              QueryDocumentSnapshot data =
+                                  displayDispenseSummary[index];
+                              return DispenseWidget(
+                                tabItem01: data["type"],
+                                tabItem02: data["id"],
+                                tabItem03: data["date"],
+                                tabItem04: data["by"],
+                                tabItem05: "£${data["total"]}",
+                                tabItem06: data["status"],
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return DispenseItemDialog(
+                                          isDispense: true,
+                                          patientID: widget.patientID,
+                                          type: data["type"],
+                                          reference: data.id,
+                                          date: data["date"],
+                                          by: data["by"],
+                                          total: "${data["total"]}",
+                                          status: data["status"],
+                                          dispenseItemDetails:
+                                              data["dispenseItems"],
+                                        );
+                                      });
+                                },
+                              );
                             },
                           );
-                        },
-                      );
-                    }),
+                        })
+                    : const Center(
+                        child: Text("No dispense found!"),
+                      ),
               ),
             ],
           ),

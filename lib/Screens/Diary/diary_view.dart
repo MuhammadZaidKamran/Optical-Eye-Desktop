@@ -185,49 +185,60 @@ class _DiaryViewState extends State<DiaryView> {
                   SizedBox(
                     height: Get.height * 0.63,
                     width: Get.width,
-                    child: StreamBuilder(
-                        stream: appointmentListFireStore.snapshots(),
-                        builder: (context, snapshot) {
-                          return ListView.builder(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: Get.width * 0.006,
-                            ),
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: getAppointmentList(),
-                            // separatorBuilder: (context, index) {
-                            //   return myHeight(0.02);
-                            // },
-                            itemBuilder: (context, index) {
-                              DocumentSnapshot data =
-                                  displayAppointments[index];
-                              return DispenseWidget(
-                                isStatus: true,
-                                containerColor: data["status"] == "Not Arrived"
-                                    ? const Color.fromARGB(255, 255, 232, 147)
-                                    : data["status"] == "Late"
-                                        ? const Color.fromARGB(111, 255, 78, 66)
-                                        : data["status"] == "Arrived"
+                    child: displayAppointments.isNotEmpty
+                        ? StreamBuilder(
+                            stream: appointmentListFireStore.snapshots(),
+                            builder: (context, snapshot) {
+                              return ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: Get.width * 0.006,
+                                ),
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: getAppointmentList(),
+                                itemBuilder: (context, index) {
+                                  DocumentSnapshot data =
+                                      displayAppointments[index];
+                                  return DispenseWidget(
+                                    isStatus: true,
+                                    containerColor:
+                                        data["status"] == "Not Arrived"
                                             ? const Color.fromARGB(
-                                                255, 169, 255, 172)
-                                            : null,
-                                tabItem01: data["name"].toString(),
-                                tabItem02: data["type"].toString(),
-                                tabItem03: data["status"].toString(),
-                                tabItem04: data["clinicName"].toString(),
-                                tabItem05: data["date"].toString(),
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return UpdateDialog(
-                                          id: data.id.toString(),
-                                        );
-                                      });
+                                                255, 255, 232, 147)
+                                            : data["status"] == "Late"
+                                                ? const Color.fromARGB(
+                                                    111, 255, 78, 66)
+                                                : data["status"] == "Arrived"
+                                                    ? const Color.fromARGB(
+                                                        255, 169, 255, 172)
+                                                    : null,
+                                    tabItem01: data["name"].toString(),
+                                    tabItem02: data["type"].toString(),
+                                    tabItem03: data["status"].toString(),
+                                    tabItem04: data["clinicName"].toString(),
+                                    tabItem05: data["date"].toString(),
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return UpdateDialog(
+                                              id: data.id.toString(),
+                                            );
+                                          });
+                                    },
+                                  );
                                 },
                               );
-                            },
-                          );
-                        }),
+                            })
+                        : Center(
+                            child: Text(
+                              "No Appointments Found",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: blackColor.withOpacity(0.5),
+                              ),
+                            ),
+                          ),
                   ),
                 ],
               ),
